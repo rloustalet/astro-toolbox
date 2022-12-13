@@ -13,7 +13,7 @@ class Time():
         self.lst = 0
     def __repr__(self):
         return f'{self.year}-{self.month}-{self.day} {self. hour}:{self.minute}:{self.second}'
-    def compute_ut2jd(self):
+    def compute_uttojd(self):
         """
         Convert a datetime object into julian float.
         Args:
@@ -32,7 +32,7 @@ class Time():
         0.5 * math.copysign(1, 100 * self.year + self.month - 190002.5) + 0.5)
         self.jd = julian_datetime
     # ----------------------------------------------------------------------------------------------
-    def compute_ut2gmst(self):
+    def compute_uttogmst(self):
         """
         Get Greenwich mean sidereal time
         Args:
@@ -53,7 +53,7 @@ class Time():
         self.gmst = gmst
         return f'{gmst_hh}:{gmst_mm}:{gmst_ss}'
     # ----------------------------------------------------------------------------------------------
-    def compute_ut2lst(self, longitude):
+    def compute_uttolst(self, longitude):
         longitude = longitude/15
         lst = self.gmst + longitude
         if lst < 0:
@@ -66,4 +66,3 @@ class Time():
         self.lst = lst
         return f'{lst_hh}:{lst_mm}:{lst_ss}'
     # ----------------------------------------------------------------------------------------------
-    
