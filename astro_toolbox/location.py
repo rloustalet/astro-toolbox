@@ -1,11 +1,8 @@
-import numpy as np
-
+from astro_toolbox import Angle
 class Location():
 
-    def __init__(self, name, latitude, longitude):
+    def __init__(self, name, latitude, longitude, altitude):
         self.name = name
-        if type(latitude) is tuple:
-            latitude = latitude[0]
-        self.latitude = latitude
-        self.longitude = longitude
-        
+        self.latitude = Angle(latitude, 'dms')
+        self.longitude = Angle(longitude, 'dms')
+        self.altitude = altitude
