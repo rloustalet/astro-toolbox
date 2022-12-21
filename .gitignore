@@ -2,5 +2,10 @@ __pycache__
 *.pdf
 *.dat
 *.egg-info
+*.empty
 build
 examples
+.pypirc
+.pylintrc
+dist
+pyproject.toml

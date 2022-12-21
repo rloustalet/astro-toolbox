@@ -1,5 +1,5 @@
 install:
-	pip install -e .
+	pip install .
 
 uninstall:
 	pip uninstall astro_toolbox

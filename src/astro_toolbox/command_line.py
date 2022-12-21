@@ -5,7 +5,7 @@ import pathlib
 import click
 from matplotlib import pyplot as plt
 
-from astro_toolbox import AngleHMS
+from astro_toolbox.angle.hms import AngleHMS
 from astro_toolbox.time import AstroDateTime
 from astro_toolbox.location import Location
 from astro_toolbox.coordinates.equatorial import Equatorial
