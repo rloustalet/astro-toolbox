@@ -43,7 +43,8 @@ class Horizontal():
         """Airmass calculation method
         The airmass is calculate with the Pickering(2002) formula from DIO,
         The International Journal of Scientific History vol. 12
-        .. math:: \\frac{1}{sin(h+\\frac{244}{165+47h^{1.1})}
+
+        .. math:: X = \\frac{1}{sin(h+\\frac{244}{165+47h^{1.1}})}
 
         Returns
         -------
@@ -57,7 +58,9 @@ class Horizontal():
     # ----------------------------------------------------------------------------------------------
     def to_equatorial(self, gamma: AngleHMS, location: Location):
         """Horizontal to Equation converting method
+
         .. math:: \\delta=sin^{-1}(sin \\Phi sin h-cos \\Phi cos h cos A)
+        
         .. math:: \\alpha=sin^{-1}(\\frac{-cosh cosA}{cos\\delta})-\\gamma
 
         Parameters

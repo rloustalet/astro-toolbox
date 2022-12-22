@@ -9,3 +9,5 @@ examples
 .pylintrc
 dist
 pyproject.toml
+_static
+_templates

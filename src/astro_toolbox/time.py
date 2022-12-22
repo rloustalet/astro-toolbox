@@ -3,8 +3,7 @@
 import math
 from astro_toolbox.location import Location
 class AstroDateTime():
-    """
-    This module contain AngleRad class
+    """This module contain AngleRad class
     """
     def __init__(self, ut_time):
         """Constructor method
@@ -84,6 +83,7 @@ class AstroDateTime():
 
         .. math:: JD=367year-\\frac{7(year+\\frac{month+9}{12}}{4}>+\\frac{275month}{9}+
                 day+1721013.5+\\frac{UT}{24}-0.5sign(100year+month-190002.5)+0.5
+        
         Returns
         -------
         float
@@ -101,6 +101,7 @@ class AstroDateTime():
     def get_gmst(self):
         """UT time to Greenwich mean sidereal time converting method
         Get Greenwich mean sidereal time
+
         .. math:: gmst=mod(18.697375+24.065709824279(JD-2451545), 24)
 
         Returns
@@ -119,12 +120,14 @@ class AstroDateTime():
     def get_lst(self, location: Location):
         """UT time to local mean sidereal time converting method
         Get local mean sidereal time
+
         .. math:: lst=gmst+\\frac{\\lambda}{15}
 
         Parameters
         ----------
         location : Location
             Observer location
+        
         Returns
         -------
         tuple

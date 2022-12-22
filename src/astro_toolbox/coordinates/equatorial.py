@@ -39,7 +39,9 @@ class Equatorial():
 
     def get_hourangle(self, gamma: AngleHMS):
         """Riht-Ascencion to Hour-Angle conversion method
+
         .. math:: HA = RA - \\gamma
+
         Parameters
         ----------
         gamma : AngleHMS
@@ -57,7 +59,10 @@ class Equatorial():
         """Airmass calculation method
         The airmass is calculate with the Pickering(2002) formula from DIO,
         The International Journal of Scientific History vol. 12
-        .. math:: \\frac{1}{sin(h+\\frac{244}{165+47h^{1.1})}
+
+        .. math:: X = \\frac{1}{sin(h+\\frac{244}{165+47h^{1.1}})}
+
+        For altitude angle calculation c.f. to_horizontal method
 
         Parameters
         ----------
@@ -82,7 +87,9 @@ class Equatorial():
     # ----------------------------------------------------------------------------------------------
     def to_horizontal(self, gamma: AngleHMS, location: Location):
         """Equatorial to Horizontal converting method
+
         .. math:: h=sin^{-1}(cos\\Phi cos H cos\\delta+sin\\Phi sin\\delta)
+
         .. math:: A=sin^{-1}(\\frac{-sin H cos \\delta}{cosh})
 
         Parameters
@@ -109,12 +116,19 @@ class Equatorial():
     # ----------------------------------------------------------------------------------------------
     def compute_on_date_coords(self, year: float):
         """On date Equatorial coordinates calculation method from j2000 Equatorial coordinates
+
         .. math:: \\Delta year = \\frac{(year-2000)}{100}
+
         .. math:: M=1.2812323\\Delta year+0.0003879\\Delta year^2+0.0000101\\Delta year^3
+
         .. math:: N=0.5567530\\Delta year-0.0001185\\Delta year^2+0.0000116\\Delta year^3
+
         .. math:: \\Delta \\alpha=M+Nsin\\alpha tan\\delta
+
         .. math:: \\Delta \\delta=Ncos\\alpha
+
         .. math:: \\alpha=\\alpha_{J2000}+\\Delta \\alpha
+
         .. math:: \\delta=\\delta_{J2000}+\\Delta \\delta
 
         Parameters

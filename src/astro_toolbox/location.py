@@ -3,14 +3,6 @@
 from astro_toolbox.angle.dms import AngleDMS
 class Location():
     """This class represent the observer location
-    :param name: Location name
-    :type name: str
-    :param latitude: Location latitude tuple (°, ', '')
-    :type name: tuple
-    :param longitude: Location longitude tuple (°, ', '')
-    :type name: tuple
-    :param altitude: Location altitude(m)
-    :type name: float
     """
     def __init__(self, name: str, latitude: tuple, longitude: tuple, altitude: float = 0.0):
         """Constructor method
