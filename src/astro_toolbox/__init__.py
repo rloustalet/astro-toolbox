@@ -9,7 +9,7 @@ from astro_toolbox.angle.hms import AngleHMS
 from astro_toolbox.coordinates.equatorial import Equatorial
 from astro_toolbox.coordinates.horizontal import Horizontal
 from astro_toolbox.location import Location
-
+from astro_toolbox.catalog import Simbad
 
 __all__ = [
     "AstroDateTime",

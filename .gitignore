@@ -9,5 +9,6 @@ examples
 .pylintrc
 dist
 pyproject.toml
+.DS_Store
 _static
 _templates
