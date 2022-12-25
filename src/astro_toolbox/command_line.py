@@ -39,8 +39,9 @@ def read_observatory_program(input_file: pathlib.Path):
     date = tuple([int(x) for x in date])
     location = Location(location_str[0], latitude=latitude, longitude=longitude)
     datetime = AstroDateTime(date+time)
-    object_list.remove('')
-    object_list.sort(reverse=True)
+    if '' in object_list:
+        object_list.remove('')
+    object_list.sort(reverse=True, key=str.casefold)
     objects_dict = {}
     for n in track(object_list, description="Processing..."):
         alpha, delta = Simbad(n).get_coords()

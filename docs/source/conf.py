@@ -18,19 +18,13 @@ author = 'Romain Loustalet Palengat'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 release = '0.0.1'
 
-extensions = ['myst_parser',
-    'sphinx.ext.autodoc',
+extensions = ['sphinx_mdinclude',
+    'myst_parser',
 ]
 
 templates_path = ['_templates']
 exclude_patterns = []
 
-
-source_suffix = {
-    '.rst': 'restructuredtext',
-    '.txt': 'markdown',
-    '.md': 'markdown',
-}
 
 
 # -- Options for HTML output -------------------------------------------------

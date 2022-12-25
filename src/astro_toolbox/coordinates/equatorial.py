@@ -83,9 +83,6 @@ class Equatorial():
                     math.sin(self.delta.dmstorad()))).radtodeg()
         if altitude < 0:
             altitude = altitude + 360
-        airmass = 1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * (altitude) ** 1.1)).degtorad()))
-        if airmass < 0:
-            airmass = float('inf')
         return abs(1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * (altitude) ** 1.1)).degtorad())))
     # ----------------------------------------------------------------------------------------------
     def to_horizontal(self, gamma: AngleHMS, location: Location):
