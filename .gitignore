@@ -12,3 +12,4 @@ pyproject.toml
 .DS_Store
 _static
 _templates
+.DS_Store
