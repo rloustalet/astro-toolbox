@@ -84,7 +84,7 @@ class Equatorial():
         if altitude < 0:
             altitude = altitude + 360
         return abs(1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * (altitude) ** 1.1)).degtorad())))
-    # ----------------------------------------------------------------------------------------------
+
     def to_horizontal(self, gamma: AngleHMS, location: Location):
         """Equatorial to Horizontal converting method
 
@@ -113,7 +113,7 @@ class Equatorial():
             math.cos(self.delta.dmstorad) / math.cos(altitude.anglevalue)))
         return coordinates.horizontal.Horizontal(altitude=AngleDMS(altitude.radtodms()),
                                                 azimuth=AngleDMS(azimuth.radtodms()))
-    # ----------------------------------------------------------------------------------------------
+
     def compute_on_date_coords(self, year: float):
         """On date Equatorial coordinates calculation method from j2000 Equatorial coordinates
 

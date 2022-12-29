@@ -25,7 +25,7 @@ class Horizontal():
         self.name = name
         self.azimuth = AngleDMS(azimuth)
         self.altitude = AngleDMS(altitude)
-    # ----------------------------------------------------------------------------------------------
+
     def __repr__(self):
         """Representative method
 
@@ -39,7 +39,7 @@ class Horizontal():
         azstr = (f'{self.azimuth.anglevalue[0]:03d}°{self.azimuth.anglevalue[1]:02d}\''+
                 f'{self.azimuth.anglevalue[2]:05.2f}\'\'')
         return f'{self.name}: A = {azstr} h = {altstr}'
-    # ----------------------------------------------------------------------------------------------
+
     def calculate_airmass(self):
         """Airmass calculation method
         The airmass is calculate with the Pickering(2002) formula from DIO,
@@ -56,12 +56,12 @@ class Horizontal():
         if altitude < 0:
             altitude = altitude + 360
         return abs(1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * (altitude) ** 1.1)).degtorad())))
-    # ----------------------------------------------------------------------------------------------
+
     def to_equatorial(self, gamma: AngleHMS, location: Location):
         """Horizontal to Equation converting method
 
         .. math:: \\delta=sin^{-1}(sin \\Phi sin h-cos \\Phi cos h cos A)
-        
+
         .. math:: \\alpha=sin^{-1}(\\frac{-cosh cosA}{cos\\delta})-\\gamma
 
         Parameters

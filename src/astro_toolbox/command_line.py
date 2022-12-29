@@ -96,7 +96,7 @@ def airmass_command(input_file, begin, end):
     plt.figure(figsize=(8.3, 11.7))
     plt.pcolormesh(airmasses, cmap='jet', shading='flat', vmin = 1, vmax = 3.5, label = 'airmasses')
     plt.colorbar(shrink = 0.5)
-    plt.xticks(np.arange(0,130,10), np.arange(18,31))
+    plt.xticks(np.arange(0,len(timelist),10), np.arange(begin,end))
     listname = [object_dict[key].name for key in object_dict]
     plt.yticks(np.arange(0.5,len(object_dict),1), listname)
     plt.tick_params(left = False)

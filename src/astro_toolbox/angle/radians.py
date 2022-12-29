@@ -14,7 +14,7 @@ class AngleRad():
             The angle value in radians
         """
         self.anglevalue = anglevalue
-    # ----------------------------------------------------------------------------------------------
+
     def __repr__(self):
         """Representative method
 
@@ -24,7 +24,7 @@ class AngleRad():
             Return a class representative string
         """
         return f'{self.anglevalue}rad'
-    # ----------------------------------------------------------------------------------------------
+
     def radtodeg(self):
         """Radians to Degrees converting method
         This method return angle in radians from angle in degrees
@@ -35,7 +35,7 @@ class AngleRad():
             The angle value in degrees
         """
         return self.anglevalue*180/math.pi
-    # ----------------------------------------------------------------------------------------------
+
     def radtodms(self):
         """Radians to DMS converting method
         This method return angle in dms from angle in radians
@@ -52,7 +52,7 @@ class AngleRad():
         rad_dms_value = (rad_dms_value - int(rad_dms_value)) * 60
         rad_dms_result = rad_dms_result + (rad_dms_value,)
         return rad_dms_result
-    # ----------------------------------------------------------------------------------------------
+
     def radtohms(self):
         """Radians to HMS converting method
         This method return angle in hms from angle in radians

@@ -22,7 +22,7 @@ class Location():
         self.latitude = AngleDMS(latitude)
         self.longitude = AngleDMS(longitude)
         self.altitude = altitude
-    # ----------------------------------------------------------------------------------------------
+
     def __repr__(self):
         """Representative method
 
@@ -34,4 +34,3 @@ class Location():
         return (f'{self.name}: latitude: {self.latitude} '+
                 f'longitude: {self.longitude} '+
                 f'altitude = {self.altitude}m')
-    # ----------------------------------------------------------------------------------------------

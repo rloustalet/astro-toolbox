@@ -14,7 +14,7 @@ class AngleDMS():
             The angle value in dms
         """
         self.anglevalue = anglevalue
-    # ----------------------------------------------------------------------------------------------
+
     def __repr__(self):
         """Representative method
 
@@ -24,7 +24,7 @@ class AngleDMS():
             Return a class representative string
         """
         return f'{self.anglevalue[0]:+03d}°{self.anglevalue[1]:02d}\'{self.anglevalue[2]:05.2f}\'\''
-    # ----------------------------------------------------------------------------------------------
+
     def dmstodeg(self):
         """DMS to Degrees converting method
         This method return angle in degrees from angle in dms
@@ -37,7 +37,7 @@ class AngleDMS():
         return (self.anglevalue[0] +
             self.anglevalue[1]/60 +
             self.anglevalue[2]/3600)
-    # ----------------------------------------------------------------------------------------------
+
     def dmstorad(self):
         """DMS to Radians converting method
         This method return angle in radians from angle in dms
@@ -48,7 +48,7 @@ class AngleDMS():
             The angle value in radians
         """
         return self.dmstodeg()*math.pi/180
-    # ----------------------------------------------------------------------------------------------
+
     def get_angle(self):
         """Angle value returning method
 

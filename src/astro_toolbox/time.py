@@ -15,7 +15,7 @@ class AstroDateTime():
         """
         self.date = (ut_time[0], ut_time[1], ut_time[2])
         self.time = (ut_time[3], ut_time[4], ut_time[5])
-    # ----------------------------------------------------------------------------------------------
+
     def __repr__(self):
         """Representative method
 
@@ -26,7 +26,7 @@ class AstroDateTime():
         """
         return (f'{self.date[0]}-{self.date[1]}-{self.date[2]} '+
                 f'{self.time[0]}:{self.time[1]}:{self.time[2]}')
-    # ----------------------------------------------------------------------------------------------
+
     def get_date(self):
         """Get date
 
@@ -36,7 +36,7 @@ class AstroDateTime():
             date in format (year,month,day)
         """
         return self.date
-    # ----------------------------------------------------------------------------------------------
+
     def get_year(self):
         """Get year
 
@@ -46,7 +46,7 @@ class AstroDateTime():
             year
         """
         return self.date[0]
-    # ----------------------------------------------------------------------------------------------
+
     def get_month(self):
         """Get month
 
@@ -56,7 +56,7 @@ class AstroDateTime():
             month
         """
         return self.date[1]
-    # ----------------------------------------------------------------------------------------------
+
     def get_day(self):
         """Get day
 
@@ -66,7 +66,7 @@ class AstroDateTime():
             day
         """
         return self.date[2]
-    # ----------------------------------------------------------------------------------------------
+
     def get_time(self):
         """Get time
 
@@ -76,14 +76,14 @@ class AstroDateTime():
             time in format (hour,minute,second)
         """
         return self.time
-    # ----------------------------------------------------------------------------------------------
+
     def get_jd(self):
         """UT time to Julian day float converting method
         get Julain day
 
         .. math:: JD=367year-\\frac{7(year+\\frac{month+9}{12}}{4}>+\\frac{275month}{9}+
                 day+1721013.5+\\frac{UT}{24}-0.5sign(100year+month-190002.5)+0.5
-        
+
         Returns
         -------
         float
@@ -97,7 +97,7 @@ class AstroDateTime():
         (self.time[0] + self.time[1] / 60.0 + self.time[2] / 3600) / 24.0 -
         0.5 * math.copysign(1, 100 * self.date[0] + self.date[1] - 190002.5) + 0.5)
         return julian_day
-    # ----------------------------------------------------------------------------------------------
+
     def get_gmst(self):
         """UT time to Greenwich mean sidereal time converting method
         Get Greenwich mean sidereal time
@@ -116,7 +116,7 @@ class AstroDateTime():
         gmst_hh = int(gmst)
         gmst_mm = int(gmst_mm)
         return (gmst_hh,gmst_mm,gmst_ss)
-    # ----------------------------------------------------------------------------------------------
+
     def get_lst(self, location: Location):
         """UT time to local mean sidereal time converting method
         Get local mean sidereal time
@@ -127,7 +127,7 @@ class AstroDateTime():
         ----------
         location : Location
             Observer location
-        
+
         Returns
         -------
         tuple
@@ -143,4 +143,3 @@ class AstroDateTime():
         lst_hh = int(lst)
         lst_mm = int(lst_mm)
         return (lst_hh,lst_mm,lst_ss)
-    # ----------------------------------------------------------------------------------------------
