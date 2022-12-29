@@ -18,8 +18,8 @@ author = 'Romain Loustalet Palengat'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 release = '0.0.1'
 
-extensions = ['sphinx_mdinclude',
-    'myst_parser',
+extensions = ['sphinx.ext.autodoc',
+                'myst_parser',
 ]
 
 templates_path = ['_templates']
