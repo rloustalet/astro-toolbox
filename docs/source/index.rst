@@ -1,4 +1,4 @@
-.. mdinclude:: ../../README.rst
+.. include:: ../../README.rst
 
 .. toctree::
    Home <self>
