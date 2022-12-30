@@ -19,7 +19,6 @@ author = 'Romain Loustalet Palengat'
 release = '0.0.1'
 
 extensions = ['sphinx.ext.autodoc',
-                'myst_parser',
 ]
 
 templates_path = ['_templates']
