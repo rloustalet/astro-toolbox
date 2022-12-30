@@ -10,7 +10,7 @@ from astro_toolbox.location import Location
 class Equatorial():
     """This class represent astronomical equatorials coodinates
     """
-    def __init__(self, alpha: tuple, delta: tuple, name: str = None):
+    def __init__(self, alpha: tuple, delta: tuple, name: str = None, magnitude: float = None):
         """Constructor method
 
         Parameters
@@ -25,6 +25,7 @@ class Equatorial():
         self.name = name
         self.alpha = AngleHMS(alpha)
         self.delta = AngleDMS(delta)
+        self.magnitude = magnitude
 
     def __repr__(self):
         """Representative method
@@ -34,8 +35,9 @@ class Equatorial():
         string
             Return a class representative string
         """
-        return (f'{self.name}: \N{GREEK SMALL LETTER ALPHA} = {self.alpha}' +
-                f'\N{GREEK SMALL LETTER DELTA} = {self.delta}')
+        return (f'{self.name}: \N{GREEK SMALL LETTER ALPHA} = {self.alpha} ' +
+                f'\N{GREEK SMALL LETTER DELTA} = {self.delta} '
+                f'v = {self.magnitude}')
 
     def get_hourangle(self, gamma: AngleHMS):
         """Riht-Ascencion to Hour-Angle conversion method
@@ -112,7 +114,8 @@ class Equatorial():
         azimuth = AngleRad(math.asin(-math.sin(hour_angle) *
             math.cos(self.delta.dmstorad) / math.cos(altitude.anglevalue)))
         return coordinates.horizontal.Horizontal(altitude=AngleDMS(altitude.radtodms()),
-                                                azimuth=AngleDMS(azimuth.radtodms()))
+                                                azimuth=AngleDMS(azimuth.radtodms()),name=self.name,
+                                                magnitude=self.magnitude)
 
     def compute_on_date_coords(self, year: float):
         """On date Equatorial coordinates calculation method from j2000 Equatorial coordinates

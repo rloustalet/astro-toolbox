@@ -10,7 +10,7 @@ from astro_toolbox.angle.degrees import AngleDeg
 class Horizontal():
     """This class represent horizontals coordinates
     """
-    def __init__(self, altitude: tuple, azimuth: tuple, name = None):
+    def __init__(self, altitude: tuple, azimuth: tuple, name: str = None, magnitude: float = None):
         """Constructor method
 
         Parameters
@@ -25,6 +25,7 @@ class Horizontal():
         self.name = name
         self.azimuth = AngleDMS(azimuth)
         self.altitude = AngleDMS(altitude)
+        self.magnitude = magnitude
 
     def __repr__(self):
         """Representative method
@@ -34,11 +35,7 @@ class Horizontal():
         string
             Return a class representative string
         """
-        altstr = (f'{self.altitude.anglevalue[0]:+03d}°{self.altitude.anglevalue[1]:02d}m'+
-                f'{self.altitude.anglevalue[2]:05.2f}s')
-        azstr = (f'{self.azimuth.anglevalue[0]:03d}°{self.azimuth.anglevalue[1]:02d}\''+
-                f'{self.azimuth.anglevalue[2]:05.2f}\'\'')
-        return f'{self.name}: A = {azstr} h = {altstr}'
+        return f'{self.name}: A = {self.azimuth} h = {self.altitude} v = {self.magnitude}'
 
     def calculate_airmass(self):
         """Airmass calculation method
@@ -82,4 +79,5 @@ class Horizontal():
         alpha = AngleRad(math.asin(-math.cos(self.altitude.dmstorad()) *
                 math.cos(self.azimuth.dmstorad) / math.cos(delta)) - gamma.hmstorad())
         return coordinates.equatorial.Equatorial(alpha=AngleHMS(alpha.radtohms()),
-                                                 delta=AngleDMS(delta.radtodms()))
+                                                 delta=AngleDMS(delta.radtodms()),
+                                                 name=self.name, magnitude=self.magnitude)

@@ -10,6 +10,7 @@ from astro_toolbox.angle.hms import AngleHMS
 from astro_toolbox.time import AstroDateTime
 from astro_toolbox.location import Location
 from astro_toolbox.coordinates.equatorial import Equatorial
+from astro_toolbox.coordinates.horizontal import Horizontal
 from astro_toolbox.catalog import Simbad
 
 def read_observatory_program(input_file: pathlib.Path):
@@ -43,9 +44,10 @@ def read_observatory_program(input_file: pathlib.Path):
         object_list.remove('')
     object_list.sort(reverse=True, key=str.casefold)
     objects_dict = {}
-    for n in track(object_list, description="Processing..."):
-        alpha, delta = Simbad(n).get_coords()
-        objects_dict[n] = Equatorial(alpha, delta, n)
+    for name in track(object_list, description="Processing..."):
+        simbad_object = Simbad(name)
+        alpha, delta = simbad_object.get_coords()
+        objects_dict[name] = Equatorial(alpha, delta, name=name, magnitude=simbad_object.get_magnitude())
     return datetime, location, objects_dict
 
 
@@ -97,7 +99,8 @@ def airmass_command(input_file, begin, end):
     plt.pcolormesh(airmasses, cmap='jet', shading='flat', vmin = 1, vmax = 3.5, label = 'airmasses')
     plt.colorbar(shrink = 0.5)
     plt.xticks(np.arange(0,len(timelist),10), np.arange(begin,end))
-    listname = [object_dict[key].name for key in object_dict]
+    listname = [object_dict[key].name + ' v=' + str(object_dict[key].magnitude) 
+                for key in object_dict]
     plt.yticks(np.arange(0.5,len(object_dict),1), listname)
     plt.tick_params(left = False)
     plt.grid(axis = 'x', color = 'k')
@@ -111,12 +114,10 @@ def simbad_command(object_name):
     """Get Simbad inormations
     """
     obj = Simbad(object_name)
-    alpha = ':'.join((str(n) for n in obj.get_coords()[0]))
-    delta = ':'.join((str(n) for n in obj.get_coords()[1]))
-    print(f'{obj.get_name()}: '+
-    f'\N{GREEK SMALL LETTER ALPHA}={alpha}; '+
-    f'\N{GREEK SMALL LETTER DELTA}={delta}; '+
-    f'v={obj.get_magnitude()}')
+    alpha = obj.get_coords()[0]
+    delta = obj.get_coords()[1]
+    coords = Equatorial(alpha=alpha, delta=delta,name=obj.get_name(), magnitude=obj.get_magnitude())
+    print(f'{coords}')
 
 if __name__ == '__main__':
     cli()
