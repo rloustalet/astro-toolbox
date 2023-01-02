@@ -14,7 +14,7 @@ class AngleDeg():
             The angle value in degrees
         """
         self.anglevalue = anglevalue
-    # ----------------------------------------------------------------------------------------------
+
     def __repr__(self):
         """Representative method
 
@@ -24,7 +24,7 @@ class AngleDeg():
             Return a class representative string
         """
         return f'{self.anglevalue}°'
-    # ----------------------------------------------------------------------------------------------
+
     def degtorad(self):
         """Degrees to Radians converting method
         This method return angle in degrees from angle in radians
@@ -35,7 +35,7 @@ class AngleDeg():
             The angle value in radians
         """
         return self.anglevalue*math.pi/180
-    # ----------------------------------------------------------------------------------------------
+
     def degtodms(self):
         """Degrees to DMS converting method
         This method return angle in dms from angle in degrees
@@ -51,7 +51,7 @@ class AngleDeg():
         deg_dms_value = (deg_dms_value - int(deg_dms_value)) * 60
         deg_dms_result = deg_dms_result + (deg_dms_value,)
         return deg_dms_result
-    # ----------------------------------------------------------------------------------------------
+
     def degtohms(self):
         """Degrees to HMS converting method
         This method return angle in hms from angle in degrees

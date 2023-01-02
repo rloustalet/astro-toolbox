@@ -5,15 +5,21 @@ import pathlib
 import click
 from rich.progress import track
 from matplotlib import pyplot as plt
+from datetime import date
+import json
 
 from astro_toolbox.angle.hms import AngleHMS
-from astro_toolbox.time import AstroDateTime
-from astro_toolbox.location import Location
+from astro_toolbox.time.core import AstroDateTime
+from astro_toolbox.coordinates.location import Location
 from astro_toolbox.coordinates.equatorial import Equatorial
 from astro_toolbox.coordinates.horizontal import Horizontal
-from astro_toolbox.catalog import Simbad
+from astro_toolbox.query.catalogs import Simbad
 
-def read_observatory_program(input_file: pathlib.Path):
+def today_date():
+    strdate = date.today().strftime('%Y-%m-%d').split('-')
+    return (int(value) for value in strdate)
+
+def read_observatory_program(input_file: pathlib.Path, date: str):
     """Read an observatory program from a list.
 
     Parameters
@@ -50,7 +56,6 @@ def read_observatory_program(input_file: pathlib.Path):
         objects_dict[name] = Equatorial(alpha, delta, name=name, magnitude=simbad_object.get_magnitude())
     return datetime, location, objects_dict
 
-
 @click.group()
 @click.option(
     "-v",
@@ -63,6 +68,7 @@ def cli(verbose):
     pass
 
 @cli.command("airmass")
+@click.option("-d", "--date", default=None, help='-d, --date the date default None if None, today date')
 @click.option("--begin", default=18, help='--begin to set begin hour as int, default=18')
 @click.option("--end", default=31, help='--end to set end hour as int, default=18')
 @click.argument('input_file', default = '')

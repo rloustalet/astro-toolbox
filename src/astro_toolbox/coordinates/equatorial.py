@@ -6,7 +6,7 @@ from astro_toolbox.angle.dms import AngleDMS
 from astro_toolbox.angle.degrees import AngleDeg
 from astro_toolbox.angle.radians import AngleRad
 from astro_toolbox import coordinates
-from astro_toolbox.location import Location
+from astro_toolbox.coordinates.location import Location
 class Equatorial():
     """This class represent astronomical equatorials coodinates
     """

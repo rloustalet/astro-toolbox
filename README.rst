@@ -14,4 +14,4 @@ Astro Toolbox
 
 Installation
 ------------
-Use `pip install astro_toolbox` to install last version.
+Use ``pip install astro_toolbox`` to install last version.

@@ -1,7 +1,7 @@
 """This module contain AstroDateTime class
 """
 import math
-from astro_toolbox.location import Location
+from astro_toolbox.coordinates.location import Location
 class AstroDateTime():
     """This module contain AngleRad class
     """
