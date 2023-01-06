@@ -1,2 +1,0 @@
-[console_scripts]
-astro_toolbox = astro_toolbox.__main__:main
