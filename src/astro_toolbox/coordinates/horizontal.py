@@ -4,9 +4,8 @@ import math
 from astro_toolbox.angle.hms import AngleHMS
 from astro_toolbox.angle.dms import AngleDMS
 from astro_toolbox.angle.radians import AngleRad
-from astro_toolbox import coordinates
-from astro_toolbox.coordinates.location import Location
 from astro_toolbox.angle.degrees import AngleDeg
+from astro_toolbox import coordinates
 class Horizontal():
     """This class represent horizontals coordinates
     """
@@ -54,7 +53,7 @@ class Horizontal():
             altitude = altitude + 360
         return abs(1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * (altitude) ** 1.1)).degtorad())))
 
-    def to_equatorial(self, gamma: AngleHMS, location: Location):
+    def to_equatorial(self, gamma: AngleHMS, location: coordinates.location.Location):
         """Horizontal to Equation converting method
 
         .. math:: \\delta=sin^{-1}(sin \\Phi sin h-cos \\Phi cos h cos A)

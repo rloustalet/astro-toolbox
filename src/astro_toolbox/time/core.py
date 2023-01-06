@@ -1,11 +1,12 @@
 """This module contain AstroDateTime class
 """
 import math
+import datetime
 from astro_toolbox.coordinates.location import Location
 class AstroDateTime():
     """This module contain AngleRad class
     """
-    def __init__(self, ut_time):
+    def __init__(self, ut_time: tuple = None):
         """Constructor method
 
         Parameters
@@ -13,6 +14,8 @@ class AstroDateTime():
         ut_time : tuple
             tuple of the date and time in format (year,month,day,hour,minute,second)
         """
+        if ut_time is None:
+            ut_time = datetime.datetime.now(datetime.timezone.utc).timetuple()
         self.date = (ut_time[0], ut_time[1], ut_time[2])
         self.time = (ut_time[3], ut_time[4], ut_time[5])
 

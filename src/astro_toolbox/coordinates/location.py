@@ -1,13 +1,18 @@
 """This module contain Location class
 """
+import re
 import json
+import math
+import pkg_resources
 
 from astro_toolbox.angle.dms import AngleDMS
+
+PATH = pkg_resources.resource_filename(__name__, '/data/')
 class Location():
     """This class represent the observer location
     """
-    def __init__(self, name: str = None, latitude: tuple = None,
-                longitude: tuple = None, elevation: float = None):
+    def __init__(self, name: str = 'None', latitude: tuple = 'None',
+                longitude: tuple = 'None', elevation: float = float('nan')):
         """Constructor method
 
         Parameters
@@ -21,14 +26,28 @@ class Location():
         elevation : float, optional
             Loaction elevation (m), by default 0.0
         """
-        self.name = name
+        if name == 'None':
+            dict_site = self._get_site()
+        else:
+            dict_site = self._get_site(name=name)
+        name = list(dict_site.keys())[0]
+        if latitude == 'None':
+            latitude_str = re.split(r"[°']",dict_site[name]['latitude'])[:3]
+            latitude = (int(latitude_str[0]), int(latitude_str[1]), float(latitude_str[2]))
+        if longitude == 'None':
+            longitude_str = re.split(r"[°']",dict_site[name]['longitude'])[:3]
+            longitude = (int(longitude_str[0]), int(longitude_str[1]), float(longitude_str[2]))
+        if math.isnan(elevation):
+            elevation = dict_site[name]['elevation']
+
+        self.name = list(dict_site.keys())[0]
         self.latitude = AngleDMS(latitude)
         self.longitude = AngleDMS(longitude)
         self.elevation = elevation
         self.current_site = {self.name:
                             {
-                                'latitude': self.latitude.anglevalue,
-                                'longitude': self.longitude.anglevalue,
+                                'latitude': repr(self.latitude),
+                                'longitude': repr(self.longitude),
                                 'elevation': self.elevation
                             }
             }
@@ -43,7 +62,7 @@ class Location():
         """
         return (f'{self.name}: latitude: {self.latitude} '+
                 f'longitude: {self.longitude} '+
-                f'altitude = {self.elevation}m')
+                f'elevation = {self.elevation} m')
 
     def save_site(self):
         """Method saving current site in sites file
@@ -53,19 +72,14 @@ class Location():
         KeyError
             The first level key already exist
         """
-        with open("data/sites.json", encoding="utf-8") as json_file:
+        with open(PATH  + 'sites.json', encoding="utf-8") as json_file:
             dict_sites = json.load(json_file)
-        if self.name not in dict_sites:
-            current_site = {self.name:
-                            {
-                                'latitude': self.latitude.dmstodeg(),
-                                'longitude': self.longitude.dmstodeg(),
-                                'elevation': self.elevation
-                            }
-            }
-            dict_sites.update(current_site)
-            with open("data/sites.json", 'w', encoding="utf-8") as json_file:
-                json.dump(dict_sites, json_file, indent=4)
+        if self.name.lower() not in [key.lower() for key in dict_sites]:
+            new_dict_sites = self.current_site
+            new_dict_sites.update(dict_sites)
+            with open(PATH  + 'sites.json', 'w', encoding="utf-8") as json_file:
+                json.dump(new_dict_sites, json_file, indent=4)
+            return None
         raise KeyError("Site already exist, use `update_site` instead")
 
     def delete_site(self):
@@ -76,11 +90,12 @@ class Location():
         KeyError
             The first level key doesn't exist
         """
-        with open("data/sites.json", encoding="utf-8") as json_file:
+        with open(PATH  + 'sites.json', encoding="utf-8") as json_file:
             dict_sites = json.load(json_file)
-        if self.name in dict_sites:
-            del dict_sites[self.name]
-        raise KeyError("Site doesn't exist")
+        if self.name.lower() in list(key.lower() for key in dict_sites):
+            keys = list(key for key in dict_sites)
+            idx = list(key.lower() for key in dict_sites).index(self.name.lower())
+            del dict_sites[keys[idx]]
 
     def update_site(self):
         """Method updating current site in saved sites file
@@ -90,14 +105,21 @@ class Location():
         KeyError
             The first level key doesn't exist
         """
-        with open("data/sites.json", encoding="utf-8") as json_file:
+        with open(PATH  + 'sites.json', encoding="utf-8") as json_file:
             dict_sites = json.load(json_file)
-        if self.name in dict_sites:
-            for key in dict_sites:
-                dict_sites[self.name][key] = self.current_site[self.name][key]
+        if self.name.lower() in list(key.lower() for key in dict_sites):
+            keys = list(key for key in dict_sites)
+            idx = [key.lower() for key in dict_sites].index(self.name.lower())
+            print(self.current_site)
+            for key in dict_sites[keys[idx]]:
+                if self.current_site[self.name][key] is not None:
+                    dict_sites[keys[idx]][key] = self.current_site[self.name][key]
+            with open(PATH  + 'sites.json', 'w', encoding="utf-8") as json_file:
+                json.dump(dict_sites, json_file, indent=4)
+            return None
         raise KeyError("Site doesn't exist")
 
-    def get_site(self, name: str = None):
+    def _get_site(self, name: str = None):
         """Method to get a site with it datas
 
         Parameters
@@ -107,8 +129,8 @@ class Location():
 
         Returns
         -------
-        Location
-            The Location class of the site from his save data in saved sites file
+        dict
+            The location dictionnary of the site from his save data in saved sites file
 
         Raises
         ------
@@ -117,14 +139,16 @@ class Location():
         ValueError
             The site name is not given
         """
-        with open("data/sites.json", encoding="utf-8") as json_file:
+        with open(PATH  + 'sites.json', encoding="utf-8") as json_file:
             dict_sites = json.load(json_file)
-        if name is not None:
-            if name in dict_sites:
-                return Location(name = name,
-                                latitude = dict_sites[name]['latitude'],
-                                longitude = dict_sites[name]['longitude'],
-                                elevation = dict_sites[name]['elevation']
-                        )
-            raise KeyError ("Site doesn't exist")
-        raise ValueError ("Site name not given")
+        if name is None:
+            name = list(dict_sites.keys())[0]
+        if name.lower() in [key.lower() for key in dict_sites.keys()]:
+            keys = list(key for key in dict_sites)
+            idx = list(key.lower() for key in dict_sites).index(name.lower())
+            dict_site = dict_sites[keys[idx]]
+            new_dict_sites = {keys[idx]: dict_sites.pop(keys[idx]), **dict_sites}
+            with open(PATH  + 'sites.json', 'w', encoding="utf-8") as json_file:
+                json.dump(new_dict_sites, json_file, indent=4)
+            return {keys[idx]: dict_site}
+        raise KeyError (f"{name} site doesn't exist")

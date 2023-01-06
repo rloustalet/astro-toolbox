@@ -6,7 +6,6 @@ from astro_toolbox.angle.dms import AngleDMS
 from astro_toolbox.angle.degrees import AngleDeg
 from astro_toolbox.angle.radians import AngleRad
 from astro_toolbox import coordinates
-from astro_toolbox.coordinates.location import Location
 class Equatorial():
     """This class represent astronomical equatorials coodinates
     """
@@ -57,7 +56,7 @@ class Equatorial():
         hour_angle = AngleDeg(gamma.hmstodeg() - self.alpha.hmstodeg())
         return AngleHMS(hour_angle.degtohms())
 
-    def calculate_airmass(self, gamma: AngleHMS, location: Location):
+    def calculate_airmass(self, gamma: AngleHMS, location: coordinates.location.Location):
         """Airmass calculation method
         The airmass is calculate with the Pickering(2002) formula from DIO,
         The International Journal of Scientific History vol. 12
@@ -87,7 +86,7 @@ class Equatorial():
             altitude = altitude + 360
         return abs(1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * (altitude) ** 1.1)).degtorad())))
 
-    def to_horizontal(self, gamma: AngleHMS, location: Location):
+    def to_horizontal(self, gamma: AngleHMS, location: coordinates.location.Location):
         """Equatorial to Horizontal converting method
 
         .. math:: h=sin^{-1}(cos\\Phi cos H cos\\delta+sin\\Phi sin\\delta)

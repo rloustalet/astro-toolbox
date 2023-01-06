@@ -9,13 +9,13 @@ Astro toolbox
     :members:
 .. automodule:: astro_toolbox.angle.radians
     :members:
-.. automodule:: astro_toolbox.catalog
-    :members:
 .. automodule:: astro_toolbox.coordinates.equatorial
     :members:
 .. automodule:: astro_toolbox.coordinates.horizontal
     :members:
-.. automodule:: astro_toolbox.location
+.. automodule:: astro_toolbox.coordinates.location
     :members:
-.. automodule:: astro_toolbox.time
+.. automodule:: astro_toolbox.query.catalogs
+    :members:
+.. automodule:: astro_toolbox.time.core
     :members:
