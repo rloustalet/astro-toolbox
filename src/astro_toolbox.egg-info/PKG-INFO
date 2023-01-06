@@ -1,0 +1,41 @@
+Metadata-Version: 2.1
+Name: astro-toolbox
+Version: 0.0.0.dev1
+Summary: Toolbox for observationnal astronomy
+Home-page: https://github.com/rloustalet/astro_toolbox
+Author: Romain Loustalet Palengat
+Project-URL: Source, https://github.com/rloustalet/astro_toolbox
+Project-URL: Documentation, https://astro-toolbox.readthedocs.io/en/latest/
+Keywords: astro,toolbox,astro_toolbox,observationnal
+Platform: unix
+Platform: linux
+Platform: osx
+Platform: cygwin
+Platform: win32
+Classifier: License :: OSI Approved :: GNU General Public License (GPL)
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Topic :: Software Development :: Libraries
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Provides-Extra: test
+Provides-Extra: doc
+License-File: LICENSE
+
+Astro Toolbox
+==============
+
+.. image:: https://img.shields.io/readthedocs/astro_toolbox
+   :target: https://astro-toolbox.readthedocs.io/en/latest/
+   :alt: Read the Docs
+
+.. image:: https://img.shields.io/github/license/rloustalet/astro_toolbox?color=green
+   :target: https://en.wikipedia.org/wiki/GNU_General_Public_License
+   :alt: GitHu
+
+.. image:: https://img.shields.io/badge/code_style-pep8-blue
+    :target: https://www.python.org/dev/peps/pep-0008/
+
+Installation
+------------
+Use ``pip install astro_toolbox`` to install last version.

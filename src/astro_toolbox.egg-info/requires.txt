@@ -1,0 +1,10 @@
+numpy>=1.23.5
+rich>=12.6.0
+xmltodict>=0.13.0
+
+[doc]
+sphinx
+sphinx-rtd-theme
+
+[test]
+pytest

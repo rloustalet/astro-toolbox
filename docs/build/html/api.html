@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astro toolbox &mdash; Astro Toolbox 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Astro Toolbox" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Astro Toolbox
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Home</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Astro toolbox</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#astro_toolbox.angle.degrees.AngleDeg"><code class="docutils literal notranslate"><span class="pre">AngleDeg</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.angle.degrees.AngleDeg.degtodms"><code class="docutils literal notranslate"><span class="pre">AngleDeg.degtodms()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.angle.degrees.AngleDeg.degtohms"><code class="docutils literal notranslate"><span class="pre">AngleDeg.degtohms()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.angle.degrees.AngleDeg.degtorad"><code class="docutils literal notranslate"><span class="pre">AngleDeg.degtorad()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#astro_toolbox.angle.dms.AngleDMS"><code class="docutils literal notranslate"><span class="pre">AngleDMS</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.angle.dms.AngleDMS.dmstodeg"><code class="docutils literal notranslate"><span class="pre">AngleDMS.dmstodeg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.angle.dms.AngleDMS.dmstorad"><code class="docutils literal notranslate"><span class="pre">AngleDMS.dmstorad()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.angle.dms.AngleDMS.get_angle"><code class="docutils literal notranslate"><span class="pre">AngleDMS.get_angle()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#astro_toolbox.angle.hms.AngleHMS"><code class="docutils literal notranslate"><span class="pre">AngleHMS</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.angle.hms.AngleHMS.get_angle"><code class="docutils literal notranslate"><span class="pre">AngleHMS.get_angle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.angle.hms.AngleHMS.hmstodeg"><code class="docutils literal notranslate"><span class="pre">AngleHMS.hmstodeg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.angle.hms.AngleHMS.hmstorad"><code class="docutils literal notranslate"><span class="pre">AngleHMS.hmstorad()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#astro_toolbox.angle.radians.AngleRad"><code class="docutils literal notranslate"><span class="pre">AngleRad</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.angle.radians.AngleRad.radtodeg"><code class="docutils literal notranslate"><span class="pre">AngleRad.radtodeg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.angle.radians.AngleRad.radtodms"><code class="docutils literal notranslate"><span class="pre">AngleRad.radtodms()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.angle.radians.AngleRad.radtohms"><code class="docutils literal notranslate"><span class="pre">AngleRad.radtohms()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#astro_toolbox.coordinates.equatorial.Equatorial"><code class="docutils literal notranslate"><span class="pre">Equatorial</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.coordinates.equatorial.Equatorial.calculate_airmass"><code class="docutils literal notranslate"><span class="pre">Equatorial.calculate_airmass()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.coordinates.equatorial.Equatorial.compute_on_date_coords"><code class="docutils literal notranslate"><span class="pre">Equatorial.compute_on_date_coords()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.coordinates.equatorial.Equatorial.get_hourangle"><code class="docutils literal notranslate"><span class="pre">Equatorial.get_hourangle()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.coordinates.equatorial.Equatorial.to_horizontal"><code class="docutils literal notranslate"><span class="pre">Equatorial.to_horizontal()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#astro_toolbox.coordinates.horizontal.Horizontal"><code class="docutils literal notranslate"><span class="pre">Horizontal</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.coordinates.horizontal.Horizontal.calculate_airmass"><code class="docutils literal notranslate"><span class="pre">Horizontal.calculate_airmass()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.coordinates.horizontal.Horizontal.to_equatorial"><code class="docutils literal notranslate"><span class="pre">Horizontal.to_equatorial()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#astro_toolbox.coordinates.location.Location"><code class="docutils literal notranslate"><span class="pre">Location</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.coordinates.location.Location.delete_site"><code class="docutils literal notranslate"><span class="pre">Location.delete_site()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.coordinates.location.Location.get_site"><code class="docutils literal notranslate"><span class="pre">Location.get_site()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.coordinates.location.Location.save_site"><code class="docutils literal notranslate"><span class="pre">Location.save_site()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.coordinates.location.Location.update_site"><code class="docutils literal notranslate"><span class="pre">Location.update_site()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#astro_toolbox.query.catalogs.Simbad"><code class="docutils literal notranslate"><span class="pre">Simbad</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.query.catalogs.Simbad.get_coords"><code class="docutils literal notranslate"><span class="pre">Simbad.get_coords()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.query.catalogs.Simbad.get_magnitude"><code class="docutils literal notranslate"><span class="pre">Simbad.get_magnitude()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.query.catalogs.Simbad.get_name"><code class="docutils literal notranslate"><span class="pre">Simbad.get_name()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#astro_toolbox.time.core.AstroDateTime"><code class="docutils literal notranslate"><span class="pre">AstroDateTime</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.time.core.AstroDateTime.get_date"><code class="docutils literal notranslate"><span class="pre">AstroDateTime.get_date()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.time.core.AstroDateTime.get_day"><code class="docutils literal notranslate"><span class="pre">AstroDateTime.get_day()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.time.core.AstroDateTime.get_gmst"><code class="docutils literal notranslate"><span class="pre">AstroDateTime.get_gmst()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.time.core.AstroDateTime.get_jd"><code class="docutils literal notranslate"><span class="pre">AstroDateTime.get_jd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.time.core.AstroDateTime.get_lst"><code class="docutils literal notranslate"><span class="pre">AstroDateTime.get_lst()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.time.core.AstroDateTime.get_month"><code class="docutils literal notranslate"><span class="pre">AstroDateTime.get_month()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.time.core.AstroDateTime.get_time"><code class="docutils literal notranslate"><span class="pre">AstroDateTime.get_time()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#astro_toolbox.time.core.AstroDateTime.get_year"><code class="docutils literal notranslate"><span class="pre">AstroDateTime.get_year()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Astro Toolbox</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Astro toolbox</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-astro_toolbox.angle.degrees">
+<span id="astro-toolbox"></span><h1>Astro toolbox<a class="headerlink" href="#module-astro_toolbox.angle.degrees" title="Permalink to this heading"></a></h1>
+<p>This module contain AngleDeg class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="astro_toolbox.angle.degrees.AngleDeg">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">astro_toolbox.angle.degrees.</span></span><span class="sig-name descname"><span class="pre">AngleDeg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anglevalue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.degrees.AngleDeg" title="Permalink to this definition"></a></dt>
+<dd><p>AngleDeg define a Degrees angle with his conversions</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.angle.degrees.AngleDeg.degtodms">
+<span class="sig-name descname"><span class="pre">degtodms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.degrees.AngleDeg.degtodms" title="Permalink to this definition"></a></dt>
+<dd><p>Degrees to DMS converting method
+This method return angle in dms from angle in degrees</p>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>tuple</dt><dd><p>The angle values in dms</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.angle.degrees.AngleDeg.degtohms">
+<span class="sig-name descname"><span class="pre">degtohms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.degrees.AngleDeg.degtohms" title="Permalink to this definition"></a></dt>
+<dd><p>Degrees to HMS converting method
+This method return angle in hms from angle in degrees</p>
+<section id="id1">
+<h2>Returns<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>tuple</dt><dd><p>The angle values in hms</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.angle.degrees.AngleDeg.degtorad">
+<span class="sig-name descname"><span class="pre">degtorad</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.degrees.AngleDeg.degtorad" title="Permalink to this definition"></a></dt>
+<dd><p>Degrees to Radians converting method
+This method return angle in degrees from angle in radians</p>
+<section id="id2">
+<h2>Returns<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>float</dt><dd><p>The angle value in radians</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-astro_toolbox.angle.dms"></span><p>This module contain AngleDMS class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="astro_toolbox.angle.dms.AngleDMS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">astro_toolbox.angle.dms.</span></span><span class="sig-name descname"><span class="pre">AngleDMS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anglevalue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.dms.AngleDMS" title="Permalink to this definition"></a></dt>
+<dd><p>AngleDMS define a dms angle with his conversions</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.angle.dms.AngleDMS.dmstodeg">
+<span class="sig-name descname"><span class="pre">dmstodeg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.dms.AngleDMS.dmstodeg" title="Permalink to this definition"></a></dt>
+<dd><p>DMS to Degrees converting method
+This method return angle in degrees from angle in dms</p>
+<section id="id3">
+<h2>Returns<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>float</dt><dd><p>The angle value in degrees</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.angle.dms.AngleDMS.dmstorad">
+<span class="sig-name descname"><span class="pre">dmstorad</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.dms.AngleDMS.dmstorad" title="Permalink to this definition"></a></dt>
+<dd><p>DMS to Radians converting method
+This method return angle in radians from angle in dms</p>
+<section id="id4">
+<h2>Returns<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>float</dt><dd><p>The angle value in radians</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.angle.dms.AngleDMS.get_angle">
+<span class="sig-name descname"><span class="pre">get_angle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.dms.AngleDMS.get_angle" title="Permalink to this definition"></a></dt>
+<dd><p>Angle value returning method</p>
+<section id="id5">
+<h2>Returns<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>float | tuple</dt><dd><p>The angle value in dms</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-astro_toolbox.angle.hms"></span><p>This module contain AngleHMS class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="astro_toolbox.angle.hms.AngleHMS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">astro_toolbox.angle.hms.</span></span><span class="sig-name descname"><span class="pre">AngleHMS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anglevalue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.hms.AngleHMS" title="Permalink to this definition"></a></dt>
+<dd><p>AngleHMS define a hms angle with his conversions</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.angle.hms.AngleHMS.get_angle">
+<span class="sig-name descname"><span class="pre">get_angle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.hms.AngleHMS.get_angle" title="Permalink to this definition"></a></dt>
+<dd><p>Angle value returning method</p>
+<section id="id6">
+<h2>Returns<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>float | tuple</dt><dd><p>The angle value in hms</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.angle.hms.AngleHMS.hmstodeg">
+<span class="sig-name descname"><span class="pre">hmstodeg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.hms.AngleHMS.hmstodeg" title="Permalink to this definition"></a></dt>
+<dd><p>HMS to Degrees converting method
+This method return angle in degrees from angle in hms</p>
+<section id="id7">
+<h2>Returns<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>float</dt><dd><p>The angle value in degrees</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.angle.hms.AngleHMS.hmstorad">
+<span class="sig-name descname"><span class="pre">hmstorad</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.hms.AngleHMS.hmstorad" title="Permalink to this definition"></a></dt>
+<dd><p>HMS to Radians converting method
+This method return angle in radians from angle in hms</p>
+<section id="id8">
+<h2>Returns<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>float</dt><dd><p>The angle value in radians</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-astro_toolbox.angle.radians"></span><p>This module contain AngleRad class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="astro_toolbox.angle.radians.AngleRad">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">astro_toolbox.angle.radians.</span></span><span class="sig-name descname"><span class="pre">AngleRad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anglevalue</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.radians.AngleRad" title="Permalink to this definition"></a></dt>
+<dd><p>AngleRad define a radian angle with his conversions</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.angle.radians.AngleRad.radtodeg">
+<span class="sig-name descname"><span class="pre">radtodeg</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.radians.AngleRad.radtodeg" title="Permalink to this definition"></a></dt>
+<dd><p>Radians to Degrees converting method
+This method return angle in radians from angle in degrees</p>
+<section id="id9">
+<h2>Returns<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>float</dt><dd><p>The angle value in degrees</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.angle.radians.AngleRad.radtodms">
+<span class="sig-name descname"><span class="pre">radtodms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.radians.AngleRad.radtodms" title="Permalink to this definition"></a></dt>
+<dd><p>Radians to DMS converting method
+This method return angle in dms from angle in radians</p>
+<section id="id10">
+<h2>Returns<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>tuple</dt><dd><p>The angle values in dms</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.angle.radians.AngleRad.radtohms">
+<span class="sig-name descname"><span class="pre">radtohms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.angle.radians.AngleRad.radtohms" title="Permalink to this definition"></a></dt>
+<dd><p>Radians to HMS converting method
+This method return angle in hms from angle in radians</p>
+<section id="id11">
+<h2>Returns<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>tuple</dt><dd><p>The angle values in hms</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-astro_toolbox.coordinates.equatorial"></span><p>This module contain Equatorial class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.equatorial.Equatorial">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">astro_toolbox.coordinates.equatorial.</span></span><span class="sig-name descname"><span class="pre">Equatorial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.equatorial.Equatorial" title="Permalink to this definition"></a></dt>
+<dd><p>This class represent astronomical equatorials coodinates</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.equatorial.Equatorial.calculate_airmass">
+<span class="sig-name descname"><span class="pre">calculate_airmass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#astro_toolbox.angle.hms.AngleHMS" title="astro_toolbox.angle.hms.AngleHMS"><span class="pre">AngleHMS</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#astro_toolbox.coordinates.location.Location" title="astro_toolbox.coordinates.location.Location"><span class="pre">Location</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.equatorial.Equatorial.calculate_airmass" title="Permalink to this definition"></a></dt>
+<dd><p>Airmass calculation method
+The airmass is calculate with the Pickering(2002) formula from DIO,
+The International Journal of Scientific History vol. 12</p>
+<div class="math notranslate nohighlight">
+\[X = \frac{1}{sin(h+\frac{244}{165+47h^{1.1}})}\]</div>
+<p>For altitude angle calculation c.f. to_horizontal method</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>gamma<span class="classifier">AngleHMS</span></dt><dd><p>Sidereal Time angle in hms</p>
+</dd>
+<dt>location<span class="classifier">Location</span></dt><dd><p>observer location</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h2>Returns<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>float</dt><dd><p>Airmass value of the object</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.equatorial.Equatorial.compute_on_date_coords">
+<span class="sig-name descname"><span class="pre">compute_on_date_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">year</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.equatorial.Equatorial.compute_on_date_coords" title="Permalink to this definition"></a></dt>
+<dd><p>On date Equatorial coordinates calculation method from j2000 Equatorial coordinates</p>
+<div class="math notranslate nohighlight">
+\[\Delta year = \frac{(year-2000)}{100}\]</div>
+<div class="math notranslate nohighlight">
+\[M=1.2812323\Delta year+0.0003879\Delta year^2+0.0000101\Delta year^3\]</div>
+<div class="math notranslate nohighlight">
+\[N=0.5567530\Delta year-0.0001185\Delta year^2+0.0000116\Delta year^3\]</div>
+<div class="math notranslate nohighlight">
+\[\Delta \alpha=M+Nsin\alpha tan\delta\]</div>
+<div class="math notranslate nohighlight">
+\[\Delta \delta=Ncos\alpha\]</div>
+<div class="math notranslate nohighlight">
+\[\alpha=\alpha_{J2000}+\Delta \alpha\]</div>
+<div class="math notranslate nohighlight">
+\[\delta=\delta_{J2000}+\Delta \delta\]</div>
+<section id="id13">
+<h2>Parameters<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>year<span class="classifier">float</span></dt><dd><p>Current year (months and days can be counted as year fraction)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.equatorial.Equatorial.get_hourangle">
+<span class="sig-name descname"><span class="pre">get_hourangle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#astro_toolbox.angle.hms.AngleHMS" title="astro_toolbox.angle.hms.AngleHMS"><span class="pre">AngleHMS</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.equatorial.Equatorial.get_hourangle" title="Permalink to this definition"></a></dt>
+<dd><p>Riht-Ascencion to Hour-Angle conversion method</p>
+<div class="math notranslate nohighlight">
+\[HA = RA - \gamma\]</div>
+<section id="id14">
+<h2>Parameters<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>gamma<span class="classifier">AngleHMS</span></dt><dd><p>Sidereal Time angle in hms</p>
+</dd>
+</dl>
+</section>
+<section id="id15">
+<h2>Returns<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>AngleHMS</dt><dd><p>Hour-Angle object at needed time</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.equatorial.Equatorial.to_horizontal">
+<span class="sig-name descname"><span class="pre">to_horizontal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#astro_toolbox.angle.hms.AngleHMS" title="astro_toolbox.angle.hms.AngleHMS"><span class="pre">AngleHMS</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#astro_toolbox.coordinates.location.Location" title="astro_toolbox.coordinates.location.Location"><span class="pre">Location</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.equatorial.Equatorial.to_horizontal" title="Permalink to this definition"></a></dt>
+<dd><p>Equatorial to Horizontal converting method</p>
+<div class="math notranslate nohighlight">
+\[h=sin^{-1}(cos\Phi cos H cos\delta+sin\Phi sin\delta)\]</div>
+<div class="math notranslate nohighlight">
+\[A=sin^{-1}(\frac{-sin H cos \delta}{cosh})\]</div>
+<section id="id16">
+<h2>Parameters<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>gamma<span class="classifier">AngleHMS</span></dt><dd><p>Sidereal Time angle in hms</p>
+</dd>
+<dt>location<span class="classifier">Location</span></dt><dd><p>observer location</p>
+</dd>
+</dl>
+</section>
+<section id="id17">
+<h2>Returns<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>Horizontal</dt><dd><p>Horizontal coordinates of the object</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-astro_toolbox.coordinates.horizontal"></span><p>This module contain Horizontal class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.horizontal.Horizontal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">astro_toolbox.coordinates.horizontal.</span></span><span class="sig-name descname"><span class="pre">Horizontal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">azimuth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">magnitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.horizontal.Horizontal" title="Permalink to this definition"></a></dt>
+<dd><p>This class represent horizontals coordinates</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.horizontal.Horizontal.calculate_airmass">
+<span class="sig-name descname"><span class="pre">calculate_airmass</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.horizontal.Horizontal.calculate_airmass" title="Permalink to this definition"></a></dt>
+<dd><p>Airmass calculation method
+The airmass is calculate with the Pickering(2002) formula from DIO,
+The International Journal of Scientific History vol. 12</p>
+<div class="math notranslate nohighlight">
+\[X = \frac{1}{sin(h+\frac{244}{165+47h^{1.1}})}\]</div>
+<section id="id18">
+<h2>Returns<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>float</dt><dd><p>Object airmass</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.horizontal.Horizontal.to_equatorial">
+<span class="sig-name descname"><span class="pre">to_equatorial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#astro_toolbox.angle.hms.AngleHMS" title="astro_toolbox.angle.hms.AngleHMS"><span class="pre">AngleHMS</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#astro_toolbox.coordinates.location.Location" title="astro_toolbox.coordinates.location.Location"><span class="pre">Location</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.horizontal.Horizontal.to_equatorial" title="Permalink to this definition"></a></dt>
+<dd><p>Horizontal to Equation converting method</p>
+<div class="math notranslate nohighlight">
+\[\delta=sin^{-1}(sin \Phi sin h-cos \Phi cos h cos A)\]</div>
+<div class="math notranslate nohighlight">
+\[\alpha=sin^{-1}(\frac{-cosh cosA}{cos\delta})-\gamma\]</div>
+<section id="id19">
+<h2>Parameters<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>gamma<span class="classifier">AngleHMS</span></dt><dd><p>Sidereal Time angle in hms</p>
+</dd>
+<dt>location<span class="classifier">Location</span></dt><dd><p>observer location</p>
+</dd>
+</dl>
+</section>
+<section id="id20">
+<h2>Returns<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>Equatorial</dt><dd><p>Equatorial coordinates of the object</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-astro_toolbox.coordinates.location"></span><p>This module contain Location class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.location.Location">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">astro_toolbox.coordinates.location.</span></span><span class="sig-name descname"><span class="pre">Location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elevation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.location.Location" title="Permalink to this definition"></a></dt>
+<dd><p>This class represent the observer location</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.location.Location.delete_site">
+<span class="sig-name descname"><span class="pre">delete_site</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.location.Location.delete_site" title="Permalink to this definition"></a></dt>
+<dd><p>Method deleting current site from saved sites file</p>
+<section id="raises">
+<h2>Raises<a class="headerlink" href="#raises" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>KeyError</dt><dd><p>The first level key doesn’t exist</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.location.Location.get_site">
+<span class="sig-name descname"><span class="pre">get_site</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.location.Location.get_site" title="Permalink to this definition"></a></dt>
+<dd><p>Method to get a site with it datas</p>
+<section id="id21">
+<h2>Parameters<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>name<span class="classifier">str, optional</span></dt><dd><p>The site name, by default None</p>
+</dd>
+</dl>
+</section>
+<section id="id22">
+<h2>Returns<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>Location</dt><dd><p>The Location class of the site from his save data in saved sites file</p>
+</dd>
+</dl>
+</section>
+<section id="id23">
+<h2>Raises<a class="headerlink" href="#id23" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>KeyError</dt><dd><p>The first level key doen’t exist</p>
+</dd>
+<dt>ValueError</dt><dd><p>The site name is not given</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.location.Location.save_site">
+<span class="sig-name descname"><span class="pre">save_site</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.location.Location.save_site" title="Permalink to this definition"></a></dt>
+<dd><p>Method saving current site in sites file</p>
+<section id="id24">
+<h2>Raises<a class="headerlink" href="#id24" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>KeyError</dt><dd><p>The first level key already exist</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.coordinates.location.Location.update_site">
+<span class="sig-name descname"><span class="pre">update_site</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.coordinates.location.Location.update_site" title="Permalink to this definition"></a></dt>
+<dd><p>Method updating current site in saved sites file</p>
+<section id="id25">
+<h2>Raises<a class="headerlink" href="#id25" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>KeyError</dt><dd><p>The first level key doesn’t exist</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-astro_toolbox.query.catalogs"></span><p>This module contain Simbad Class.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="astro_toolbox.query.catalogs.Simbad">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">astro_toolbox.query.catalogs.</span></span><span class="sig-name descname"><span class="pre">Simbad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.query.catalogs.Simbad" title="Permalink to this definition"></a></dt>
+<dd><p>This class allow to read astronomical catalogs over internet.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.query.catalogs.Simbad.get_coords">
+<span class="sig-name descname"><span class="pre">get_coords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.query.catalogs.Simbad.get_coords" title="Permalink to this definition"></a></dt>
+<dd><p>Get RA/DEC aobject coords.</p>
+<section id="id26">
+<h2>Returns<a class="headerlink" href="#id26" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>Tuple</dt><dd><p>Tuple wich contain two tuples RA coords and DEC.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.query.catalogs.Simbad.get_magnitude">
+<span class="sig-name descname"><span class="pre">get_magnitude</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.query.catalogs.Simbad.get_magnitude" title="Permalink to this definition"></a></dt>
+<dd><p>Get visual magnitude.</p>
+<section id="id27">
+<h2>Returns<a class="headerlink" href="#id27" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>float, None</dt><dd><p>The object magnitude if available.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.query.catalogs.Simbad.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.query.catalogs.Simbad.get_name" title="Permalink to this definition"></a></dt>
+<dd><p>Get object name.</p>
+<section id="id28">
+<h2>Returns<a class="headerlink" href="#id28" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>str</dt><dd><p>Object name from Simbad</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-astro_toolbox.time.core"></span><p>This module contain AstroDateTime class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="astro_toolbox.time.core.AstroDateTime">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">astro_toolbox.time.core.</span></span><span class="sig-name descname"><span class="pre">AstroDateTime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ut_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.time.core.AstroDateTime" title="Permalink to this definition"></a></dt>
+<dd><p>This module contain AngleRad class</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.time.core.AstroDateTime.get_date">
+<span class="sig-name descname"><span class="pre">get_date</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.time.core.AstroDateTime.get_date" title="Permalink to this definition"></a></dt>
+<dd><p>Get date</p>
+<section id="id29">
+<h2>Returns<a class="headerlink" href="#id29" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>tuple</dt><dd><p>date in format (year,month,day)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.time.core.AstroDateTime.get_day">
+<span class="sig-name descname"><span class="pre">get_day</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.time.core.AstroDateTime.get_day" title="Permalink to this definition"></a></dt>
+<dd><p>Get day</p>
+<section id="id30">
+<h2>Returns<a class="headerlink" href="#id30" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>int</dt><dd><p>day</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.time.core.AstroDateTime.get_gmst">
+<span class="sig-name descname"><span class="pre">get_gmst</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.time.core.AstroDateTime.get_gmst" title="Permalink to this definition"></a></dt>
+<dd><p>UT time to Greenwich mean sidereal time converting method
+Get Greenwich mean sidereal time</p>
+<div class="math notranslate nohighlight">
+\[gmst=mod(18.697375+24.065709824279(JD-2451545), 24)\]</div>
+<section id="id31">
+<h2>Returns<a class="headerlink" href="#id31" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>tuple</dt><dd><p>Greenwich mean sidereal time</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.time.core.AstroDateTime.get_jd">
+<span class="sig-name descname"><span class="pre">get_jd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.time.core.AstroDateTime.get_jd" title="Permalink to this definition"></a></dt>
+<dd><p>UT time to Julian day float converting method
+get Julain day</p>
+<div class="math notranslate nohighlight">
+\[JD=367year-\frac{7(year+\frac{month+9}{12}}{4}&gt;+\frac{275month}{9}+
+day+1721013.5+\frac{UT}{24}-0.5sign(100year+month-190002.5)+0.5\]</div>
+<section id="id32">
+<h2>Returns<a class="headerlink" href="#id32" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>float</dt><dd><p>Julian day</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.time.core.AstroDateTime.get_lst">
+<span class="sig-name descname"><span class="pre">get_lst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#astro_toolbox.coordinates.location.Location" title="astro_toolbox.coordinates.location.Location"><span class="pre">Location</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.time.core.AstroDateTime.get_lst" title="Permalink to this definition"></a></dt>
+<dd><p>UT time to local mean sidereal time converting method
+Get local mean sidereal time</p>
+<div class="math notranslate nohighlight">
+\[lst=gmst+\frac{\lambda}{15}\]</div>
+<section id="id33">
+<h2>Parameters<a class="headerlink" href="#id33" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>location<span class="classifier">Location</span></dt><dd><p>Observer location</p>
+</dd>
+</dl>
+</section>
+<section id="id34">
+<h2>Returns<a class="headerlink" href="#id34" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>tuple</dt><dd><p>local mean sidereal time</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.time.core.AstroDateTime.get_month">
+<span class="sig-name descname"><span class="pre">get_month</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.time.core.AstroDateTime.get_month" title="Permalink to this definition"></a></dt>
+<dd><p>Get month</p>
+<section id="id35">
+<h2>Returns<a class="headerlink" href="#id35" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>int</dt><dd><p>month</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.time.core.AstroDateTime.get_time">
+<span class="sig-name descname"><span class="pre">get_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.time.core.AstroDateTime.get_time" title="Permalink to this definition"></a></dt>
+<dd><p>Get time</p>
+<section id="id36">
+<h2>Returns<a class="headerlink" href="#id36" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>tuple</dt><dd><p>time in format (hour,minute,second)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="astro_toolbox.time.core.AstroDateTime.get_year">
+<span class="sig-name descname"><span class="pre">get_year</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#astro_toolbox.time.core.AstroDateTime.get_year" title="Permalink to this definition"></a></dt>
+<dd><p>Get year</p>
+<section id="id37">
+<h2>Returns<a class="headerlink" href="#id37" title="Permalink to this heading"></a></h2>
+<dl class="simple">
+<dt>int</dt><dd><p>year</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Astro Toolbox" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Romain Loustalet Palengat.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
