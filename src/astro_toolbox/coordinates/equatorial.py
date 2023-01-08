@@ -1,6 +1,8 @@
 """This module contain Equatorial class
 """
 import math
+
+from astro_toolbox.utils import negative_support_pow
 from astro_toolbox.angle.hms import AngleHMS
 from astro_toolbox.angle.dms import AngleDMS
 from astro_toolbox.angle.degrees import AngleDeg
@@ -83,8 +85,8 @@ class Equatorial():
                     math.cos(self.delta.dmstorad()) + math.sin(lat) *
                     math.sin(self.delta.dmstorad()))).radtodeg()
         if altitude < 0:
-            altitude = altitude + 360
-        return abs(1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * (altitude) ** 1.1)).degtorad())))
+            return float('inf')
+        return 1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * altitude ** 1.1)).degtorad()))
 
     def to_horizontal(self, gamma: AngleHMS, location: coordinates.location.Location):
         """Equatorial to Horizontal converting method

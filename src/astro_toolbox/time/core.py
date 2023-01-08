@@ -12,7 +12,7 @@ class AstroDateTime():
         Parameters
         ----------
         ut_time : tuple
-            tuple of the date and time in format (year,month,day,hour,minute,second)
+            Tuple of the date and time in format (year,month,day,hour,minute,second)
         """
         if ut_time is None:
             ut_time = datetime.datetime.now(datetime.timezone.utc).timetuple()
@@ -36,7 +36,7 @@ class AstroDateTime():
         Returns
         -------
         tuple
-            date in format (year,month,day)
+            Date in format (year,month,day)
         """
         return self.date
 
@@ -46,7 +46,7 @@ class AstroDateTime():
         Returns
         -------
         int
-            year
+            Year
         """
         return self.date[0]
 
@@ -56,7 +56,7 @@ class AstroDateTime():
         Returns
         -------
         int
-            month
+            Month
         """
         return self.date[1]
 
@@ -66,7 +66,7 @@ class AstroDateTime():
         Returns
         -------
         int
-            day
+            Day
         """
         return self.date[2]
 
@@ -76,16 +76,16 @@ class AstroDateTime():
         Returns
         -------
         tuple
-            time in format (hour,minute,second)
+            Time in format (hour,minute,second)
         """
         return self.time
 
     def get_jd(self):
-        """UT time to Julian day float converting method
-        get Julain day
+        """Get julian day with USNO formula
 
         .. math:: JD=367year-\\frac{7(year+\\frac{month+9}{12}}{4}>+\\frac{275month}{9}+
-                day+1721013.5+\\frac{UT}{24}-0.5sign(100year+month-190002.5)+0.5
+                day+1721013.5+\\frac{UT}{24}-\n
+        .. math:: 0.5sign(100year+month-190002.5)+0.5
 
         Returns
         -------
@@ -102,8 +102,7 @@ class AstroDateTime():
         return julian_day
 
     def get_gmst(self):
-        """UT time to Greenwich mean sidereal time converting method
-        Get Greenwich mean sidereal time
+        """Get Greenwich mean sidereal time with USNO formula
 
         .. math:: gmst=mod(18.697375+24.065709824279(JD-2451545), 24)
 
@@ -121,8 +120,7 @@ class AstroDateTime():
         return (gmst_hh,gmst_mm,gmst_ss)
 
     def get_lst(self, location: Location):
-        """UT time to local mean sidereal time converting method
-        Get local mean sidereal time
+        """Get local mean sidereal time with USNO formula
 
         .. math:: lst=gmst+\\frac{\\lambda}{15}
 
@@ -134,7 +132,7 @@ class AstroDateTime():
         Returns
         -------
         tuple
-            local mean sidereal time
+            Local mean sidereal time
         """
         gmst = self.get_gmst()
         longitude = location.longitude.dmstodeg()/15

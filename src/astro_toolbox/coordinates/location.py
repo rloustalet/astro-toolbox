@@ -28,9 +28,13 @@ class Location():
         """
         if name == 'None':
             dict_site = self._get_site()
+            name = list(dict_site.keys())[0]
         else:
-            dict_site = self._get_site(name=name)
-        name = list(dict_site.keys())[0]
+            try:
+                dict_site = self._get_site(name=name)
+                name = list(dict_site.keys())[0]
+            except ValueError:
+                pass
         if latitude == 'None':
             latitude_str = re.split(r"[°']",dict_site[name]['latitude'])[:3]
             latitude = (int(latitude_str[0]), int(latitude_str[1]), float(latitude_str[2]))
@@ -39,8 +43,7 @@ class Location():
             longitude = (int(longitude_str[0]), int(longitude_str[1]), float(longitude_str[2]))
         if math.isnan(elevation):
             elevation = dict_site[name]['elevation']
-
-        self.name = list(dict_site.keys())[0]
+        self.name = name
         self.latitude = AngleDMS(latitude)
         self.longitude = AngleDMS(longitude)
         self.elevation = elevation
@@ -80,7 +83,7 @@ class Location():
             with open(PATH  + 'sites.json', 'w', encoding="utf-8") as json_file:
                 json.dump(new_dict_sites, json_file, indent=4)
             return None
-        raise KeyError("Site already exist, use `update_site` instead")
+        raise ValueError("Site already exist, use `update_site` instead")
 
     def delete_site(self):
         """Method deleting current site from saved sites file
@@ -96,7 +99,10 @@ class Location():
             keys = list(key for key in dict_sites)
             idx = list(key.lower() for key in dict_sites).index(self.name.lower())
             del dict_sites[keys[idx]]
-
+            with open(PATH  + 'sites.json', 'w', encoding="utf-8") as json_file:
+                json.dump(dict_sites, json_file, indent=4)
+            return None
+        raise ValueError("Site already exist, use `update_site` instead")
     def update_site(self):
         """Method updating current site in saved sites file
 
@@ -110,14 +116,13 @@ class Location():
         if self.name.lower() in list(key.lower() for key in dict_sites):
             keys = list(key for key in dict_sites)
             idx = [key.lower() for key in dict_sites].index(self.name.lower())
-            print(self.current_site)
             for key in dict_sites[keys[idx]]:
                 if self.current_site[self.name][key] is not None:
                     dict_sites[keys[idx]][key] = self.current_site[self.name][key]
             with open(PATH  + 'sites.json', 'w', encoding="utf-8") as json_file:
                 json.dump(dict_sites, json_file, indent=4)
             return None
-        raise KeyError("Site doesn't exist")
+        raise ValueError("Site doesn't exist")
 
     def _get_site(self, name: str = None):
         """Method to get a site with it datas
@@ -151,4 +156,4 @@ class Location():
             with open(PATH  + 'sites.json', 'w', encoding="utf-8") as json_file:
                 json.dump(new_dict_sites, json_file, indent=4)
             return {keys[idx]: dict_site}
-        raise KeyError (f"{name} site doesn't exist")
+        raise ValueError(f"{name} site doesn't exist")

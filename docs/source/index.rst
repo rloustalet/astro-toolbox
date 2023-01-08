@@ -2,5 +2,5 @@
 
 .. toctree::
    Home <self>
-   api
+   modules
 

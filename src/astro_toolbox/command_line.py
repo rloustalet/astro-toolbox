@@ -46,7 +46,7 @@ def _read_observatory_program(input_file: pathlib.Path):
     return objects_dict
 
 def _verify_coords(latitude, longitude, elevation):
-    """_summary_
+    """Function to verify coords
 
     Parameters
     ----------
@@ -79,11 +79,11 @@ def _verify_coords(latitude, longitude, elevation):
         elif '.' in value and not ('°' and "'") in value:
             coords[count] = AngleDeg(float(value)).degtodms()
             value_flag = False
-        elif value_flag is False and (value != 'None' or float('nan')):
+        elif value_flag is False and (value != 'None'):
             raise ValueError(f"{value} Latitude or longitude is not in format 0.0 or 0°0'0''")
         if not isinstance(elevation, float):
             raise ValueError((f"{value} Elevation value is not a number"))
-        return coords
+    return coords
 
 @click.group()
 @click.option(
@@ -178,7 +178,7 @@ def simbad_command(object_name, date, location):
     site = Location(name=location)
     ut_time = AstroDateTime(date)
     gamma = AngleHMS(ut_time.get_lst(site))
-    print(f'{coords} X = {coords.calculate_airmass(gamma=gamma, location=site)} @ {site.name}')
+    print(f'{coords} X = {coords.calculate_airmass(gamma=gamma, location=site):.2f} @ {site.name}')
 
 @cli.command('location')
 @click.argument('location_name')
