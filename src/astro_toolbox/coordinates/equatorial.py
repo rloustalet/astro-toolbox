@@ -2,7 +2,6 @@
 """
 import math
 
-from astro_toolbox.utils import negative_support_pow
 from astro_toolbox.angle.hms import AngleHMS
 from astro_toolbox.angle.dms import AngleDMS
 from astro_toolbox.angle.degrees import AngleDeg

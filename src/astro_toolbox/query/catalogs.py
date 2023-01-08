@@ -33,7 +33,10 @@ class Simbad():
         link = 'https://cds.unistra.fr/cgi-bin/nph-sesame/-oIfx?'+object_name
         request=urllib.Request(link)
         with urllib.urlopen(request) as response:
-            return xmltodict.parse(response.read().decode('utf-8'))['Sesame']['Target']
+            result = xmltodict.parse(response.read().decode('utf-8'))['Sesame']['Target']
+        if 'Resolver' not in result:
+            raise ValueError("Object doesn't exist")
+        return result
 
     def get_coords(self):
         """Get RA/DEC aobject coords.
