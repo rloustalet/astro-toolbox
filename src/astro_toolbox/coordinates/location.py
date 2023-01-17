@@ -36,10 +36,10 @@ class Location():
             except ValueError:
                 pass
         if latitude == 'None':
-            latitude_str = re.split(r"[°']",dict_site[name]['latitude'])[:3]
+            latitude_str = re.split(r"[°'\"]",dict_site[name]['latitude'])[:3]
             latitude = (int(latitude_str[0]), int(latitude_str[1]), float(latitude_str[2]))
         if longitude == 'None':
-            longitude_str = re.split(r"[°']",dict_site[name]['longitude'])[:3]
+            longitude_str = re.split(r"[°'\"]",dict_site[name]['longitude'])[:3]
             longitude = (int(longitude_str[0]), int(longitude_str[1]), float(longitude_str[2]))
         if math.isnan(elevation):
             elevation = dict_site[name]['elevation']

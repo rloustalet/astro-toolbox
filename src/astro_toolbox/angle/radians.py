@@ -45,11 +45,11 @@ class AngleRad():
         tuple
             The angle values in dms
         """
-        rad_dms_value = self.radtodeg()
-        rad_dms_result = (int(rad_dms_value),)
-        rad_dms_value = (rad_dms_value - int(rad_dms_value)) * 60
+        rad_dms_value = self.anglevalue*180/math.pi
+        rad_dms_result = ((int(rad_dms_value)), )
+        rad_dms_value = abs(rad_dms_value - int(rad_dms_value)) * 60
         rad_dms_result = rad_dms_result + (int(rad_dms_value),)
-        rad_dms_value = (rad_dms_value - int(rad_dms_value)) * 60
+        rad_dms_value = abs(rad_dms_value - int(rad_dms_value)) * 60
         rad_dms_result = rad_dms_result + (rad_dms_value,)
         return rad_dms_result
 
@@ -62,7 +62,7 @@ class AngleRad():
         tuple
             The angle values in hms
         """
-        rad_hms_value = self.radtodeg()*12/180
+        rad_hms_value = (self.anglevalue*12/math.pi)%24
         rad_hms_result = (int(rad_hms_value),)
         rad_hms_value = (rad_hms_value - int(rad_hms_value)) * 60
         rad_hms_result = rad_hms_result + (int(rad_hms_value),)

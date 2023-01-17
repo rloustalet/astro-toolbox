@@ -6,7 +6,6 @@ import json
 import pkg_resources
 import numpy as np
 import click
-from rich.progress import track
 from matplotlib import pyplot as plt
 
 from astro_toolbox.angle.hms import AngleHMS
@@ -14,7 +13,10 @@ from astro_toolbox.angle.degrees import AngleDeg
 from astro_toolbox.time.core import AstroDateTime
 from astro_toolbox.coordinates.location import Location
 from astro_toolbox.coordinates.equatorial import Equatorial
+from astro_toolbox.query.ephemeris import Horizons
 from astro_toolbox.query.catalogs import Simbad
+
+from astro_toolbox.query.ephemeris import DICT_OBJECTS
 
 PATH = pkg_resources.resource_filename(__name__, '/coordinates/data/')
 
@@ -37,13 +39,7 @@ def _read_observatory_program(input_file: pathlib.Path):
     if '' in object_list:
         object_list.remove('')
     object_list.sort(reverse=True, key=str.casefold)
-    objects_dict = {}
-    for name in track(object_list, description="Processing..."):
-        simbad_object = Simbad(name)
-        alpha, delta = simbad_object.get_coords()
-        objects_dict[name] = Equatorial(alpha=alpha, delta=delta, name=name,
-                            magnitude=simbad_object.get_magnitude())
-    return objects_dict
+    return object_list
 
 def _verify_coords(latitude, longitude, elevation):
     """Function to verify coords
@@ -118,7 +114,7 @@ def cli(verbose):
             help='--end to set end hour as int, default=18')
 @click.argument('input_file',
             default = '')
-def airmasses_map_command(input_file,location, date,  begin, end):
+def airmass_map_command(input_file,location, date,  begin, end):
     """Airmasses calculations
     """
     if input_file == '':
@@ -139,7 +135,7 @@ def airmasses_map_command(input_file,location, date,  begin, end):
                                                 (ut_time.get_month()-1.0)/12)
         for i, time in enumerate(timelist):
             time = (int(time),(time-int(time))*60,00)
-            ut_time = AstroDateTime(ut_time.get_date()+time)
+            ut_time = AstroDateTime(ut_time.date+time)
             airmasses[j][i] = object_dict[key].calculate_airmass(
                                 AngleHMS(ut_time.get_lst(site)), site)
     plt.figure(figsize=(8.3, 11.7))
@@ -161,7 +157,7 @@ def airmasses_map_command(input_file,location, date,  begin, end):
     print(f'Airmasses: {ut_time.get_day():02d}/{ut_time.get_month():02d}'
         +f'/{ut_time.get_year()} @ {site.name}')
 
-@cli.command('simbad')
+@cli.command('info')
 @click.argument('object_name')
 @click.option("-d", "--date",
             default=None,
@@ -172,13 +168,22 @@ def airmasses_map_command(input_file,location, date,  begin, end):
 def simbad_command(object_name, date, location):
     """Get Simbad inormations
     """
-    obj = Simbad(object_name)
-    alpha, delta = obj.get_coords()
-    coords = Equatorial(alpha=alpha, delta=delta,name=obj.get_name(), magnitude=obj.get_magnitude())
     site = Location(name=location)
     ut_time = AstroDateTime(date)
+    if object_name.lower() in [key.lower() for key in DICT_OBJECTS]:
+        obj = Horizons(object_name, ut_time, site)
+        alpha, delta = obj.get_coord()
+        obj_name = obj.get_name()
+        obj_magnitude = obj.get_magnitude()
+    else:
+        obj = Simbad(object_name)
+        alpha, delta = obj.get_coord()
+        obj_name = obj.get_name()
+        obj_magnitude = obj.get_magnitude()
+    coord = Equatorial(alpha=alpha, delta=delta, name=obj_name, magnitude=obj_magnitude)
+    coord.compute_on_date_coords(ut_time.get_year())
     gamma = AngleHMS(ut_time.get_lst(site))
-    print(f'{coords} X = {coords.calculate_airmass(gamma=gamma, location=site):.2f} @ {site.name}')
+    print(f'{coord} X = {coord.calculate_airmass(gamma=gamma, location=site):.2f} @ {site.name}')
 
 @cli.command('location')
 @click.argument('location_name')

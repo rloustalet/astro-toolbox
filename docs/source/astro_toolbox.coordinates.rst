@@ -4,6 +4,14 @@ astro\_toolbox.coordinates package
 Submodules
 ----------
 
+astro\_toolbox.coordinates.ephemeris module
+-------------------------------------------
+
+.. automodule:: astro_toolbox.coordinates.ephemeris
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 astro\_toolbox.coordinates.equatorial module
 --------------------------------------------
 

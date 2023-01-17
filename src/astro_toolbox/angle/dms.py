@@ -23,7 +23,7 @@ class AngleDMS():
         str | None
             Return a class representative string
         """
-        return f'{self.anglevalue[0]:+03d}°{self.anglevalue[1]:02d}\'{self.anglevalue[2]:05.2f}\'\''
+        return f'{self.anglevalue[0]:+03d}°{self.anglevalue[1]:02d}\'{self.anglevalue[2]:05.2f}\"'
 
     def dmstodeg(self):
         """DMS to Degrees converting method
@@ -34,9 +34,9 @@ class AngleDMS():
         float
             The angle value in degrees
         """
-        return (self.anglevalue[0] +
-            self.anglevalue[1]/60 +
-            self.anglevalue[2]/3600)
+        return math.copysign(abs(self.anglevalue[0]) +
+                self.anglevalue[1]/60 +
+                self.anglevalue[2]/3600, self.anglevalue[0])
 
     def dmstorad(self):
         """DMS to Radians converting method

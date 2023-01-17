@@ -12,6 +12,14 @@ astro\_toolbox.query.catalogs module
    :undoc-members:
    :show-inheritance:
 
+astro\_toolbox.query.ephemeris module
+-------------------------------------
+
+.. automodule:: astro_toolbox.query.ephemeris
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

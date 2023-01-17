@@ -9,7 +9,11 @@ from astro_toolbox.angle.hms import AngleHMS
 from astro_toolbox.coordinates.equatorial import Equatorial
 from astro_toolbox.coordinates.horizontal import Horizontal
 from astro_toolbox.coordinates.location import Location
+from astro_toolbox.coordinates.solar_system import Ephemeris
+from astro_toolbox.query.ephemeris import Horizons
 from astro_toolbox.query.catalogs import Simbad
+
+from astro_toolbox.query.ephemeris import DICT_OBJECTS
 
 __all__ = [
     "AstroDateTime",
@@ -20,5 +24,6 @@ __all__ = [
     "Equatorial",
     "Horizontal",
     "Location",
+    "Ephemeris",
     "Simbad",
 ]

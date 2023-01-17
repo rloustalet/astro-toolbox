@@ -30,16 +30,6 @@ class AstroDateTime():
         return (f'{self.date[0]}-{self.date[1]}-{self.date[2]} '+
                 f'{self.time[0]}:{self.time[1]}:{self.time[2]}')
 
-    def get_date(self):
-        """Get date
-
-        Returns
-        -------
-        tuple
-            Date in format (year,month,day)
-        """
-        return self.date
-
     def get_year(self):
         """Get year
 
