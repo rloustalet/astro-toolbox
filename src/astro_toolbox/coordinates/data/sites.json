@@ -1,12 +1,17 @@
 {
+    "Greenwich": {
+        "latitude": "+51\u00b028'40.5408\"",
+        "longitude": "-0\u00b00'5.5620\"",
+        "elevation": 6
+    },
     "Pic du Midi": {
         "latitude": "+42\u00b058'08.12\"",
         "longitude": "+00\u00b008'33.31\"",
         "elevation": 2877.0
     },
-    "Greenwich": {
-        "latitude": "+51\u00b028'40.5408\"",
-        "longitude": "-0\u00b00'5.5620\"",
-        "elevation": 6
+    "Silla": {
+        "latitude": "-29\u00b015'40.32\"",
+        "longitude": "-70\u00b043'53.76\"",
+        "elevation": 2877.0
     }
 }

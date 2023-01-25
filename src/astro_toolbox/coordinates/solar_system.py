@@ -7,7 +7,7 @@ import pkg_resources
 from astro_toolbox.angle.radians import AngleRad
 from astro_toolbox.time.core import AstroDateTime
 
-PATH = pkg_resources.resource_filename(__name__, '/data/')
+PATH = pkg_resources.resource_filename('astro_toolbox', 'coordinates/data/')
 
 class Ephemeris():
     """Ephemeris class computing system solar objetcs positon in differents rerentials
@@ -90,8 +90,6 @@ class Ephemeris():
             eccentric_anomaly = (eccentric_anomaly +
                                 delta_eccentric_anomaly)
         orbital_elements.update({"E": eccentric_anomaly%360})
-        for key, value in orbital_elements.items():
-            print(key, value)
         return orbital_elements
 
     def compute_earth_position(self):

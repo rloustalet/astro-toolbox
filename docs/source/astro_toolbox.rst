@@ -10,6 +10,7 @@ Subpackages
    astro_toolbox.angle
    astro_toolbox.coordinates
    astro_toolbox.query
+   astro_toolbox.scripts
    astro_toolbox.time
 
 Submodules

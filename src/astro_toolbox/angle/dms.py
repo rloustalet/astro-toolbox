@@ -48,13 +48,3 @@ class AngleDMS():
             The angle value in radians
         """
         return self.dmstodeg()*math.pi/180
-
-    def get_angle(self):
-        """Angle value returning method
-
-        Returns
-        -------
-        float | tuple
-            The angle value in dms
-        """
-        return self.anglevalue

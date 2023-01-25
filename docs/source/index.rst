@@ -1,4 +1,5 @@
-.. include:: ../../README.rst
+Astro toolbox
+=============
 
 .. toctree::
    Home <self>

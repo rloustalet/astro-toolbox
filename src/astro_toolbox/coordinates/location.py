@@ -7,7 +7,7 @@ import pkg_resources
 
 from astro_toolbox.angle.dms import AngleDMS
 
-PATH = pkg_resources.resource_filename(__name__, '/data/')
+PATH = pkg_resources.resource_filename('astro_toolbox', 'coordinates/data/')
 class Location():
     """This class represent the observer location
     """

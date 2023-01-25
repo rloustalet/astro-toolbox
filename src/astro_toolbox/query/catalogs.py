@@ -39,12 +39,12 @@ class Simbad():
         return result
 
     def get_coord(self):
-        """Get RA/DEC aobject coords.
+        """Get RA/DEC aobject coord.
 
         Returns
         -------
         Tuple
-            Tuple wich contain two tuples RA coords and DEC.
+            Tuple wich contain two tuples RA coord and DEC.
         """
         alpha, delta = self.result['Resolver']['jpos'].split(' ')
         alpha = alpha.split(':')
@@ -72,6 +72,8 @@ class Simbad():
         """
         if 'mag' in self.result['Resolver']:
             flux_list = self.result['Resolver']['mag']
+            if isinstance(flux_list, dict):
+                flux_list = [flux_list]
             for flux in flux_list:
                 if flux['@band'] == 'V':
                     return float(flux['v'])

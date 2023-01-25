@@ -40,25 +40,26 @@ class Equatorial():
                 f'\N{GREEK SMALL LETTER DELTA} = {self.delta} '
                 f'v = {self.magnitude}')
 
-    def get_hourangle(self, gamma: AngleHMS):
+    def get_hourangle(self, gamma: tuple):
         """Riht-Ascencion to Hour-Angle conversion method
 
         .. math:: HA = RA - \\gamma
 
         Parameters
         ----------
-        gamma : AngleHMS
+        gamma : tuple
             Sidereal Time angle in hms
 
         Returns
         -------
-        AngleHMS
-            Hour-Angle object at needed time
+        tuple
+            Hour-Angle tuple in hms
         """
-        hour_angle = AngleDeg(gamma.hmstodeg() - self.alpha.hmstodeg())
-        return AngleHMS(hour_angle.degtohms())
+        gamma_angle = AngleHMS(gamma)
+        hour_angle = AngleDeg(gamma_angle.hmstodeg() - self.alpha.hmstodeg())
+        return hour_angle.degtohms()
 
-    def calculate_airmass(self, gamma: AngleHMS, location: Location):
+    def calculate_airmass(self, gamma: tuple, location: Location):
         """Airmass calculation method
         The airmass is calculate with the Pickering(2002) formula from DIO,
         The International Journal of Scientific History vol. 12
@@ -69,7 +70,7 @@ class Equatorial():
 
         Parameters
         ----------
-        gamma : AngleHMS
+        gamma : tuple
             Sidereal Time angle in hms
         location : Location
             observer location
@@ -80,15 +81,15 @@ class Equatorial():
             Airmass value of the object
         """
         lat = location.latitude.dmstorad()
-        hour_angle = self.get_hourangle(gamma=gamma).hmstorad()
+        hour_angle = AngleHMS(self.get_hourangle(gamma=gamma)).hmstorad()
         altitude = AngleRad(math.asin(math.cos(lat) * math.cos(hour_angle) *
                     math.cos(self.delta.dmstorad()) + math.sin(lat) *
                     math.sin(self.delta.dmstorad()))).radtodeg()
         if altitude < 0:
-            return float('inf')
+            return 40
         return 1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * altitude ** 1.1)).degtorad()))
 
-    def to_horizontal(self, gamma: AngleHMS, location: Location):
+    def to_horizontal(self, gamma: tuple, location: Location):
         """Equatorial to Horizontal converting method
 
         .. math:: h=sin^{-1}(cos\\Phi cos H cos\\delta+sin\\Phi sin\\delta)
@@ -97,26 +98,26 @@ class Equatorial():
 
         Parameters
         ----------
-        gamma : AngleHMS
+        gamma : tuple
              Sidereal Time angle in hms
         location : Location
             observer location
 
         Returns
         -------
-        Horizontal
-            Horizontal coordinates of the object
+        tuple
+            Tuple containing two tuple in dms with (az, alt)
         """
         lat = location.latitude.dmstorad()
-        hour_angle = self.get_hourangle(gamma=gamma).hmstorad()
-        altitude = AngleRad(math.asin(math.cos(lat) * math.cos(hour_angle) *
+        hour_angle = AngleHMS(self.get_hourangle(gamma=gamma)).hmstorad()
+        altitude = AngleRad((math.asin(math.cos(lat) * math.cos(hour_angle) *
                             math.cos(self.delta.dmstorad())
-            + math.sin(lat) * math.sin(self.delta.dmstorad())))
-        azimuth = AngleRad(math.asin(-math.sin(hour_angle) *
-            math.cos(self.delta.dmstorad) / math.cos(altitude.anglevalue)))
-        return (AngleDMS(altitude.radtodms()), AngleDMS(azimuth.radtodms()))
+            + math.sin(lat) * math.sin(self.delta.dmstorad()))%(2*math.pi)))
+        azimuth = AngleRad((math.asin(-math.sin(hour_angle) *
+            math.cos(self.delta.dmstorad()) / math.cos(altitude.anglevalue)))%(2*math.pi))
+        return (azimuth.radtodms(), altitude.radtodms())
 
-    def compute_on_date_coords(self, year: float):
+    def compute_on_date_coord(self, year: float):
         """On date Equatorial coordinates calculation method from j2000 Equatorial coordinates
 
         .. math:: \\Delta year = \\frac{(year-2000)}{100}
@@ -151,7 +152,7 @@ class Equatorial():
         self.alpha = alpha
         self.delta = delta
 
-    def calculate_rise_time(self, location:Location, time: AstroDateTime):
+    def calculate_rise_time(self, location:Location, time: AstroDateTime, altitude_0: float=0.0):
         """Rise time calculation method
 
         Parameters
@@ -166,20 +167,20 @@ class Equatorial():
         tuple
             Tuple containing the rising time
         """
-        hour_angle = math.acos(math.sin(0) -
+        hour_angle = math.acos((math.sin(altitude_0*math.pi/180) -
                     math.sin(location.latitude.dmstorad()) *
-                    math.sin(self.delta.dmstorad()) /
+                    math.sin(self.delta.dmstorad())) /
                     (math.cos(location.latitude.dmstorad()) *
                     math.cos(self.delta.dmstorad())))*180/math.pi
         date = time.date
         tsg0 = AngleHMS(AstroDateTime(date+(0,0,0)).get_gmst()).hmstodeg()
-        return AngleHMS(AngleDeg((self.alpha.hmstodeg() +
+        return AngleDeg((self.alpha.hmstodeg() -
                                 hour_angle +
                                 location.longitude.dmstodeg() -
                                 tsg0) /
-                                1.002737909).degtohms())
+                                1.002737909).degtohms()
 
-    def calculate_set_time(self, location:Location, time: AstroDateTime):
+    def calculate_set_time(self, location:Location, time: AstroDateTime, altitude_0: float=0.0):
         """Set time calculation method
 
         Parameters
@@ -194,15 +195,15 @@ class Equatorial():
         tuple
             Tuple containing the setting time
         """
-        hour_angle = math.acos(math.sin(0) -
+        hour_angle = math.acos(math.sin(altitude_0*math.pi/180) -
                     math.sin(location.latitude.dmstorad()) *
                     math.sin(self.delta.dmstorad()) /
                     (math.cos(location.latitude.dmstorad()) *
                     math.cos(self.delta.dmstorad())))*180/math.pi
         date = time.date
         tsg0 = AngleHMS(AstroDateTime(date+(0,0,0)).get_gmst()).hmstodeg()
-        return AngleHMS(AngleDeg((self.alpha.hmstodeg() +
+        return AngleDeg((self.alpha.hmstodeg() +
                                 hour_angle +
                                 location.longitude.dmstodeg() -
                                 tsg0) /
-                                1.002737909).degtohms())
+                                1.002737909).degtohms()

@@ -9,7 +9,7 @@ from astro_toolbox.coordinates.location import Location
 class Horizontal():
     """This class represent horizontals coordinates
     """
-    def __init__(self, altitude: tuple, azimuth: tuple, name: str = None, magnitude: float = None):
+    def __init__(self, azimuth: tuple, altitude: tuple, name: str = None, magnitude: float = None):
         """Constructor method
 
         Parameters
@@ -53,7 +53,7 @@ class Horizontal():
             altitude = altitude + 360
         return abs(1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * (altitude) ** 1.1)).degtorad())))
 
-    def to_equatorial(self, gamma: AngleHMS, location: Location):
+    def to_equatorial(self, gamma: tuple, location: Location):
         """Horizontal to Equation converting method
 
         .. math:: \\delta=sin^{-1}(sin \\Phi sin h-cos \\Phi cos h cos A)
@@ -72,9 +72,13 @@ class Horizontal():
         Equatorial
             Equatorial coordinates of the object
         """
-        lat = location.latitude.dmstodeg()
-        delta = AngleRad(math.asin(math.sin(lat) * math.sin(self.altitude.dmstorad() -
-                math.cos(lat) * math.cos(self.altitude.dmstorad()) * self.azimuth.dmstorad())))
-        alpha = AngleRad(math.asin(-math.cos(self.altitude.dmstorad()) *
-                math.cos(self.azimuth.dmstorad) / math.cos(delta)) - gamma.hmstorad())
-        return (AngleHMS(alpha.radtohms()), AngleDMS(delta.radtodms()))
+        gamma_angle =  AngleHMS(gamma)
+        lat = location.latitude.dmstorad()
+        delta = AngleRad(math.asin(math.sin(lat) *
+                math.sin(self.altitude.dmstorad()) +
+                math.cos(lat) *
+                math.cos(self.altitude.dmstorad()) *
+                math.cos(self.azimuth.dmstorad())))
+        alpha = AngleRad(gamma_angle.hmstorad() - math.asin(-math.cos(self.altitude.dmstorad()) *
+                math.sin(self.azimuth.dmstorad()) / math.cos(delta.anglevalue)))
+        return alpha.radtohms(), delta.radtodms()
