@@ -64,6 +64,9 @@ def cli(verbose):
 def airmass_map_command(input_file_objects, output, location, date, bounds):
     """Airmass calculations
     """
+    if date is not None:
+        date = date.split('-')
+        date = ((val) for val in date)+(0, 0, 0)
     inputpath = False
     if len(input_file_objects) == 0:
         inputpath = pathlib.Path('observations.lst')
@@ -75,8 +78,6 @@ def airmass_map_command(input_file_objects, output, location, date, bounds):
         else:
             object_list = list(input_file_objects)
             object_list.sort(key=str.casefold)
-    if date is not None:
-        date = date+(0,0,0)
     if inputpath is not False:
         object_list = read_observatory_program(inputpath)
     ut_time = AstroDateTime(date)
@@ -105,6 +106,9 @@ def airmass_map_command(input_file_objects, output, location, date, bounds):
 def info_command(object_name, date, location):
     """Get Simbad inormations
     """
+    if date is not None:
+        date = date.split('-')
+        date = ((val) for val in date)+(0, 0, 0)
     site = Location(name=location)
     ut_time = AstroDateTime(date)
     if object_name.lower() in [key.lower() for key in DICT_OBJECTS]:
@@ -233,6 +237,9 @@ def location_command(location_name, add, delete, update):
 def polaris_command(location, datetime):
     """Polaris position calculation
     """
+    if datetime is not None:
+        datetime =  re.split(r"[-:]",datetime)
+        datetime = ((val) for val in datetime)
     location = Location(location)
     if location.latitude.dmstodeg() > 0:
         polarstar_plt_northern(location, datetime)
