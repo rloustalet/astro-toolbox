@@ -26,19 +26,28 @@ def sun_impact(lines, site, ut_time, bounds):
                                     altitude_0=-18)
     rise_time = rise_time[0] + rise_time[1]/60 + rise_time[2]/3600
     set_time = set_time[0] + set_time[1]/60 + set_time[2]/3600
-    if bounds[0] < set_time:
-        plt.plot([(set_time-bounds[0])*10]*2,
-                [0, lines], '--', color='white', linewidth=2, label='Sunset')
-    elif bounds[1] - 24 > set_time:
-        plt.plot([(24 + set_time-bounds[0])*10]*2,
-                [0, lines], '--', color='white', linewidth=2, label='Sunset')
-    if bounds[1] - 24 > rise_time:
-        plt.plot([(24+rise_time-bounds[0])*10]*2,
-                [0, lines], ':', color='white', linewidth=2, label='Sunrise')
-    elif bounds[0] < rise_time:
-        plt.plot([(rise_time-bounds[0])*10]*2,
-                [0, lines], ':', color='white', linewidth=2, label='Sunrise')
-    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., facecolor='k', labelcolor='red')
+    lower_bound = [0] * (int((bounds[1] - bounds[0])/24)+2)
+    upper_bound = [0] * (int((bounds[1] - bounds[0])/24)+2)
+    for i in range(0,int((bounds[1] - bounds[0])/24)+2):
+        lower_bound[i] += 24 * i
+        upper_bound[i] += 24 + 24 * i
+    lower_bound[0] = bounds[0]
+    upper_bound[-1] = bounds[1]
+    for lower, upper in zip(lower_bound, upper_bound):
+        if lower < set_time + 24 * int(lower/24) < upper:
+            plt.plot([(set_time + 24 * int(lower/24)-bounds[0])*10]*2,
+                    [0, lines], '--', color='white', linewidth=2, label='Sunset')
+        if lower < rise_time + 24 * int(lower/24) < upper:
+            plt.plot([(rise_time + 24 * int(lower/24)-bounds[0])*10]*2,
+                    [0, lines], ':', color='white', linewidth=2, label='Sunrise')
+    handles, labels = plt.gca().get_legend_handles_labels()
+    by_label = dict(zip(labels, handles))
+    plt.legend(by_label.values(),
+                by_label.keys(),
+                bbox_to_anchor=(1.05, 1),
+                loc=2, borderaxespad=0.,
+                facecolor='k',
+                labelcolor='red')
 
 def moon_impact(lines, site, ut_time, bounds):
     """Sun observational impact
@@ -56,19 +65,28 @@ def moon_impact(lines, site, ut_time, bounds):
                                     altitude_0=0)
     rise_time = rise_time[0] + rise_time[1]/60 + rise_time[2]/3600
     set_time = set_time[0] + set_time[1]/60 + set_time[2]/3600
-    if bounds[0] < set_time:
-        plt.plot([(set_time-bounds[0])*10]*2,
-                [0, lines], '--', color='grey', linewidth=2, label='Moonset')
-    elif bounds[1] - 24 > set_time:
-        plt.plot([(24 + set_time-bounds[0])*10]*2,
-                [0, lines], '--', color='grey', linewidth=2, label='Moonset')
-    if bounds[1] - 24 > rise_time:
-        plt.plot([(24+rise_time-bounds[0])*10]*2,
-                [0, lines], ':', color='grey', linewidth=2, label='Moonrise')
-    elif bounds[0] < rise_time:
-        plt.plot([(rise_time-bounds[0])*10]*2,
-                [0, lines], ':', color='grey', linewidth=2, label='Moonrise')
-    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0., facecolor='k', labelcolor='red')
+    lower_bound = [0] * (int((bounds[1] - bounds[0])/24)+2)
+    upper_bound = [0] * (int((bounds[1] - bounds[0])/24)+2)
+    for i in range(0,int((bounds[1] - bounds[0])/24)+2):
+        lower_bound[i] += 24 * i
+        upper_bound[i] += 24 + 24 * i
+    lower_bound[0] = bounds[0]
+    upper_bound[-1] = bounds[1]
+    for lower, upper in zip(lower_bound, upper_bound):
+        if lower < set_time + 24 * int(lower/24) < upper:
+            plt.plot([(set_time + 24 * int(lower/24)-bounds[0])*10]*2,
+                    [0, lines], '--', color='grey', linewidth=2, label='Moonset')
+        if lower < rise_time + 24 * int(lower/24) < upper:
+            plt.plot([(rise_time + 24 * int(lower/24)-bounds[0])*10]*2,
+                    [0, lines], ':', color='grey', linewidth=2, label='Moonrise')
+    handles, labels = plt.gca().get_legend_handles_labels()
+    by_label = dict(zip(labels, handles))
+    plt.legend(by_label.values(),
+                by_label.keys(),
+                bbox_to_anchor=(1.05, 1),
+                loc=2, borderaxespad=0.,
+                facecolor='k',
+                labelcolor='red')
 
 def airmas_map(object_dict,
                 site: Location,
@@ -79,8 +97,6 @@ def airmas_map(object_dict,
     bounds = list(bounds)
     if bounds[1] <= bounds[0]:
         bounds[1] = bounds[1] + 24
-    if bounds[1] - bounds[0] > 24:
-        raise ValueError("This program can't plot airmass map on duration exceeding 24 hours")
     airmasses = np.empty((len(object_dict), np.shape(np.arange(bounds[0],bounds[1],0.1))[0]))
     for j, key in enumerate(object_dict):
         object_dict[key].compute_on_date_coord(year = ut_time.get_year()+
