@@ -33,7 +33,7 @@ def read_observatory_program(input_file: pathlib.Path):
     object_list.sort(key=str.casefold)
     return object_list
 
-def get_multiple_informations(object_list, site, ut_time, bounds):
+def get_multiple_informations(object_list, site, datetime, bounds):
     """Getting multiple objects equatorials informations
     """
     bounds = list(bounds)
@@ -43,11 +43,11 @@ def get_multiple_informations(object_list, site, ut_time, bounds):
     for name in track(object_list, description="Quering informations..."):
         try:
             if name.lower() in list(key.lower() for key in DICT_OBJECTS):
-                obj = Horizons(name, ut_time, site)
+                obj = Horizons(name, datetime, site)
             else:
                 obj = Simbad(name)
-            object_dict[name] = Equatorial(alpha=obj.get_coord()[0],
-                                        delta=obj.get_coord()[1], name=name,
+            object_dict[name] = Equatorial(alpha=obj.get_equatorial_coord()[0],
+                                        delta=obj.get_equatorial_coord()[1], name=name,
                                         magnitude=obj.get_magnitude())
         except ValueError:
             pass

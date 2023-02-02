@@ -2,31 +2,30 @@
 """
 import re
 import json
-import math
 import pkg_resources
-
 from astro_toolbox.angle.dms import AngleDMS
+from astro_toolbox.utils.strparser import angle_parser
 
 PATH = pkg_resources.resource_filename('astro_toolbox', 'coordinates/data/')
 class Location():
     """This class represent the observer location
     """
-    def __init__(self, name: str = 'None', latitude: tuple = 'None',
-                longitude: tuple = 'None', elevation: float = float('nan')):
+    def __init__(self, name: str = None, latitude: tuple | str = None,
+                longitude: tuple | str = None, elevation: float = None):
         """Constructor method
 
         Parameters
         ----------
         name : str
             Location name
-        latitude : tuple
+        latitude : tuple | str
             Location latitude tuple (°, ', '')
-        longitude : tuple
+        longitude : tuple | str
             Location longitude tuple (°, ', '')
         elevation : float, optional
             Loaction elevation (m), by default 0.0
         """
-        if name == 'None':
+        if name is None:
             dict_site = self._get_site()
             name = list(dict_site.keys())[0]
         else:
@@ -35,13 +34,19 @@ class Location():
                 name = list(dict_site.keys())[0]
             except ValueError:
                 pass
-        if latitude == 'None':
+        if latitude is None:
             latitude_str = re.split(r"[°'\"]",dict_site[name]['latitude'])[:3]
-            latitude = (int(latitude_str[0]), int(latitude_str[1]), float(latitude_str[2]))
-        if longitude == 'None':
+            latitude = (float(latitude_str[0]), float(latitude_str[1]), float(latitude_str[2]))
+        if isinstance(latitude, str) and latitude is not None:
+            latitude = angle_parser(latitude)
+        if longitude is None:
             longitude_str = re.split(r"[°'\"]",dict_site[name]['longitude'])[:3]
-            longitude = (int(longitude_str[0]), int(longitude_str[1]), float(longitude_str[2]))
-        if math.isnan(elevation):
+            longitude = (float(longitude_str[0]), float(longitude_str[1]), float(longitude_str[2]))
+        if isinstance(longitude, str) and longitude is not None:
+            longitude = angle_parser(longitude)
+        if isinstance(longitude, str) and longitude is not None:
+            longitude = angle_parser(longitude)
+        if elevation is None:
             elevation = dict_site[name]['elevation']
         self.name = name
         self.latitude = AngleDMS(latitude)

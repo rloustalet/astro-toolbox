@@ -45,7 +45,7 @@ class AngleDeg():
         tuple
             The angle values in dms
         """
-        deg_dms_result = (int(self.anglevalue),)
+        deg_dms_result = (math.copysign(int(self.anglevalue), self.anglevalue),)
         deg_dms_value = abs(self.anglevalue - int(self.anglevalue)) * 60
         deg_dms_result = deg_dms_result + (int(deg_dms_value),)
         deg_dms_value = abs(deg_dms_value - int(deg_dms_value)) * 60

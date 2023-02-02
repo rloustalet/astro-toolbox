@@ -10,6 +10,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 from rich.progress import track
 
 from astro_toolbox.angle.degrees import AngleDeg
+from astro_toolbox.angle.hms import AngleHMS
 from astro_toolbox.time.core import AstroDateTime
 from astro_toolbox.coordinates.location import Location
 from astro_toolbox.coordinates.equatorial import Equatorial
@@ -38,18 +39,25 @@ def cli(verbose):
 
     Parameters
     ----------
-    verbose : boolean
-        Display verbos or not
+    verbose : int
+        Display verbose or not with logging levels
     """
+    logging_levels = {1: logging.CRITICAL,
+                          2: logging.ERROR,
+                          3: logging.INFO,
+                          4: logging.DEBUG}
     if verbose:
-        logging.basicConfig(level=logging.INFO)
+        logging.basicConfig(level = logging_levels[verbose],
+                            format='%(levelname)s:astro_toolbox: %(message)s')
 
 @cli.command("airmass")
 @click.option("-d", "--date",
+            type=click.STRING,
             default=None,
             help='-d, --date the date default is None if None, today date')
 @click.option("-l", "--location",
-            default='None',
+            type=click.STRING,
+            default=None,
             help='-l --location the site name default is None if None last site used')
 @click.option("--bounds",
             nargs=2,
@@ -57,16 +65,15 @@ def cli(verbose):
             default=((18, 7)),
             help='--bounds to set airmass calculation hours bounds, default=(18, 31)')
 @click.option("-o", "--output",
+            type=click.STRING,
             default='',
             help='-o --output to set output path, default=\'\'')
 @click.argument('input_file_objects',
+            type=click.STRING,
             nargs=-1)
 def airmass_map_command(input_file_objects, output, location, date, bounds):
     """Airmass calculations
     """
-    if date is not None:
-        date = date.split('-')
-        date = ((val) for val in date)+(0, 0, 0)
     inputpath = False
     if len(input_file_objects) == 0:
         inputpath = pathlib.Path('observations.lst')
@@ -82,51 +89,56 @@ def airmass_map_command(input_file_objects, output, location, date, bounds):
         object_list = read_observatory_program(inputpath)
     ut_time = AstroDateTime(date)
     site = Location(location)
-    object_dict = get_multiple_informations(object_list, site, ut_time, bounds)
+    object_dict = get_multiple_informations(object_list, site, date, bounds)
     temporary_dict = {}
     pdf = PdfPages(pathlib.Path(output +
-                    f'Airmass_Map_{ut_time.get_day():02d}_{ut_time.get_month():02d}'
-                    +f'_{ut_time.get_year()}_@_{site.name}.pdf'))
+                    f'Airmass_Map_{ut_time.get_day():02.0f}_{ut_time.get_month():02.0f}'
+                    +f'_{ut_time.get_year():04.0f}_@_{site.name}.pdf'))
     for count, key in track(enumerate(object_dict), description='Plotting maps...'):
         temporary_dict.update({key:object_dict[key]})
         if count == len(object_dict)-1 or ((count+1)%50 == 0):
-            pdf.savefig(airmas_map(temporary_dict, site, ut_time, bounds))
+            pdf.savefig(airmas_map(temporary_dict, site, date, bounds))
             temporary_dict = {}
     del temporary_dict
     pdf.close()
+    logging.info(f'Airmass: {ut_time.get_day():02.0f}/{ut_time.get_month():02.0f}'
+                +f'/{ut_time.get_year():04.0f} UT @ {site.name}')
 
 @cli.command('info')
-@click.argument('object_name')
-@click.option("-d", "--date",
+@click.argument('objects_list',
+                nargs=-1,
+                type=click.STRING)
+@click.option("-d", "--datetime",
+            type=click.STRING,
             default=None,
-            help='-d, --date the date default is None if None, today date')
+            help='-d, --datetime the date default is None if None, now')
 @click.option("-l", "--location",
+            type=click.STRING,
             default=None,
             help='-l --location the site name default is None if None last site used')
-def info_command(object_name, date, location):
+def info_command(objects_list, datetime, location):
     """Get Simbad inormations
     """
-    if date is not None:
-        date = date.split('-')
-        date = ((val) for val in date)+(0, 0, 0)
-    site = Location(name=location)
-    ut_time = AstroDateTime(date)
-    if object_name.lower() in [key.lower() for key in DICT_OBJECTS]:
-        obj = Horizons(object_name, ut_time, site)
-        alpha, delta = obj.get_coord()
-        obj_name = obj.get_name()
-        obj_magnitude = obj.get_magnitude()
-    else:
-        obj = Simbad(object_name)
-        alpha, delta = obj.get_coord()
-        obj_name = obj.get_name()
-        obj_magnitude = obj.get_magnitude()
-    coord = Equatorial(alpha=alpha, delta=delta, name=obj_name, magnitude=obj_magnitude)
-    coord.compute_on_date_coord(ut_time.get_year())
-    gamma = ut_time.get_lst(site)
-    click.echo(f'{coord}' +
-               f'X = {coord.calculate_airmass(gamma=gamma, location=site):.2f}' +
-               f'@ {site.name}')
+    for object_name in objects_list:
+        site = Location(name=location)
+        ut_time = AstroDateTime(datetime)
+        if object_name.lower() in [key.lower() for key in DICT_OBJECTS]:
+            obj = Horizons(object_name, ut_time, site)
+            alpha, delta = obj.get_equatorial_coord()
+            obj_name = obj.get_name()
+            obj_magnitude = obj.get_magnitude()
+        else:
+            obj = Simbad(object_name)
+            alpha, delta = obj.get_equatorial_coord()
+            obj_name = obj.get_name()
+            obj_magnitude = obj.get_magnitude()
+        coord = Equatorial(alpha=alpha, delta=delta, name=obj_name, magnitude=obj_magnitude)
+        coord.compute_on_date_coord(ut_time.get_year())
+        gamma = ut_time.get_lst(site)
+        click.echo(f'{coord}' +
+                f' HA = {AngleHMS(coord.get_hourangle(gamma=gamma))}'
+                f' X = {coord.calculate_airmass(gamma=gamma, location=site):.2f}' +
+                f' @ {site.name}')
 
 @cli.command('location')
 @click.argument('location_name')
@@ -185,7 +197,7 @@ def location_command(location_name, add, delete, update):
             value_flag = True
             if ('°' and "'") in value:
                 coord_str = re.split(r"[°']",value)[:3]
-                coords[count] = (int(coord_str[0]), int(coord_str[1]), float(coord_str[2]))
+                coords[count] = tuple(float(coord_val) for coord_val in coord_str)
                 value_flag = False
             elif '.' in value and not ('°' and "'") in value:
                 coords[count] = AngleDeg(float(value)).degtodms
@@ -196,10 +208,14 @@ def location_command(location_name, add, delete, update):
                 raise ValueError((f"{value} Elevation value is not a number"))
         return coords
     if add:
-        latitude = str(input("Enter latitude in degrees (00.00) or in dms (00°00'00''): "))
-        longitude = str(input("Enter longitude in degrees (00.00) or in dms (00°00'00''): "))
+        latitude = str(input("Enter latitude in degrees (00.00) or in dms (00°00'00\"): "))
+        if '.' in latitude and ('°' and "'") not in latitude:
+            latitude = AngleDeg(float(latitude)).degtodms()
+        longitude = str(input("Enter longitude in degrees (00.00) or in dms (00°00'00\"): "))
+        if '.' in longitude and ('°' and "'") not in longitude:
+            longitude = AngleDeg(float(longitude)).degtodms()
         elevation = float(input("Enter elevation in meters: ") or 0)
-        coords = _verify_coords(latitude=latitude, longitude=longitude, elevation=elevation)
+        coords = (latitude, longitude, elevation)
         Location(location_name, coords[0], coords[1], elevation).save_site()
 
     if delete:
@@ -229,17 +245,16 @@ def location_command(location_name, add, delete, update):
 
 @cli.command('polaris')
 @click.option("-d", "--datetime",
+            type=click.STRING,
             default=None,
-            help='-d, --datetime the date default is None if None, today date')
+            help='-d, --datetime the date and time default is None if None, now')
 @click.option("-l", "--location",
-            default='None',
+            type=click.STRING,
+            default=None,
             help='-l --location the site name default is None if None last site used')
 def polaris_command(location, datetime):
     """Polaris position calculation
     """
-    if datetime is not None:
-        datetime =  re.split(r"[-:]",datetime)
-        datetime = ((val) for val in datetime)
     location = Location(location)
     if location.latitude.dmstodeg() > 0:
         polarstar_plt_northern(location, datetime)

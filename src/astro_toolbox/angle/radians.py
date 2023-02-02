@@ -46,7 +46,7 @@ class AngleRad():
             The angle values in dms
         """
         rad_dms_value = self.anglevalue*180/math.pi
-        rad_dms_result = ((int(rad_dms_value)), )
+        rad_dms_result = (math.copysign(int(rad_dms_value), rad_dms_value), )
         rad_dms_value = abs(rad_dms_value - int(rad_dms_value)) * 60
         rad_dms_result = rad_dms_result + (int(rad_dms_value),)
         rad_dms_value = abs(rad_dms_value - int(rad_dms_value)) * 60

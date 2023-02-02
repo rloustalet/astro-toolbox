@@ -38,7 +38,7 @@ class Simbad():
             raise ValueError("Object doesn't exist")
         return result
 
-    def get_coord(self):
+    def get_equatorial_coord(self):
         """Get RA/DEC aobject coord.
 
         Returns

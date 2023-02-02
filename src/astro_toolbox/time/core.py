@@ -3,10 +3,11 @@
 import math
 import datetime
 from astro_toolbox.coordinates.location import Location
+from astro_toolbox.utils.strparser import angle_parser
 class AstroDateTime():
     """This module contain AngleRad class
     """
-    def __init__(self, ut_time: tuple = None):
+    def __init__(self, ut_time: tuple | str = None):
         """Constructor method
 
         Parameters
@@ -16,6 +17,10 @@ class AstroDateTime():
         """
         if ut_time is None:
             ut_time = datetime.datetime.now(datetime.timezone.utc).timetuple()
+        elif isinstance(ut_time, str):
+            ut_time = angle_parser(ut_time)
+        if ut_time is not None and len(ut_time) == 3:
+            ut_time += (12, 0, 0)
         self.date = (ut_time[0], ut_time[1], ut_time[2])
         self.time = (ut_time[3], ut_time[4], ut_time[5])
 

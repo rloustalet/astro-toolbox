@@ -6,21 +6,31 @@ from astro_toolbox.angle.dms import AngleDMS
 from astro_toolbox.angle.radians import AngleRad
 from astro_toolbox.angle.degrees import AngleDeg
 from astro_toolbox.coordinates.location import Location
+from astro_toolbox.utils.strparser import angle_parser
+
 class Horizontal():
     """This class represent horizontals coordinates
     """
-    def __init__(self, azimuth: tuple, altitude: tuple, name: str = None, magnitude: float = None):
+    def __init__(self, azimuth:
+                tuple | str,
+                altitude: tuple | str,
+                name: str = None,
+                magnitude: float = None):
         """Constructor method
 
         Parameters
         ----------
-        altitude : tuple
+        altitude : tuple | str
             Altitude of the object a tuple (°,','')
-        azimuth : tuple
+        azimuth : tuple | str
             Azimuth of the object a tuple (°,','')
         name : str, optional
             Object name, by default None
         """
+        if isinstance(azimuth, str):
+            azimuth = angle_parser(azimuth)
+        if isinstance(altitude, str):
+            altitude = angle_parser(altitude)
         self.name = name
         self.azimuth = AngleDMS(azimuth)
         self.altitude = AngleDMS(altitude)
@@ -50,10 +60,10 @@ class Horizontal():
         """
         altitude = self.altitude
         if altitude < 0:
-            altitude = altitude + 360
+            return 40
         return abs(1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * (altitude) ** 1.1)).degtorad())))
 
-    def to_equatorial(self, gamma: tuple, location: Location):
+    def to_equatorial(self, gamma: tuple | str, location: Location):
         """Horizontal to Equation converting method
 
         .. math:: \\delta=sin^{-1}(sin \\Phi sin h-cos \\Phi cos h cos A)
@@ -72,6 +82,8 @@ class Horizontal():
         Equatorial
             Equatorial coordinates of the object
         """
+        if isinstance(gamma, str):
+            gamma = angle_parser(gamma)
         gamma_angle =  AngleHMS(gamma)
         lat = location.latitude.dmstorad()
         delta = AngleRad(math.asin(math.sin(lat) *

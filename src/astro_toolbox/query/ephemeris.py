@@ -6,6 +6,7 @@ import urllib.request as urllib
 
 from astro_toolbox.time.core import AstroDateTime
 from astro_toolbox.coordinates.location import Location
+from astro_toolbox.utils.strparser import angle_parser
 
 DICT_OBJECTS = {
                 'Sun': 10,
@@ -23,7 +24,7 @@ DICT_OBJECTS = {
 class Horizons():
     """JPL Horizons ephemeris request and parsing
     """
-    def __init__(self, object_name: str | int, time: AstroDateTime, location: Location):
+    def __init__(self, object_name: str | int, time: tuple | str, location: Location):
         """Constructor method
 
         Parameters
@@ -35,8 +36,10 @@ class Horizons():
         location : Location
             Observer location as Location class
         """
+        if isinstance(time, str):
+            time = angle_parser(time)
         self.name = object_name
-        self.time = time
+        self.time = AstroDateTime(time)
         self.location = location
         self.object_data = self._get_data()
 
@@ -74,7 +77,7 @@ class Horizons():
             result = json.loads(response.read().decode('utf-8'))['result']
         return re.split(r"\*+",result)
 
-    def get_coord(self):
+    def get_equatorial_coord(self):
         """Get equatorial coordinates from JPL Horizons
 
         Returns

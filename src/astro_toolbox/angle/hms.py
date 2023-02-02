@@ -23,7 +23,7 @@ class AngleHMS():
         string
             Return a class representative string
         """
-        return f'{self.anglevalue[0]:02d}h{self.anglevalue[1]:02d}m{self.anglevalue[2]:05.2f}s'
+        return f'{self.anglevalue[0]:02.0f}h{self.anglevalue[1]:02.0f}m{self.anglevalue[2]:05.2f}s'
 
     def hmstodeg(self):
         """HMS to Degrees converting method

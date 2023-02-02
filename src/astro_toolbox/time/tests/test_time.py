@@ -15,4 +15,4 @@ def test_get_gmst():
     assert ut_time.get_gmst() == (7, 36, approx(45.9, rel=1e-2))
 
 def test_get_lst():
-    assert ut_time.get_lst(location) == (7, 36, approx(46, rel=1e-2))
+    assert ut_time.get_lst(location) == (7, 36, approx(45.32, rel=1e-2))

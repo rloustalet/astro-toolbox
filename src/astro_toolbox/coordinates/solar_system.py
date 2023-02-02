@@ -6,6 +6,7 @@ import pkg_resources
 
 from astro_toolbox.angle.radians import AngleRad
 from astro_toolbox.time.core import AstroDateTime
+from astro_toolbox.utils.strparser import angle_parser
 
 PATH = pkg_resources.resource_filename('astro_toolbox', 'coordinates/data/')
 
@@ -14,9 +15,8 @@ class Ephemeris():
 
     Orbital elements calculated by JPL.
 
-    This
     """
-    def __init__(self, name: str, time: AstroDateTime):
+    def __init__(self, name: str, time: tuple | str):
         """Constructor method
 
         Parameters
@@ -26,9 +26,11 @@ class Ephemeris():
         time : AstroDateTime
             Date and time as AstroDateTime class
         """
+        if isinstance(time, str):
+            time = angle_parser(time)
         self.name = name
-        self.time = time
-        self.n_centuries = (time.get_jd() - 2451545)/36525
+        self.time = AstroDateTime(time)
+        self.n_centuries = (self.time.get_jd() - 2451545)/36525
         if self.name.lower() == 'sun':
             self.orbital_elements = self._get_orbital_elements('EM Bary')
         else:
