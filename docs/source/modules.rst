@@ -1,4 +1,4 @@
-Astro toolbox
+astro_toolbox
 ===
 
 .. toctree::
