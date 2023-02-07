@@ -6,7 +6,6 @@ import urllib.request as urllib
 
 from astro_toolbox.time.core import AstroDateTime
 from astro_toolbox.coordinates.location import Location
-from astro_toolbox.utils.strparser import angle_parser
 
 DICT_OBJECTS = {
                 'Sun': 10,
@@ -22,39 +21,48 @@ DICT_OBJECTS = {
                 }
 
 class Horizons():
-    """JPL Horizons ephemeris request and parsing
+    """JPL Horizons ephemeris request and parsing.
+
+    Attributes
+    ----------
+    name : str | int
+        The object name or integer reference according to JPL Horizons.
+    datetime : AstroDateTime
+        Date and time as AstroDateTime class.
+    location : Location
+        Observer location as Location class.
+    object_data : list
+        List which contains results from Horizons.
     """
-    def __init__(self, object_name: str | int, time: tuple | str, location: Location):
+    def __init__(self, object_name: str | int, datetime: tuple | str, location: Location):
         """Constructor method
 
         Parameters
         ----------
         object_name : str | int
-            The object name or integer reference according to JPL Horizons
-        time : AstroDateTime
-            Date and time as AstroDateTime class
+            The object name or integer reference according to JPL Horizons.
+        datetime : tuple | str
+            Date and time as tuple or str (``dd:dd:dd.dd`` or ``ddhddmdd.dds``).
         location : Location
             Observer location as Location class
         """
-        if isinstance(time, str):
-            time = angle_parser(time)
         self.name = object_name
-        self.time = AstroDateTime(time)
+        self.datetime = AstroDateTime(datetime)
         self.location = location
         self.object_data = self._get_data()
 
     def _get_data(self):
-        """JPL data query method
+        """JPL data query method.
 
         Returns
         -------
         list
-            A list containing the request result
+            A list containing the request result.
 
         Raises
         ------
         ValueError
-            Unknown object
+            Unknown object.
         """
         if isinstance(self.name, int):
             object_ref = self.name
@@ -66,7 +74,7 @@ class Horizons():
             raise ValueError ("Object doesn't exist verify value")
         dict_parameters = {'COMMAND': object_ref,
                             'SITE_COORD': 500,
-                            'TLIST': f"{self.time.get_jd()}"
+                            'TLIST': f"{self.datetime.get_jd()}"
                             }
         link = ("https://ssd.jpl.nasa.gov/api/horizons.api?" +
                 "format=json&OBJ_DATA=%27NO%27&QUANTITIES=%271,9%27")
@@ -78,12 +86,12 @@ class Horizons():
         return re.split(r"\*+",result)
 
     def get_equatorial_coord(self):
-        """Get equatorial coordinates from JPL Horizons
+        """Get equatorial coordinates from JPL Horizons.
 
         Returns
         -------
         tuple
-            Equatorial coordinates right_ascencion as HMS angle and declination as DMS angle
+            Equatorial coordinates right_ascension as HMS angle and declination as DMS angle.
         """
         result = self.object_data[6]
         result = re.split(r"\s",re.split(r"\s{2,}",result)[2])
@@ -91,24 +99,24 @@ class Horizons():
                 (int(result[3]), int(result[4]), float(result[5])))
 
     def get_magnitude(self):
-        """Get magnitude from JPL Horizons
+        """Get magnitude from JPL Horizons.
 
         Returns
         -------
         int
-            Magnitude
+            Magnitude.
         """
         result = self.object_data[6]
         result = re.split(r"\s",re.split(r"\s{2,}",result)[3])[0]
         return float(result)
 
     def get_name(self):
-        """Get object name from JPL Horizons
+        """Get object name from JPL Horizons.
 
         Returns
         -------
         str
-            Object name
+            Object name.
         """
         result = self.object_data[2]
         result = re.findall(r"Target body name: (\w+)", result)

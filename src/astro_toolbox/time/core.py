@@ -1,4 +1,4 @@
-"""This module contain AstroDateTime class
+"""This module contains AstroDateTime class
 """
 import math
 import datetime

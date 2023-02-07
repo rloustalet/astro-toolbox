@@ -1,33 +1,41 @@
 """
-This module contain AngleHMS class
+This module contains AngleHMS class
 """
 import math
+from astro_toolbox.utils.strparser import angle_parser
 class AngleHMS():
-    """AngleHMS define a hms angle with his conversions
+    """AngleHMS define a hms angle with his conversions.
+
+    Parameters
+    ----------
+    anglevalue : tuple
+        The angle value as floats in tuple.
     """
-    def __init__(self, anglevalue: tuple):
+    def __init__(self, anglevalue: tuple | str):
         """Constructor method
 
         Parameters
         ----------
-        anglevalue : tuple
-            The angle value in hms
+        anglevalue : tuple | str
+            The angle value in hms as a tuple of float or a string (``ddhddmdds`` or ``dd:dd:dd``).
         """
+        if isinstance(anglevalue, str):
+            anglevalue = angle_parser(anglevalue)
         self.anglevalue = anglevalue
 
     def __repr__(self):
-        """Representative method
+        """Representative method.
 
         Returns
         -------
         string
-            Return a class representative string
+            Return a class representative string.
         """
         return f'{self.anglevalue[0]:02.0f}h{self.anglevalue[1]:02.0f}m{self.anglevalue[2]:05.2f}s'
 
     def hmstodeg(self):
-        """HMS to Degrees converting method
-        This method return angle in degrees from angle in hms
+        """HMS to Degrees converting method.
+        This method return angle in degrees from angle in hms.
 
         Returns
         -------
@@ -39,12 +47,12 @@ class AngleHMS():
             self.anglevalue[2]/3600)*180/12)
 
     def hmstorad(self):
-        """HMS to Radians converting method
-        This method return angle in radians from angle in hms
+        """HMS to Radians converting method.
+        This method return angle in radians from angle in hms.
 
         Returns
         -------
         float
-            The angle value in radians
+            The angle value in radians.
         """
         return self.hmstodeg() * math.pi/180

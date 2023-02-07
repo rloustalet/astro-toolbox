@@ -12,23 +12,23 @@ from astro_toolbox.coordinates.equatorial import Equatorial
 from astro_toolbox.query.ephemeris import Horizons
 
 def sun_impact(lines, site, date, bounds):
-    """Function which polts sun impact
+    """Function which plots sun impact.
 
     Parameters
     ----------
     lines : int
-        number of lines ploted
+        number of lines plot.
     site : Location
-        location object
-    ut_time : tuple | str
-        universal time
+        Location object.
+    date : tuple | str
+        Date to plot sun impact.
     bounds : list
-        List of length 2 containing lower and upper time bounds
+        List of length 2 containing lower and upper time bounds.
 
     Returns
     -------
     list
-        List of matplotlib.pyplot Rectangles objects
+        List of matplotlib.pyplot Rectangles objects.
     """
     ut_time = AstroDateTime(date)
     sun = Horizons('Sun', date, site)
@@ -52,7 +52,18 @@ def sun_impact(lines, site, date, bounds):
     return sun_rectangles_list
 
 def moon_times(lines, site, date, bounds):
-    """Sun observational impact
+    """Moon observational impact.
+
+    Parameters
+    ----------
+    lines : int
+        number of lines plot.
+    site : Location
+        Location object.
+    date : tuple | str
+        Date to plot moon impact.
+    bounds : list
+        List of length 2 containing lower and upper time bounds.
     """
     moon = Horizons('Moon', date, site)
     moon = Equatorial(name='Moon',
@@ -94,7 +105,18 @@ def airmas_map(object_dict,
                 site: Location,
                 date: tuple|str,
                 bounds: tuple=(18,31)):
-    """Airmass calculations
+    """Airmass calculations.
+
+    Parameters
+    ----------
+    object_dict : dict
+        Dictionary containing object name ans theirs associated equatorial class.
+    site : Location
+        Location object.
+    date : tuple | str
+        Date to plot airmass map.
+    bounds : tuple
+        List of length 2 containing lower and upper time bounds.
     """
     ut_time = AstroDateTime(date)
     bounds = list(bounds)
@@ -139,7 +161,14 @@ def airmas_map(object_dict,
     return fig
 
 def polarstar_plt_northern(location: Location, datetime: tuple | str=None):
-    """Polaris Polar Finder possiton for northern emisphere
+    """Polaris Polar Finder position for northern hemisphere.
+
+    Parameters
+    ----------
+    site : Location
+        Location object.
+    datetime : tuple | str
+        Date and time to plot Polaris position.
     """
     ut_time = AstroDateTime(datetime)
     fig, axis = plt.subplots(figsize=(5, 5), num='Polaris position')
@@ -175,7 +204,14 @@ def polarstar_plt_northern(location: Location, datetime: tuple | str=None):
     plt.show()
 
 def polarstar_plt_southern(location: Location, datetime: tuple=None):
-    """Polaris Polar Finder possiiton for souhern emisphere
+    """Polaris Polar Finder position for southern hemisphere
+
+    Parameters
+    ----------
+    site : Location
+        Location object.
+    datetime : tuple | str
+        Date and time to plot Polaris australis position.
     """
     ut_time = AstroDateTime(datetime)
     fig, axis = plt.subplots(figsize=(8, 8), num='Polaris position')

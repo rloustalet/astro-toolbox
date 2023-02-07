@@ -18,12 +18,12 @@ def read_observatory_program(input_file: pathlib.Path):
     Parameters
     ----------
     input_file : pathlib.Path
-        input file path.
+        Input file path.
 
     Returns
     -------
-    Location, AstroDateTime, dict
-        Location class, DateTime as AstroDateTime class and object dictionnary
+    object_list : list
+        Objects list.
     """
     with open(input_file, 'r', encoding="utf-8") as file:
         object_list = file.readlines()
@@ -34,13 +34,13 @@ def read_observatory_program(input_file: pathlib.Path):
     return object_list
 
 def get_multiple_informations(object_list, site, datetime, bounds):
-    """Getting multiple objects equatorials informations
+    """Getting multiple objects equatorial information.
     """
     bounds = list(bounds)
     if bounds[1] <= bounds[0]:
         bounds[1] = bounds[1] + 24
     object_dict = {}
-    for name in track(object_list, description="Quering informations..."):
+    for name in track(object_list, description="Querying information..."):
         try:
             if name.lower() in list(key.lower() for key in DICT_OBJECTS):
                 obj = Horizons(name, datetime, site)

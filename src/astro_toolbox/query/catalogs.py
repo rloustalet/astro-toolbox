@@ -1,18 +1,25 @@
-"""This module contain Simbad Class.
+"""This module contains Simbad Class.
 """
 import urllib.request as urllib
 import xmltodict
 
 class Simbad():
     """This class allow to read astronomical catalogs over internet.
+
+    Attributes
+    ----------
+    object_name : str
+
     """
     def __init__(self,object_name: str):
-        """Construcotr method.
+        """Constructor method.
 
         Parameters
         ----------
         object_name : str
-            Astronomical object name
+            Astronomical object name.
+        result : dict
+            The object dictionary returned from Simbad.
         """
         object_name = object_name.replace(' ', '+')
         self.result = self._get_datas(object_name)
@@ -23,12 +30,12 @@ class Simbad():
         Parameters
         ----------
         object_name : str
-            Astronomical object name
+            Astronomical object name.
 
         Returns
         -------
         dict
-            The caractheristics object dictionnary
+            The object dictionary returned from Simbad.
         """
         link = 'https://cds.unistra.fr/cgi-bin/nph-sesame/-oIfx?'+object_name
         request=urllib.Request(link)
@@ -39,12 +46,12 @@ class Simbad():
         return result
 
     def get_equatorial_coord(self):
-        """Get RA/DEC aobject coord.
+        """Get RA/DEC object coordinates.
 
         Returns
         -------
         Tuple
-            Tuple wich contain two tuples RA coord and DEC.
+            Tuple which contain two tuples RA/DEC coordinates.
         """
         alpha, delta = self.result['Resolver']['jpos'].split(' ')
         alpha = alpha.split(':')
@@ -58,7 +65,7 @@ class Simbad():
         Returns
         -------
         str
-            Object name from Simbad
+            Object name from Simbad.
         """
         return self.result['name']
 

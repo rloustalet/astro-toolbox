@@ -1,9 +1,14 @@
 """
-This module contain AngleDeg class
+This module contains AngleDeg class
 """
 import math
 class AngleDeg():
-    """AngleDeg define a Degrees angle with his conversions
+    """AngleDeg define a Degrees angle with its conversions.
+
+    Attributes
+    ----------
+    anglevalue: float
+        The angle value in degrees.
     """
     def __init__(self, anglevalue: float):
         """Constructor method
@@ -11,39 +16,39 @@ class AngleDeg():
         Parameters
         ----------
         anglevalue : float
-            The angle value in degrees
+            The angle value in degrees.
         """
         self.anglevalue = anglevalue
 
     def __repr__(self):
-        """Representative method
+        """Representative method.
 
         Returns
         -------
         string
-            Return a class representative string
+            Return a class representative string.
         """
         return f'{self.anglevalue}°'
 
     def degtorad(self):
-        """Degrees to Radians converting method
-        This method return angle in degrees from angle in radians
+        """Degrees to Radians converting method.
+        This method returns angle in radians from angle in degrees.
 
         Returns
         -------
         float
-            The angle value in radians
+            The angle value in radians.
         """
         return self.anglevalue*math.pi/180
 
     def degtodms(self):
-        """Degrees to DMS converting method
-        This method return angle in dms from angle in degrees
+        """Degrees to DMS converting method.
+        This method returns angle in dms from angle in degrees.
 
         Returns
         -------
         tuple
-            The angle values in dms
+            The angle values in dms.
         """
         deg_dms_result = (math.copysign(int(self.anglevalue), self.anglevalue),)
         deg_dms_value = abs(self.anglevalue - int(self.anglevalue)) * 60
@@ -53,13 +58,13 @@ class AngleDeg():
         return deg_dms_result
 
     def degtohms(self):
-        """Degrees to HMS converting method
-        This method return angle in hms from angle in degrees
+        """Degrees to HMS converting method.
+        This method returns angle in hms from angle in degrees.
 
         Returns
         -------
         tuple
-            The angle values in hms
+            The angle values in hms.
         """
         deg_hms_value = (self.anglevalue*12/180)%24
         deg_hms_result = (int(deg_hms_value),)

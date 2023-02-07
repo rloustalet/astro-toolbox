@@ -1,49 +1,54 @@
 """
-This module contain AngleRad class
+This module contains AngleRad class
 """
 import math
 class AngleRad():
-    """AngleRad define a radian angle with his conversions
+    """AngleRad define a radian angle with his conversions.
+
+    Attributes
+        ----------
+        anglevalue : float
+            The angle value in radians.
     """
     def __init__(self, anglevalue: float):
-        """Constructor method
+        """Constructor method.
 
         Parameters
         ----------
         anglevalue : float
-            The angle value in radians
+            The angle value in radians.
         """
         self.anglevalue = anglevalue
 
     def __repr__(self):
-        """Representative method
+        """Representative method.
 
         Returns
         -------
         string
-            Return a class representative string
+            Return a class representative string.
         """
         return f'{self.anglevalue}rad'
 
     def radtodeg(self):
-        """Radians to Degrees converting method
-        This method return angle in radians from angle in degrees
+        """Radians to Degrees converting method.
+        This method returns angle in radians from angle in degrees.
 
         Returns
         -------
         float
-            The angle value in degrees
+            The angle value in degrees.
         """
         return self.anglevalue*180/math.pi
 
     def radtodms(self):
-        """Radians to DMS converting method
-        This method return angle in dms from angle in radians
+        """Radians to DMS converting method.
+        This method returns angle in dms from angle in radians.
 
         Returns
         -------
         tuple
-            The angle values in dms
+            The angle values in dms.
         """
         rad_dms_value = self.anglevalue*180/math.pi
         rad_dms_result = (math.copysign(int(rad_dms_value), rad_dms_value), )
@@ -54,13 +59,13 @@ class AngleRad():
         return rad_dms_result
 
     def radtohms(self):
-        """Radians to HMS converting method
-        This method return angle in hms from angle in radians
+        """Radians to HMS converting method.
+        This method returns angle in hms from angle in radians.
 
         Returns
         -------
         tuple
-            The angle values in hms
+            The angle values in hms.
         """
         rad_hms_value = (self.anglevalue*12/math.pi)%24
         rad_hms_result = (int(rad_hms_value),)

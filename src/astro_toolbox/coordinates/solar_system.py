@@ -6,53 +6,56 @@ import pkg_resources
 
 from astro_toolbox.angle.radians import AngleRad
 from astro_toolbox.time.core import AstroDateTime
-from astro_toolbox.utils.strparser import angle_parser
 
 PATH = pkg_resources.resource_filename('astro_toolbox', 'coordinates/data/')
 
 class Ephemeris():
-    """Ephemeris class computing system solar objetcs positon in differents rerentials
-
+    """Ephemeris class computing system solar objects positions in different referential.
     Orbital elements calculated by JPL.
 
+    Attributes
+    ----------
+    name : str
+        Planet name.
+    n_centries : float
+        Number of centuries from J2000.
+    orbital_elements : dict
+        Dictionary which contains object orbital elements for current date.
     """
-    def __init__(self, name: str, time: tuple | str):
+    def __init__(self, name: str, datetime: tuple | str):
         """Constructor method
 
         Parameters
         ----------
         name : str
-            The planet name
-        time : AstroDateTime
-            Date and time as AstroDateTime class
+            Planet name.
+        datetime : tuple | str
+            Date and time as tuple or str (``dd:dd:dd.dd`` or ``ddhddmdd.dds``).
         """
-        if isinstance(time, str):
-            time = angle_parser(time)
         self.name = name
-        self.time = AstroDateTime(time)
-        self.n_centuries = (self.time.get_jd() - 2451545)/36525
+        self.n_centuries = (AstroDateTime(datetime).get_jd() - 2451545)/36525
         if self.name.lower() == 'sun':
             self.orbital_elements = self._get_orbital_elements('EM Bary')
         else:
             self.orbital_elements = self._get_orbital_elements(self.name)
 
     def _get_orbital_elements(self, name: str):
-        """Get on date orbital elements
+        """Get on date orbital elements.
 
         Parameters
         ----------
         name : str
-            Object name
+            Object name.
 
         Returns
         -------
         dict
-            Dictionnary containing object orbital elements for current date
+            Dictionary which contains object orbital elements for current date.
 
         Raises
         ------
         ValueError
-            Unknown Object
+            Unknown Object.
         """
         with open(PATH  + 'orbital_elements.json', encoding="utf-8") as json_file:
             dict_orbital_elements = json.load(json_file)
@@ -95,9 +98,8 @@ class Ephemeris():
         return orbital_elements
 
     def compute_earth_position(self):
-        """Sun position from earth
-
-        Distance and true anomaly are computed by _compute_true_anomaly_distance method
+        """Sun position from earth.
+        Distance and true anomaly are computed by _compute_true_anomaly_distance method.
 
         lonearth = v + w
 
@@ -117,7 +119,7 @@ class Ephemeris():
         return x_sun, y_sun
 
     def compute_true_anomaly_distance(self, **orbital_elements):
-        """Compute planets distance and true anomaly
+        """Compute object distance and true anomaly.
 
         .. math:: xv = a(cos(E) - e)
         .. math:: yv = a\\sqrt{1 - e^2} * sin(E)
@@ -127,7 +129,7 @@ class Ephemeris():
         Returns
         -------
         tuple
-            Tuple containing true anomaly and distance
+            Tuple which contains true anomaly and distance.
         """
         x_true_anomaly = orbital_elements['a'] * (math.cos(orbital_elements['E']*math.pi/180) -
                                                         orbital_elements['e'])
@@ -137,7 +139,7 @@ class Ephemeris():
                 math.sqrt(x_true_anomaly**2 + y_true_anomaly**2))
 
     def compute_ecliptic_position(self, **orbital_elements):
-        """Compute the heliocentric ecliptic position of the object
+        """Compute the heliocentric object ecliptic position.
 
         .. math:: xh = r*(cos(\\Omega)*cos(v+\\omega)-sin(\\Omega)*sin(v+\\omega)*cos(I))
         .. math:: yh = r*(sin(\\Omega)*cos(v+\\omega)+cos(\\Omega)*sin(v+\\omega)*cos(I))
@@ -146,7 +148,7 @@ class Ephemeris():
         Returns
         -------
         tuple
-            Tuple containing the position of the object around the sun
+            Tuple which contains object position around the sun.
         """
         true_anomaly, radius = self.compute_true_anomaly_distance(**orbital_elements)
         true_longitude = (true_anomaly*180/math.pi + orbital_elements['perihelion'])
@@ -165,18 +167,18 @@ class Ephemeris():
         return x_ecliptic, y_ecliptic, z_ecliptic
 
     def compute_geocentric_position(self, **orbital_elements):
-        """Compute geocentric position of the object
+        """Compute object geocentric position.
 
         .. math:: xg = xh + xs
         .. math:: yg = yh + ys
         .. math:: zg = zh
 
-        Where, xs and ys are the geocentric earth coordinates
+        Where, xs and ys are the geocentric earth coordinates.
 
         Returns
         -------
         tuple
-            Tuple containing the geocentric position
+            Tuple which contains the geocentric position.
         """
         (x_heliocentric,
         y_heliocentric,
@@ -188,7 +190,7 @@ class Ephemeris():
         return x_geocentric, y_geocentric, z_geocentric
 
     def compute_equatorial_position(self, **orbital_elements):
-        """Compute equatorial position
+        """Compute object equatorial position.
 
         For the sun:
 
@@ -211,7 +213,7 @@ class Ephemeris():
         Returns
         -------
         tuple
-            Tuple containing the geocentric position
+            Tuple which contains the geocentric position.
         """
         ecliptic_obliquity = self.calculate_ecliptic_obliquity()*math.pi/180
         if self.name.lower() == 'sun':
@@ -236,12 +238,12 @@ class Ephemeris():
         return(x_equatorial, y_equatorial, z_equatorial)
 
     def calculate_ecliptic_obliquity(self):
-        """Calculate on date ecliptic obliquity
+        """Calculate on date ecliptic obliquity.
 
         Returns
         -------
         float
-            Ecliptic obliquity in degrees
+            Ecliptic obliquity in degrees.
         """
         return (23.439279444444445 -
                 0.013010213611111111 * self.n_centuries**1 -
@@ -251,7 +253,7 @@ class Ephemeris():
                 1.2055555555555555e-11 * self.n_centuries**5)
 
     def get_equatorial_coord(self):
-        """Calculate equatorial coordinates
+        """Calculate equatorial coordinates.
 
         .. math:: RA = atan2(ye, xe)
         .. math:: DEC = atan2(ze, \\sqrt{xe^2 + ye^2})
@@ -259,7 +261,7 @@ class Ephemeris():
         Returns
         -------
         tuple
-            Tuple containing right-ascencion as HMS angle and declination as DMS angle
+            Tuple which contains right-ascension as HMS angle and declination as DMS angle.
         """
         (x_equatorial,
         y_equatorial,

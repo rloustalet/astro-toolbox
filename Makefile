@@ -1,8 +1,16 @@
-install:
+.PHONY: help
+
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+install: ## Install the package
 	pip install .
 
-uninstall:
+uninstall: ## Uninstall the package
 	pip uninstall astro_toolbox
 
-doc:
+doc: ## Generate Doc sphinx in tml
 	cd docs && make html
+
+build: ## Build the package
+	python3 -m build

@@ -2,17 +2,17 @@
 """
 import re
 def angle_parser(str_angle):
-    """string angle parser
+    """string angle parser.
 
     Parameters
     ----------
     str_anle : str
-        The angle value as str in format ()
+        The angle value as str in format (`dd:dd:dd.dd` `dd°dd'dd.dd"` `ddhddmdd.dds` or `dd.dd`)
 
     Returns
     -------
-    _type_
-        _description_
+    tuple | float
+        the angle in correct format depending on its unity
     """
     angle_list =  re.split(r"[\-:°'\"hms]",str_angle)
     if len(angle_list) == 1 and "." in angle_list[0]:

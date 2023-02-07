@@ -1,4 +1,4 @@
-"""This module create the console interface
+"""This module creates the console interface
 """
 import re
 import pathlib
@@ -72,7 +72,20 @@ def cli(verbose):
             type=click.STRING,
             nargs=-1)
 def airmass_map_command(input_file_objects, output, location, date, bounds):
-    """Airmass calculations
+    """Airmass calculations.
+
+    Parameters
+    ----------
+    input_file_objects : str
+        Multiple objects, directory or file (must contain '/' for path).
+    output : str
+        Outpt path, must contain '/' at the end.
+    location : str
+        Saved site name.
+    date : str
+        Specified date.
+    bounds : tuple
+        Tuple which contains night beginning bound and night ending bound.
     """
     inputpath = False
     if len(input_file_objects) == 0:
@@ -117,13 +130,21 @@ def airmass_map_command(input_file_objects, output, location, date, bounds):
             default=None,
             help='-l --location the site name default is None if None last site used')
 def info_command(objects_list, datetime, location):
-    """Get Simbad inormations
+    """Getting celestial objects information.
+
+    Parameters
+    ----------
+    objects_list : str
+        Multiple objects list.
+    datetime : str
+        Date and time
+    location : str
+       Saved site name.
     """
     for object_name in objects_list:
         site = Location(name=location)
-        ut_time = AstroDateTime(datetime)
         if object_name.lower() in [key.lower() for key in DICT_OBJECTS]:
-            obj = Horizons(object_name, ut_time, site)
+            obj = Horizons(object_name, datetime, site)
             alpha, delta = obj.get_equatorial_coord()
             obj_name = obj.get_name()
             obj_magnitude = obj.get_magnitude()
@@ -133,8 +154,8 @@ def info_command(objects_list, datetime, location):
             obj_name = obj.get_name()
             obj_magnitude = obj.get_magnitude()
         coord = Equatorial(alpha=alpha, delta=delta, name=obj_name, magnitude=obj_magnitude)
-        coord.compute_on_date_coord(ut_time.get_year())
-        gamma = ut_time.get_lst(site)
+        coord.compute_on_date_coord(AstroDateTime(datetime).get_year())
+        gamma = AstroDateTime(datetime).get_lst(site)
         click.echo(f'{coord}' +
                 f' HA = {AngleHMS(coord.get_hourangle(gamma=gamma))}'
                 f' X = {coord.calculate_airmass(gamma=gamma, location=site):.2f}' +
@@ -253,7 +274,14 @@ def location_command(location_name, add, delete, update):
             default=None,
             help='-l --location the site name default is None if None last site used')
 def polaris_command(location, datetime):
-    """Polaris position calculation
+    """Polaris position calculation.
+
+    Parameters
+    ----------
+    location : str
+        Saved site name.
+    datetime : str
+        Date and time.
     """
     location = Location(location)
     if location.latitude.dmstodeg() > 0:

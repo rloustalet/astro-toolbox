@@ -1,4 +1,4 @@
-"""This module contain Location class
+"""This module contains Location class
 """
 import re
 import json
@@ -9,21 +9,32 @@ from astro_toolbox.utils.strparser import angle_parser
 PATH = pkg_resources.resource_filename('astro_toolbox', 'coordinates/data/')
 class Location():
     """This class represent the observer location
+
+    Attributes
+    ----------
+    name : str
+        Location name.
+    latitude : AngleDMS
+        Location latitude.
+    longitude : AngleDMS
+        Location longitude.
+    elevation : float
+        Location elevation.
     """
     def __init__(self, name: str = None, latitude: tuple | str = None,
                 longitude: tuple | str = None, elevation: float = None):
-        """Constructor method
+        """Constructor method.
 
         Parameters
         ----------
         name : str
-            Location name
+            Location name.
         latitude : tuple | str
-            Location latitude tuple (°, ', '')
+            Location latitude tuple or str (``dd:dd:dd.dd`` or ``dd°dd'dd.dd"``).
         longitude : tuple | str
-            Location longitude tuple (°, ', '')
+            Location longitude tuple or str (``dd:dd:dd.dd`` or ``dd°dd'dd.dd"``).
         elevation : float, optional
-            Loaction elevation (m), by default 0.0
+            Location elevation (m), by default 0.0.
         """
         if name is None:
             dict_site = self._get_site()
@@ -42,8 +53,6 @@ class Location():
         if longitude is None:
             longitude_str = re.split(r"[°'\"]",dict_site[name]['longitude'])[:3]
             longitude = (float(longitude_str[0]), float(longitude_str[1]), float(longitude_str[2]))
-        if isinstance(longitude, str) and longitude is not None:
-            longitude = angle_parser(longitude)
         if isinstance(longitude, str) and longitude is not None:
             longitude = angle_parser(longitude)
         if elevation is None:
@@ -66,19 +75,19 @@ class Location():
         Returns
         -------
         string
-            Return a class representative string
+            Return a class representative string.
         """
         return (f'{self.name}: latitude: {self.latitude} '+
                 f'longitude: {self.longitude} '+
                 f'elevation = {self.elevation} m')
 
     def save_site(self):
-        """Method saving current site in sites file
+        """Method to save current site in sites file.
 
         Raises
         ------
         KeyError
-            The first level key already exist
+            The first level key already exist.
         """
         with open(PATH  + 'sites.json', encoding="utf-8") as json_file:
             dict_sites = json.load(json_file)
@@ -91,12 +100,12 @@ class Location():
         raise ValueError("Site already exist, use `update_site` instead")
 
     def delete_site(self):
-        """Method deleting current site from saved sites file
+        """Method to delete current site from saved sites file.
 
         Raises
         ------
         KeyError
-            The first level key doesn't exist
+            The first level key doesn't exist.
         """
         with open(PATH  + 'sites.json', encoding="utf-8") as json_file:
             dict_sites = json.load(json_file)
@@ -109,12 +118,12 @@ class Location():
             return None
         raise ValueError("Site already exist, use `update_site` instead")
     def update_site(self):
-        """Method updating current site in saved sites file
+        """Method to update current site in saved sites file.
 
         Raises
         ------
         KeyError
-            The first level key doesn't exist
+            The first level key doesn't exist.
         """
         with open(PATH  + 'sites.json', encoding="utf-8") as json_file:
             dict_sites = json.load(json_file)
@@ -130,24 +139,24 @@ class Location():
         raise ValueError("Site doesn't exist")
 
     def _get_site(self, name: str = None):
-        """Method to get a site with it datas
+        """Method to get a site with it data.
 
         Parameters
         ----------
         name : str, optional
-            The site name, by default None
+            The site name, by default None.
 
         Returns
         -------
         dict
-            The location dictionnary of the site from his save data in saved sites file
+            The location dictionary from its saved data in saved sites file.
 
         Raises
         ------
         KeyError
-            The first level key doen't exist
+            The first level key doesn't exist.
         ValueError
-            The site name is not given
+            The site name is not given.
         """
         with open(PATH  + 'sites.json', encoding="utf-8") as json_file:
             dict_sites = json.load(json_file)

@@ -1,21 +1,21 @@
 """Special functions
 """
 def range_w_last_val(start: float, end: float, step: float):
-    """Adaptation of in-built python `range`function
+    """Adaptation of in-built python `range` function.
 
     Parameters
     ----------
     start : float
-        Start float
+        Start float.
     end : float
-        End float
+        End float.
     step : float
-        Step float
+        Step float.
 
     Yields
     ------
     float
-        Range values
+        Range values.
     """
     idx = start
     while idx < end:

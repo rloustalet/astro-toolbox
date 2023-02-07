@@ -1,4 +1,4 @@
-"""This module contain Horizontal class
+"""This module contains Horizontal class
 """
 import math
 from astro_toolbox.angle.hms import AngleHMS
@@ -6,10 +6,20 @@ from astro_toolbox.angle.dms import AngleDMS
 from astro_toolbox.angle.radians import AngleRad
 from astro_toolbox.angle.degrees import AngleDeg
 from astro_toolbox.coordinates.location import Location
-from astro_toolbox.utils.strparser import angle_parser
 
 class Horizontal():
-    """This class represent horizontals coordinates
+    """This class represent horizontal coordinate system.
+
+    Attributes
+    ----------
+    azimuth : AngleDMS
+        Object azimuth.
+    altitude : AngleDMS
+        Object altitude.
+    name : str
+        Object name.
+    magnitude : float
+        Object magnitude.
     """
     def __init__(self, azimuth:
                 tuple | str,
@@ -20,17 +30,15 @@ class Horizontal():
 
         Parameters
         ----------
-        altitude : tuple | str
-            Altitude of the object a tuple (°,','')
         azimuth : tuple | str
-            Azimuth of the object a tuple (°,','')
+           Object azimuth as tuple or string (``dd:dd:dd.dd`` or ``dd°dd'dd.dd"``).
+        altitude : tuple | str
+            Object altitude as tuple or string (``dd:dd:dd.dd`` or ``dd°dd'dd.dd"``).
         name : str, optional
-            Object name, by default None
+            Object name, by default None.
+        magnitude : float
+            Object magnitude, by default is None.
         """
-        if isinstance(azimuth, str):
-            azimuth = angle_parser(azimuth)
-        if isinstance(altitude, str):
-            altitude = angle_parser(altitude)
         self.name = name
         self.azimuth = AngleDMS(azimuth)
         self.altitude = AngleDMS(altitude)
@@ -49,14 +57,14 @@ class Horizontal():
     def calculate_airmass(self):
         """Airmass calculation method
         The airmass is calculate with the Pickering(2002) formula from DIO,
-        The International Journal of Scientific History vol. 12
+        The International Journal of Scientific History vol. 12.
 
         .. math:: X = \\frac{1}{sin(h+\\frac{244}{165+47h^{1.1}})}
 
         Returns
         -------
         float
-            Object airmass
+            Object airmass.
         """
         altitude = self.altitude
         if altitude < 0:
@@ -64,7 +72,7 @@ class Horizontal():
         return abs(1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * (altitude) ** 1.1)).degtorad())))
 
     def to_equatorial(self, gamma: tuple | str, location: Location):
-        """Horizontal to Equation converting method
+        """Horizontal to Equation converting method.
 
         .. math:: \\delta=sin^{-1}(sin \\Phi sin h-cos \\Phi cos h cos A)
 
@@ -73,17 +81,15 @@ class Horizontal():
         Parameters
         ----------
         gamma : AngleHMS
-            Sidereal Time angle in hms
+            Sidereal Time angle in hms.
         location : Location
-            observer location
+            observer location.
 
         Returns
         -------
         Equatorial
-            Equatorial coordinates of the object
+            Equatorial coordinates of the object.
         """
-        if isinstance(gamma, str):
-            gamma = angle_parser(gamma)
         gamma_angle =  AngleHMS(gamma)
         lat = location.latitude.dmstorad()
         delta = AngleRad(math.asin(math.sin(lat) *
