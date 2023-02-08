@@ -18,8 +18,7 @@ author = 'Romain Loustalet Palengat'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 release = '0.0.1'
 
-extensions = ['sphinx.ext.autodoc',
-]
+extensions = ['sphinx.ext.autodoc']
 
 templates_path = ['_templates']
 exclude_patterns = []

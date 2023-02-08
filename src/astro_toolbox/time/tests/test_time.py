@@ -16,3 +16,6 @@ def test_get_gmst():
 
 def test_get_lst():
     assert ut_time.get_lst(location) == (7, 36, approx(45.32, rel=1e-2))
+
+def test_get_year_day():
+    assert ut_time.get_year_day() == 15

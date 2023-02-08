@@ -100,4 +100,4 @@ This command allow you to display the polaris position (northern and southern he
 
 .. toctree::
    Home <self>
-   modules
+   API <modules>

@@ -25,12 +25,12 @@ class AstroDateTime():
         self.time = (ut_time[3], ut_time[4], ut_time[5])
 
     def __repr__(self):
-        """Representative method
+        """Representative method.
 
         Returns
         -------
         string
-            Return a class representative string
+            Return a class representative string.
         """
         return (f'{self.date[0]}-{self.date[1]}-{self.date[2]} '+
                 f'{self.time[0]}:{self.time[1]}:{self.time[2]}')
@@ -41,7 +41,7 @@ class AstroDateTime():
         Returns
         -------
         int
-            Year
+            Year.
         """
         return self.date[0]
 
@@ -51,32 +51,32 @@ class AstroDateTime():
         Returns
         -------
         int
-            Month
+            Month.
         """
         return self.date[1]
 
     def get_day(self):
-        """Get day
+        """Get day.
 
         Returns
         -------
         int
-            Day
+            Day.
         """
         return self.date[2]
 
     def get_time(self):
-        """Get time
+        """Get time.
 
         Returns
         -------
         tuple
-            Time in format (hour,minute,second)
+            Time in format (hour,minute,second).
         """
         return self.time
 
     def get_jd(self):
-        """Get julian day with USNO formula
+        """Get julian day with USNO formula.
 
         .. math:: JD=367year-\\frac{7(year+\\frac{month+9}{12}}{4}>+\\frac{275month}{9}+
                 day+1721013.5+\\frac{UT}{24}-\n
@@ -85,7 +85,7 @@ class AstroDateTime():
         Returns
         -------
         float
-            Julian day
+            Julian day.
         """
         julian_day = (367 * self.date[0] -
         int((7 * (self.date[0] +
@@ -95,16 +95,34 @@ class AstroDateTime():
         (self.time[0] + self.time[1] / 60.0 + self.time[2] / 3600) / 24.0 -
         0.5 * math.copysign(1, 100 * self.date[0] + self.date[1] - 190002.5) + 0.5)
         return julian_day
+    
+    def get_year_day(self):
+        """Get day of year.
+
+        .. math:: N1 = floor(275 * month / 9)
+        .. math:: N2 = floor((month + 9) / 12)
+        .. math:: N3 = (1 + floor((year - 4 * floor(year / 4) + 2) / 3))
+        .. math:: N = N1 - (N2 * N3) + day - 30
+
+        Returns
+        -------
+        int
+            Day of year.
+        """
+        n_1 = math.floor(275 * self.get_month() / 9)
+        n_2 = math.floor((self.get_month() + 9) / 12)
+        n_3 = 1 + math.floor((self.get_year() - 4 * math.floor(self.get_year() / 4) + 2) / 3)
+        return n_1 - (n_2 * n_3) + self.get_day() - 30
 
     def get_gmst(self):
-        """Get Greenwich mean sidereal time with USNO formula
+        """Get Greenwich mean sidereal time with USNO formula.
 
         .. math:: gmst=mod(18.697375+24.065709824279(JD-2451545), 24)
 
         Returns
         -------
         tuple
-            Greenwich mean sidereal time
+            Greenwich mean sidereal time.
         """
         julian_day = self.get_jd()
         gmst = (18.697375 + 24.065709824279 * (julian_day - 2451545)) % 24
@@ -115,19 +133,19 @@ class AstroDateTime():
         return (gmst_hh,gmst_mm,gmst_ss)
 
     def get_lst(self, location: Location):
-        """Get local mean sidereal time with USNO formula
+        """Get local mean sidereal time with USNO formula.
 
         .. math:: lst=gmst+\\frac{\\lambda}{15}
 
         Parameters
         ----------
         location : Location
-            Observer location
+            Observer location.
 
         Returns
         -------
         tuple
-            Local mean sidereal time
+            Local mean sidereal time.
         """
         gmst = self.get_gmst()
         longitude = location.longitude.dmstodeg()/15

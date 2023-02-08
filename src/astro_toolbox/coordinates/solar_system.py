@@ -271,3 +271,22 @@ class Ephemeris():
                                                          y_equatorial**2))
         return (AngleRad(right_ascencion).radtohms(),
                 AngleRad(declination).radtodms())
+    
+    def get_magnitude(self):
+        """Get solar system objects magnitude.
+
+        Returns
+        -------
+        float
+            Solar system object magnitude.
+        """
+        solar_system_objects_magnitude = {'sun': -26.83,
+                                          'mercury': 0.23,
+                                          'venus': -4.14,
+                                          'moon': -12.90,
+                                          'mars': 0.71,
+                                          'jupiter': -2.20,
+                                          'saturn': 0.46,
+                                          'uranus': 6.03,
+                                          'Neptune': 7.78}
+        return solar_system_objects_magnitude[self.name.lower()]
