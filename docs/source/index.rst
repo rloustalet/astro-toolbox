@@ -69,7 +69,7 @@ Enter the object name as argument
 
 location
 ==========
-Thi command allow you to add, update or to read a location
+This command allow you to add, update or to read a location
 
 
 *argument*
