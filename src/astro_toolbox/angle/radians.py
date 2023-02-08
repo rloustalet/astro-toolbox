@@ -1,12 +1,12 @@
 """
-This module contains AngleRad class
+This module contains AngleRad class.
 """
 import math
 class AngleRad():
     """AngleRad define a radian angle with his conversions.
 
     Attributes
-        ----------
+    ----------
         anglevalue : float
             The angle value in radians.
     """

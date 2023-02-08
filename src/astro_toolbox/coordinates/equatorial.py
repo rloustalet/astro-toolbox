@@ -1,4 +1,4 @@
-"""This module contains Equatorial class
+"""This module contains Equatorial class.
 """
 import math
 

@@ -5,7 +5,7 @@ Subpackages
 -----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 8
 
    astro_toolbox.angle
    astro_toolbox.coordinates
@@ -17,7 +17,7 @@ Submodules
 ----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 8
 
    astro_toolbox.command_line
 

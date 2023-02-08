@@ -1,4 +1,4 @@
-"""This module contains Simbad Class.
+"""This module contains Simbad class.
 """
 import urllib.request as urllib
 import xmltodict

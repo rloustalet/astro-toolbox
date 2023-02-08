@@ -1,4 +1,4 @@
-"""This module creates the console interface
+"""This module creates the console interface.
 """
 import re
 import pathlib

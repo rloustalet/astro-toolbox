@@ -5,7 +5,7 @@ Submodules
 ----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 8
 
    astro_toolbox.scripts.planning
    astro_toolbox.scripts.plots

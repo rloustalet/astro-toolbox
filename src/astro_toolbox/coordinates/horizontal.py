@@ -1,4 +1,4 @@
-"""This module contains Horizontal class
+"""This module contains Horizontal class.
 """
 import math
 from astro_toolbox.angle.hms import AngleHMS

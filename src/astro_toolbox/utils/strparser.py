@@ -1,4 +1,4 @@
-"""This module contains function to parse str
+"""This module contains functionS to parse str.
 """
 import re
 def angle_parser(str_angle):

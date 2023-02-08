@@ -1,5 +1,5 @@
 """
-This module contains AngleDeg class
+This module contains AngleDeg class.
 """
 import math
 class AngleDeg():

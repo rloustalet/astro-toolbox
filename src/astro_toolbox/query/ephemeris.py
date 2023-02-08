@@ -1,4 +1,4 @@
-"""This module contains Horizon class
+"""This module contains Horizon class.
 """
 import re
 import json

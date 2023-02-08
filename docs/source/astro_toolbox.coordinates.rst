@@ -5,7 +5,7 @@ Submodules
 ----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 8
 
    astro_toolbox.coordinates.equatorial
    astro_toolbox.coordinates.horizontal

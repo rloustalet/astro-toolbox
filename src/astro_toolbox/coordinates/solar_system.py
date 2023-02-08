@@ -1,4 +1,4 @@
-"""This module contains Ephemeris class
+"""This module contains Ephemeris class.
 """
 import math
 import json
@@ -17,7 +17,7 @@ class Ephemeris():
     ----------
     name : str
         Planet name.
-    n_centries : float
+    n_centuries : float
         Number of centuries from J2000.
     orbital_elements : dict
         Dictionary which contains object orbital elements for current date.

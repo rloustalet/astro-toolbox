@@ -1,4 +1,4 @@
-"""Special functions
+"""Special functions.
 """
 def range_w_last_val(start: float, end: float, step: float):
     """Adaptation of in-built python `range` function.

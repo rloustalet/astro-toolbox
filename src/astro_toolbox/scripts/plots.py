@@ -1,4 +1,4 @@
-"""This module contains scripts functions
+"""This module contains scripts functions.
 """
 import math
 import numpy as np

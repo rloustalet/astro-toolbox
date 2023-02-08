@@ -1,5 +1,5 @@
 """
-This module contains AngleDMS class
+This module contains AngleDMS class.
 """
 import math
 from astro_toolbox.utils.strparser import angle_parser

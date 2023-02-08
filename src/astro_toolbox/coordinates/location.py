@@ -1,4 +1,4 @@
-"""This module contains Location class
+"""This module contains Location class.
 """
 import re
 import json

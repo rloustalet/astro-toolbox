@@ -1,12 +1,12 @@
 """
-This module contains AngleHMS class
+This module contains AngleHMS class.
 """
 import math
 from astro_toolbox.utils.strparser import angle_parser
 class AngleHMS():
     """AngleHMS define a hms angle with his conversions.
 
-    Parameters
+    Attributes
     ----------
     anglevalue : tuple
         The angle value as floats in tuple.
