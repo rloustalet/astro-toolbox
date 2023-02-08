@@ -4,13 +4,10 @@ astro\_toolbox.time package
 Submodules
 ----------
 
-astro\_toolbox.time.core module
--------------------------------
+.. toctree::
+   :maxdepth: 4
 
-.. automodule:: astro_toolbox.time.core
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   astro_toolbox.time.core
 
 Module contents
 ---------------

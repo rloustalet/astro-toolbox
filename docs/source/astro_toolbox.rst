@@ -16,13 +16,10 @@ Subpackages
 Submodules
 ----------
 
-astro\_toolbox.command\_line module
------------------------------------
+.. toctree::
+   :maxdepth: 4
 
-.. automodule:: astro_toolbox.command_line
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   astro_toolbox.command_line
 
 Module contents
 ---------------

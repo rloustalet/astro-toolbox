@@ -4,37 +4,13 @@ astro\_toolbox.angle package
 Submodules
 ----------
 
-astro\_toolbox.angle.degrees module
------------------------------------
+.. toctree::
+   :maxdepth: 4
 
-.. automodule:: astro_toolbox.angle.degrees
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-astro\_toolbox.angle.dms module
--------------------------------
-
-.. automodule:: astro_toolbox.angle.dms
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-astro\_toolbox.angle.hms module
--------------------------------
-
-.. automodule:: astro_toolbox.angle.hms
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-astro\_toolbox.angle.radians module
------------------------------------
-
-.. automodule:: astro_toolbox.angle.radians
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   astro_toolbox.angle.degrees
+   astro_toolbox.angle.dms
+   astro_toolbox.angle.hms
+   astro_toolbox.angle.radians
 
 Module contents
 ---------------
