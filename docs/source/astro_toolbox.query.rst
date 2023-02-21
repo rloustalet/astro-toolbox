@@ -4,11 +4,21 @@ astro\_toolbox.query package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+astro\_toolbox.query.catalogs module
+------------------------------------
 
-   astro_toolbox.query.catalogs
-   astro_toolbox.query.ephemeris
+.. automodule:: astro_toolbox.query.catalogs
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+astro\_toolbox.query.ephemeris module
+-------------------------------------
+
+.. automodule:: astro_toolbox.query.ephemeris
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------

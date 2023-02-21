@@ -32,8 +32,8 @@ class AstroDateTime():
         string
             Return a class representative string.
         """
-        return (f'{self.date[0]}-{self.date[1]}-{self.date[2]} '+
-                f'{self.time[0]}:{self.time[1]}:{self.time[2]}')
+        return (f'{self.date[0]:02d}-{self.date[1]:02d}-{self.date[2]:02d} '+
+                f'{self.time[0]:02d}:{self.time[1]:02d}:{self.time[2]:02d}')
 
     def get_year(self):
         """Get year
@@ -95,7 +95,7 @@ class AstroDateTime():
         (self.time[0] + self.time[1] / 60.0 + self.time[2] / 3600) / 24.0 -
         0.5 * math.copysign(1, 100 * self.date[0] + self.date[1] - 190002.5) + 0.5)
         return julian_day
-    
+
     def get_year_day(self):
         """Get day of year.
 

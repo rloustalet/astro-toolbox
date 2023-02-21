@@ -4,11 +4,21 @@ astro\_toolbox.scripts package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+astro\_toolbox.scripts.planning module
+--------------------------------------
 
-   astro_toolbox.scripts.planning
-   astro_toolbox.scripts.plots
+.. automodule:: astro_toolbox.scripts.planning
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+astro\_toolbox.scripts.plots module
+-----------------------------------
+
+.. automodule:: astro_toolbox.scripts.plots
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------

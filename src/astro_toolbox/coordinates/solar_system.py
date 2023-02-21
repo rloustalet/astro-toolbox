@@ -271,7 +271,7 @@ class Ephemeris():
                                                          y_equatorial**2))
         return (AngleRad(right_ascencion).radtohms(),
                 AngleRad(declination).radtodms())
-    
+
     def get_magnitude(self):
         """Get solar system objects magnitude.
 

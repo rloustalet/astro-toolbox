@@ -124,7 +124,7 @@ def airmass_map_command(input_file_objects, output, location, date, bounds):
 @click.option("-d", "--datetime",
             type=click.STRING,
             default=None,
-            help='-d, --datetime the date default is None if None, now')
+            help='-t, --time the date default is None if None, now')
 @click.option("-l", "--location",
             type=click.STRING,
             default=None,
@@ -136,7 +136,7 @@ def info_command(objects_list, datetime, location):
     ----------
     objects_list : str
         Multiple objects list.
-    datetime : str
+    time : str
         Date and time
     location : str
        Saved site name.
@@ -159,7 +159,7 @@ def info_command(objects_list, datetime, location):
         click.echo(f'{coord}' +
                 f' HA = {AngleHMS(coord.get_hourangle(gamma=gamma))}'
                 f' X = {coord.calculate_airmass(gamma=gamma, location=site):.2f}' +
-                f' @ {site.name}')
+                f' @ {site.name} {AstroDateTime(datetime)}')
 
 @cli.command('location')
 @click.argument('location_name')
@@ -265,29 +265,29 @@ def location_command(location_name, add, delete, update):
             count = count + 1
 
 @cli.command('polaris')
-@click.option("-d", "--datetime",
+@click.option("-t", "--time",
             type=click.STRING,
             default=None,
-            help='-d, --datetime the date and time default is None if None, now')
+            help='-t, --time the date and time default is None if None, now')
 @click.option("-l", "--location",
             type=click.STRING,
             default=None,
             help='-l --location the site name default is None if None last site used')
-def polaris_command(location, datetime):
+def polaris_command(location, time):
     """Polaris position calculation.
 
     Parameters
     ----------
     location : str
         Saved site name.
-    datetime : str
+    time : str
         Date and time.
     """
     location = Location(location)
     if location.latitude.dmstodeg() > 0:
-        polarstar_plt_northern(location, datetime)
+        polarstar_plt_northern(location, time)
     elif location.latitude.dmstodeg() < 0:
-        polarstar_plt_southern(location, datetime)
+        polarstar_plt_southern(location, time)
 
 
 if __name__ == '__main__':
