@@ -1,6 +1,11 @@
 astro\_toolbox package
 ======================
 
+.. automodule:: astro_toolbox
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Subpackages
 -----------
 
@@ -16,18 +21,8 @@ Subpackages
 Submodules
 ----------
 
-astro\_toolbox.command\_line module
------------------------------------
 
 .. automodule:: astro_toolbox.command_line
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: astro_toolbox
    :members:
    :undoc-members:
    :show-inheritance:
