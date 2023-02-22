@@ -1,0 +1,103 @@
+Astro toolbox
+=============
+
+==========================
+Astro Toolbox command line
+==========================
+
+Synopsis
+========
+
+astro_toolbox [options1] <command> <argument> [options2]
+
+Options 1
+=========
+
+**-v, --verbose**   Program verbosity
+
+Commands
+========
+
+airmass
+=======
+This command allow you to plot airmass map of one or multiple objects.
+
+*argument*
+==========
+
+You can enter one or many objects or a path to a file or a directory. If you left it blank, il will search on your current directory a file named observations.lst
+
+You must end the name to a directory with a /
+
+*examples:*
+===========
+
+``astro_toolbox aimass examples/``
+
+``astro_toolbox aimass examples/examples.lst``
+
+``astro_toolbox aimass betelgeuse vega``
+
+
+*options*
+=========
+
+**-d, --date**	Option to inform a direfent date ``-d 2022-12-18``, default is None (today date).
+
+**-l, --location**	Option to inform a location name ``-l Greenwich``, default is None (last location used).
+
+**-o, --output**	Option to inform the output directory (must end with a /) ``-o examples/``, default is '' (current dirctory).
+
+**--bounds**	Option which requires two hours arguments consider this program calculate everything in UT ``--bounds 19 33`` mean we begin calculations at 7pm and end these at 9am the next day.
+
+info
+====
+This command allow you to query Simbad (for stars ans deep sky objects) or JPL Horizons for solar system objects.
+
+
+*argument*
+==========
+
+Enter the object name as argument
+
+*options*
+=========
+
+**-d, --date**	Option to inform a direfent date ``-d 2022-12-18``, default is None (today date).
+
+**-l, --location**	Option to inform a location name ``-l Greenwich``, default is None (last location used).
+
+location
+==========
+This command allow you to add, update or to read a location
+
+
+*argument*
+==========
+
+Enter the location name, list allow you to display all locations saved.
+
+*options*
+=========
+
+**-a, --add**	Option to add a new location(if it doesn't exists). It will ask you longitude, latitude in degrees (0.0) or dms (0°0'O") and elevation in meters
+
+**-d, --delete**	Option to delete a location (if it exists)
+
+**-u, --update**	Option to update an existing location it will ask the same thing as adding option but left blank the data, you don't want to change.
+
+polaris
+=======
+This command allow you to display the polaris position (northern and southern hemisphere) in a polar finder. This command doesn't need any argument
+
+*options*
+=========
+
+**-d, --datetime**	Option to inform a direfent date and time ``-d 2022-12-18:20:35:55``, default is None (today date).
+
+**-l, --location**	Option to inform a location name ``-l Greenwich``, default is None (last location used).
+
+
+.. toctree::
+   Home <self>
+   API <modules>
