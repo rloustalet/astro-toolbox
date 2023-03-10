@@ -26,6 +26,7 @@ __all__ = [
     "Location",
     "Ephemeris",
     "Simbad",
+    "Horizons",
 ]
 
 __version__ = "0.0.0.dev2"
