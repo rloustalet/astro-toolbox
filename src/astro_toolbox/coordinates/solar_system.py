@@ -10,7 +10,7 @@ from astro_toolbox.time.core import AstroDateTime
 PATH = pkg_resources.resource_filename('astro_toolbox', 'coordinates/data/')
 
 class Ephemeris():
-    """Ephemeris class computing system solar objects positions in different referential.
+    """Ephemeris class computing solar system objects positions in different referential.
     Orbital elements calculated by JPL.
 
     Attributes
@@ -139,7 +139,7 @@ class Ephemeris():
                 math.sqrt(x_true_anomaly**2 + y_true_anomaly**2))
 
     def compute_ecliptic_position(self, **orbital_elements):
-        """Compute the heliocentric object ecliptic position.
+        """Compute the heliocentric ecliptic object position.
 
         .. math:: xh = r*(cos(\\Omega)*cos(v+\\omega)-sin(\\Omega)*sin(v+\\omega)*cos(I))
         .. math:: yh = r*(sin(\\Omega)*cos(v+\\omega)+cos(\\Omega)*sin(v+\\omega)*cos(I))
@@ -167,7 +167,7 @@ class Ephemeris():
         return x_ecliptic, y_ecliptic, z_ecliptic
 
     def compute_geocentric_position(self, **orbital_elements):
-        """Compute object geocentric position.
+        """Compute geocentric object position.
 
         .. math:: xg = xh + xs
         .. math:: yg = yh + ys
@@ -190,7 +190,7 @@ class Ephemeris():
         return x_geocentric, y_geocentric, z_geocentric
 
     def compute_equatorial_position(self, **orbital_elements):
-        """Compute object equatorial position.
+        """Compute equatorial object position.
 
         For the sun:
 
@@ -261,7 +261,7 @@ class Ephemeris():
         Returns
         -------
         tuple
-            Tuple which contains right-ascension as HMS angle and declination as DMS angle.
+            Tuple which contains right-ascension as HMS tuple and declination as DMS tuple.
         """
         (x_equatorial,
         y_equatorial,

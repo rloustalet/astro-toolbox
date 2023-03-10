@@ -3,7 +3,7 @@ This module contains AngleDeg class.
 """
 import math
 class AngleDeg():
-    """AngleDeg define a Degrees angle with its conversions.
+    """AngleDeg define degrees angle with its conversions.
 
     Attributes
     ----------
@@ -31,7 +31,7 @@ class AngleDeg():
         return f'{self.anglevalue}°'
 
     def degtorad(self):
-        """Degrees to Radians converting method.
+        """Degrees to radians converting method.
         This method returns angle in radians from angle in degrees.
 
         Returns
@@ -43,12 +43,12 @@ class AngleDeg():
 
     def degtodms(self):
         """Degrees to DMS converting method.
-        This method returns angle in dms from angle in degrees.
+        This method returns angle in DMS from angle in degrees.
 
         Returns
         -------
         tuple
-            The angle values in dms.
+            The angle values in DMS.
         """
         deg_dms_result = (math.copysign(int(self.anglevalue), self.anglevalue),)
         deg_dms_value = abs(self.anglevalue - int(self.anglevalue)) * 60
@@ -59,12 +59,12 @@ class AngleDeg():
 
     def degtohms(self):
         """Degrees to HMS converting method.
-        This method returns angle in hms from angle in degrees.
+        This method returns angle in HMS from angle in degrees.
 
         Returns
         -------
         tuple
-            The angle values in hms.
+            The angle values in HMS.
         """
         deg_hms_value = (self.anglevalue*12/180)%24
         deg_hms_result = (int(deg_hms_value),)

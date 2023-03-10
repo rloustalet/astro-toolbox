@@ -4,7 +4,7 @@ This module contains AngleHMS class.
 import math
 from astro_toolbox.utils.strparser import angle_parser
 class AngleHMS():
-    """AngleHMS define a hms angle with his conversions.
+    """AngleHMS define a HMS angle with its conversions.
 
     Attributes
     ----------
@@ -35,7 +35,7 @@ class AngleHMS():
 
     def hmstodeg(self):
         """HMS to Degrees converting method.
-        This method return angle in degrees from angle in hms.
+        This method return angle in degrees from angle in HMS.
 
         Returns
         -------
@@ -48,7 +48,7 @@ class AngleHMS():
 
     def hmstorad(self):
         """HMS to Radians converting method.
-        This method return angle in radians from angle in hms.
+        This method return angle in radians from angle in HMS.
 
         Returns
         -------

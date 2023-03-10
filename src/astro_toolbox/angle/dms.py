@@ -4,7 +4,7 @@ This module contains AngleDMS class.
 import math
 from astro_toolbox.utils.strparser import angle_parser
 class AngleDMS():
-    """AngleDMS define a dms angle with his conversions.
+    """AngleDMS define a dms angle with its conversions.
 
     Attributes
     ----------
@@ -36,8 +36,8 @@ class AngleDMS():
                 f'{self.anglevalue[2]:05.2f}\"')
 
     def dmstodeg(self):
-        """DMS to Degrees converting method.
-        This method return angle in degrees from angle in dms.
+        """DMS to degrees converting method.
+        This method return angle in degrees from angle in DMS.
 
         Returns
         -------
@@ -50,7 +50,7 @@ class AngleDMS():
 
     def dmstorad(self):
         """DMS to Radians converting method.
-        This method return angle in radians from angle in dms.
+        This method return angle in radians from angle in DMS.
 
         Returns
         -------

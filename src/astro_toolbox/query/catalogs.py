@@ -4,7 +4,7 @@ import urllib.request as urllib
 import xmltodict
 
 class Simbad():
-    """This class allow to read astronomical catalogs over internet.
+    """This class allows to read astronomical catalogs over internet.
 
     Attributes
     ----------
@@ -51,7 +51,7 @@ class Simbad():
         Returns
         -------
         Tuple
-            Tuple which contain two tuples RA/DEC coordinates.
+            Tuple which contains two tuples RA/DEC coordinates.
         """
         alpha, delta = self.result['Resolver']['jpos'].split(' ')
         alpha = alpha.split(':')

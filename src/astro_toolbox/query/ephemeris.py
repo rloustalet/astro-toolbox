@@ -1,4 +1,4 @@
-"""This module contains Horizon class.
+"""This module contains Horizons class.
 """
 import re
 import json
@@ -91,7 +91,7 @@ class Horizons():
         Returns
         -------
         tuple
-            Equatorial coordinates right_ascension as HMS angle and declination as DMS angle.
+            Equatorial coordinates right_ascension as HMS tuple and declination as DMS tuple.
         """
         result = self.object_data[6]
         result = re.split(r"\s",re.split(r"\s{2,}",result)[2])
@@ -103,7 +103,7 @@ class Horizons():
 
         Returns
         -------
-        int
+        float
             Magnitude.
         """
         result = self.object_data[6]

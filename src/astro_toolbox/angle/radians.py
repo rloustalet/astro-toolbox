@@ -3,7 +3,7 @@ This module contains AngleRad class.
 """
 import math
 class AngleRad():
-    """AngleRad define a radian angle with his conversions.
+    """AngleRad define radians angle with its conversions.
 
     Attributes
     ----------
@@ -43,12 +43,12 @@ class AngleRad():
 
     def radtodms(self):
         """Radians to DMS converting method.
-        This method returns angle in dms from angle in radians.
+        This method returns angle in DMS from angle in radians.
 
         Returns
         -------
         tuple
-            The angle values in dms.
+            The angle values in DMS.
         """
         rad_dms_value = self.anglevalue*180/math.pi
         rad_dms_result = (math.copysign(int(rad_dms_value), rad_dms_value), )
@@ -60,12 +60,12 @@ class AngleRad():
 
     def radtohms(self):
         """Radians to HMS converting method.
-        This method returns angle in hms from angle in radians.
+        This method returns angle in HMS from angle in radians.
 
         Returns
         -------
         tuple
-            The angle values in hms.
+            The angle values in HMS.
         """
         rad_hms_value = (self.anglevalue*12/math.pi)%24
         rad_hms_result = (int(rad_hms_value),)

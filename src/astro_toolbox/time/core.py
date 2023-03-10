@@ -5,7 +5,12 @@ import datetime
 from astro_toolbox.coordinates.location import Location
 from astro_toolbox.utils.strparser import angle_parser
 class AstroDateTime():
-    """This module contain AngleRad class
+    """This module contains AngleRad class
+
+    Attributes
+    ----------
+    ut_time : tuple | str
+        Date and time as tuple or string in format (2000/01/01/12:00:00)
     """
     def __init__(self, ut_time: tuple | str = None):
         """Constructor method
@@ -78,7 +83,7 @@ class AstroDateTime():
     def get_jd(self):
         """Get julian day with USNO formula.
 
-        .. math:: JD=367year-\\frac{7(year+\\frac{month+9}{12}}{4}>+\\frac{275month}{9}+
+        .. math:: JD=367year-\\frac{7(year+\\frac{month+9}{12})}{4}>+\\frac{275month}{9}+
                 day+1721013.5+\\frac{UT}{24}-\n
         .. math:: 0.5sign(100year+month-190002.5)+0.5
 

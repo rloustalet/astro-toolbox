@@ -56,7 +56,7 @@ class Horizontal():
 
     def calculate_airmass(self):
         """Airmass calculation method
-        The airmass is calculate with the Pickering(2002) formula from DIO,
+        The airmass is calculate with the Pickering (2002) formula from DIO,
         The International Journal of Scientific History vol. 12.
 
         .. math:: X = \\frac{1}{sin(h+\\frac{244}{165+47h^{1.1}})}
@@ -72,7 +72,7 @@ class Horizontal():
         return abs(1/(math.sin(AngleDeg(altitude + 244/(165 + 47 * (altitude) ** 1.1)).degtorad())))
 
     def to_equatorial(self, gamma: tuple | str, location: Location):
-        """Horizontal to Equation converting method.
+        """Horizontal to equatorial converting method.
 
         .. math:: \\delta=sin^{-1}(sin \\Phi sin h-cos \\Phi cos h cos A)
 
@@ -81,14 +81,14 @@ class Horizontal():
         Parameters
         ----------
         gamma : AngleHMS
-            Sidereal Time angle in hms.
+            Sidereal Time angle as tuple or string.
         location : Location
             observer location.
 
         Returns
         -------
         Equatorial
-            Equatorial coordinates of the object.
+            Object equatorial coordinates.
         """
         gamma_angle =  AngleHMS(gamma)
         lat = location.latitude.dmstorad()

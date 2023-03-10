@@ -14,9 +14,9 @@ class Equatorial():
 
     Attributes
     ----------
-    alpha : AngleHMS
+    alpha : tuple
         Object right-ascension.
-    delta : AngleDMS
+    delta : tuple
         Object declination.
     name : str
         Object name.
@@ -65,12 +65,12 @@ class Equatorial():
         Parameters
         ----------
         gamma : tuple | str
-            Sidereal Time angle in hms.
+            Sidereal Time angle as tuple or string.
 
         Returns
         -------
         tuple
-            Hour-Angle tuple in hms.
+            Hour-Angle tuple as tuple.
         """
         gamma_angle = AngleHMS(gamma)
         hour_angle = AngleDeg(gamma_angle.hmstodeg() - self.alpha.hmstodeg())
@@ -78,7 +78,7 @@ class Equatorial():
 
     def calculate_airmass(self, gamma: tuple | str, location: Location):
         """Airmass calculation method.
-        The airmass is calculate with the Pickering(2002) formula from DIO,
+        The airmass is calculate with the Pickering (2002) formula from DIO,
         The International Journal of Scientific History vol. 12.
 
         .. math:: X = \\frac{1}{sin(h+\\frac{244}{165+47h^{1.1}})}
@@ -116,7 +116,7 @@ class Equatorial():
         Parameters
         ----------
         gamma : tuple | str
-             Sidereal Time angle in hms.
+             Sidereal Time angle as tuple or string.
         location : Location
             observer location.
 
@@ -135,7 +135,7 @@ class Equatorial():
         return (azimuth.radtodms(), altitude.radtodms())
 
     def compute_on_date_coord(self, year: float):
-        """On date Equatorial coordinates calculation method from j2000 Equatorial coordinate.
+        """On date Equatorial coordinates calculation method from J2000 Equatorial coordinate.
 
         .. math:: \\Delta year = \\frac{(year-2000)}{100}
 

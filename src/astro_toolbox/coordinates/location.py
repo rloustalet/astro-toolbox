@@ -8,15 +8,15 @@ from astro_toolbox.utils.strparser import angle_parser
 
 PATH = pkg_resources.resource_filename('astro_toolbox', 'coordinates/data/')
 class Location():
-    """This class represent the observer location
+    """This class represents the observer location.
 
     Attributes
     ----------
     name : str
         Location name.
-    latitude : AngleDMS
+    latitude : tuple | str
         Location latitude.
-    longitude : AngleDMS
+    longitude : tuple | str
         Location longitude.
     elevation : float
         Location elevation.
