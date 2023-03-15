@@ -12,7 +12,7 @@ Use `pip install astro_toolbox` to install last version or clone this repository
 
 ### Synopsis
 
-astro_toolbox \[options1\] \<command\> \<argument\> \[options2\]
+astro-toolbox \[options1\] \<command\> \<argument\> \[options2\]
 
 # Options 1
 
@@ -34,11 +34,11 @@ You must end the name to a directory with a `/`
 
 # *examples:*
 
-`astro_toolbox aimass examples/`
+`astro-toolbox airmass examples/`
 
-`astro_toolbox aimass examples/examples.lst`
+`astro-toolbox airmass examples/examples.lst`
 
-`astro_toolbox aimass betelgeuse vega`
+`astro-toolbox airmass betelgeuse vega`
 
 # *options*
 
