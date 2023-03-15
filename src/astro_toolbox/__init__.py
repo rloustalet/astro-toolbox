@@ -29,4 +29,4 @@ __all__ = [
     "Horizons",
 ]
 
-__version__ = "0.0.0.dev2"
+__version__ = "0.0.1"
