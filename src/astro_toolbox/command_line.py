@@ -317,19 +317,20 @@ def weather_command(location, days):
     for time in weather_forecasts.data['hourly']['time'][:24*days]:
         time += ':00'
         if int(time[8:10]) != int(last_time[8:10]):
-            print('=' * 153)
+            print('=' * 173)
             print(f"|{'Time (UT)':^25}|{'Temperature (°C)':^20}|" +
                 f"{'Humidity (%)':^20}|{'Precipitation (mm)':^20}|" +
                 f"{'Wind Speed (km/h)':^20}|{'Wind Direction (°)':^20}|" +
-                f"{'WMO':^20}|")
-            print('=' * 153)
+                f"{'Cloud Coverage (%):':^20}{'WMO':^20}|")
+            print('=' * 173)
         else:
-            print('-' * 153)
+            print('-' * 173)
         print(f'|{time:^25}|{weather_forecasts.get_temperature(time):^20}|' +
               f'{weather_forecasts.get_humidity(time):^20}|' +
               f'{weather_forecasts.get_precipitation(time):^20}|' +
               f'{weather_forecasts.get_wind_speed(time):^20}|' +
               f'{weather_forecasts.get_wind_direction(time):^20}|' +
+              f'{weather_forecasts.get_cloud(time):^20}|' +
               f'{weather_forecasts.get_wmo(time):^20}|')
         last_time = time
     print('-' * 152)

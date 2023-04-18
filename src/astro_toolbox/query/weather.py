@@ -44,7 +44,8 @@ class OpenMeteo():
                 f'Humidity: {self.get_humidity()} %' +
                 f'Precipitation: {self.get_precipitation()} mm' +
                 f'Wind Speed: {self.get_wind_speed()} km/h' +
-                f'Wind Direction: {self.get_wind_direction()} °')
+                f'Wind Direction: {self.get_wind_direction()} °' +
+                f'Cloud Coverage: {self.get_cloud()} %')
 
     def _get_data(self):
         """Open Meteo query method.
@@ -114,7 +115,8 @@ class OpenMeteo():
         Parameters
         ----------
         datetime : str | tuple, optional
-            Date and Time as tuple (YYYY,MM,DD,hh,mm,ss) or YYYY-MM-DDThh:mm:ss, by default None
+            Date and Time as tuple (``YYYY,MM,DD,hh,mm,ss`` or ``YYYY-MM-DDThh:mm:ss``),
+            by default None.
 
         Returns
         -------
@@ -132,7 +134,8 @@ class OpenMeteo():
         Parameters
         ----------
         datetime : str | tuple, optional
-            Date and Time as tuple (YYYY,MM,DD,hh,mm,ss) or YYYY-MM-DDThh:mm:ss, by default None
+            Date and Time as tuple (``YYYY,MM,DD,hh,mm,ss`` or ``YYYY-MM-DDThh:mm:ss``),
+            by default None.
 
         Returns
         -------
@@ -150,7 +153,8 @@ class OpenMeteo():
         Parameters
         ----------
         datetime : str | tuple, optional
-            Date and Time as tuple (YYYY,MM,DD,hh,mm,ss) or YYYY-MM-DDThh:mm:ss, by default None
+            Date and Time as tuple (``YYYY,MM,DD,hh,mm,ss`` or ``YYYY-MM-DDThh:mm:ss``),
+            by default None.
 
         Returns
         -------
@@ -168,7 +172,8 @@ class OpenMeteo():
         Parameters
         ----------
         datetime : str | tuple, optional
-            Date and Time as tuple (YYYY,MM,DD,hh,mm,ss) or YYYY-MM-DDThh:mm:ss, by default None
+            Date and Time as tuple (``YYYY,MM,DD,hh,mm,ss`` or ``YYYY-MM-DDThh:mm:ss``),
+            by default None.
 
         Returns
         -------
@@ -186,7 +191,8 @@ class OpenMeteo():
         Parameters
         ----------
         datetime : str | tuple, optional
-            Date and Time as tuple (YYYY,MM,DD,hh,mm,ss) or YYYY-MM-DDThh:mm:ss, by default None
+            Date and Time as tuple (``YYYY,MM,DD,hh,mm,ss`` or ``YYYY-MM-DDThh:mm:ss``),
+            by default None.
 
         Returns
         -------
@@ -204,7 +210,8 @@ class OpenMeteo():
         Parameters
         ----------
         datetime : str | tuple, optional
-            Date and Time as tuple (YYYY,MM,DD,hh,mm,ss) or YYYY-MM-DDThh:mm:ss, by default None
+            Date and Time as tuple (``YYYY,MM,DD,hh,mm,ss`` or ``YYYY-MM-DDThh:mm:ss``),
+            by default None.
 
         Returns
         -------
@@ -223,7 +230,8 @@ class OpenMeteo():
         Parameters
         ----------
         datetime : str | tuple, optional
-            Date and Time as tuple (YYYY,MM,DD,hh,mm,ss) or YYYY-MM-DDThh:mm:ss, by default None
+            Date and Time as tuple (``YYYY,MM,DD,hh,mm,ss`` or ``YYYY-MM-DDThh:mm:ss``),
+            by default None.
 
         Returns
         -------
@@ -241,7 +249,8 @@ class OpenMeteo():
         Parameters
         ----------
         datetime : str | tuple, optional
-            Date and Time as tuple (YYYY,MM,DD,hh,mm,ss) or YYYY-MM-DDThh:mm:ss, by default None
+            Date and Time as tuple (``YYYY,MM,DD,hh,mm,ss`` or ``YYYY-MM-DDThh:mm:ss``),
+            by default None.
 
         Returns
         -------
@@ -259,7 +268,8 @@ class OpenMeteo():
         Parameters
         ----------
         datetime : str | tuple, optional
-            Date and Time as tuple (YYYY,MM,DD,hh,mm,ss) or YYYY-MM-DDThh:mm:ss, by default None
+            Date and Time as tuple (``YYYY,MM,DD,hh,mm,ss`` or ``YYYY-MM-DDThh:mm:ss``),
+            by default None.
 
         Returns
         -------
@@ -277,7 +287,8 @@ class OpenMeteo():
         Parameters
         ----------
         datetime : str | tuple, optional
-            Date and Time as tuple (YYYY,MM,DD,hh,mm,ss) or YYYY-MM-DDThh:mm:ss, by default None
+            Date and Time as tuple (``YYYY,MM,DD,hh,mm,ss`` or ``YYYY-MM-DDThh:mm:ss``),
+            by default None.
 
         Returns
         -------
@@ -295,7 +306,8 @@ class OpenMeteo():
         Parameters
         ----------
         datetime : str | tuple, optional
-            Date and Time as tuple (YYYY,MM,DD,hh,mm,ss) or YYYY-MM-DDThh:mm:ss, by default None
+            Date and Time as tuple (``YYYY,MM,DD,hh,mm,ss`` or ``YYYY-MM-DDThh:mm:ss``),
+            by default None.
 
         Returns
         -------
