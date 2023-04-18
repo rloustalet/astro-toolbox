@@ -11,6 +11,4 @@ uninstall: ## Uninstall the package
 
 doc: ## Generate Doc sphinx in tml
 	cd docs && make html
-
-build: ## Build the package
-	python3 -m build
+	
