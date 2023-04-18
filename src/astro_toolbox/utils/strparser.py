@@ -14,7 +14,7 @@ def angle_parser(str_angle):
     tuple | float
         the angle in correct format depending on its unity
     """
-    angle_list =  re.split(r"[\-:°'\"hms]",str_angle)
+    angle_list =  re.split(r"[\-:°'\"hmsT]",str_angle)
     if len(angle_list) == 1 and "." in angle_list[0]:
         return float(angle_list[0])
     angle = [int(val) for val in angle_list]

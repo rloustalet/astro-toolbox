@@ -1,8 +1,11 @@
-"""This module contains scripts functions.
+"""This module contains scripts functions
 """
 import math
 import numpy as np
+import pkg_resources
+
 from matplotlib import pyplot as plt
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox, TextArea
 
 from astro_toolbox.angle.hms import AngleHMS
 from astro_toolbox.angle.dms import AngleDMS
@@ -10,6 +13,175 @@ from astro_toolbox.time.core import AstroDateTime
 from astro_toolbox.coordinates.location import Location
 from astro_toolbox.coordinates.equatorial import Equatorial
 from astro_toolbox.query.ephemeris import Horizons
+from astro_toolbox.query.weather import OpenMeteo
+
+
+PATH = pkg_resources.resource_filename('astro_toolbox', 'query/weather_icons/')
+
+def offset_image(name, axis):
+    """Add icons from query/weather_icons on plot.
+
+    Parameters
+    ----------
+    name : str
+        icon name.
+    axis : Object
+        Pyplot axis object.
+
+    Returns
+    -------
+    Object
+        Pyplot image object.
+    """
+    path = PATH + f'{name}.png'
+    img = plt.imread(path)
+    image = OffsetImage(img, zoom=0.5)
+    image.image.axes = axis
+    return image
+
+def wmotoimage(code, axis):
+    """Function to convert WMO code to icon.
+
+    Parameters
+    ----------
+    code : str
+        WMO code as str.
+    axis : Object
+        Axis object.
+
+    Returns
+    -------
+    Object
+        offset_image Object.
+    """
+    if code == '00':
+        icon = offset_image('sunny', axis)
+    elif code == '01':
+        icon = offset_image('mainly_clear', axis)
+    elif code == '02':
+        icon = offset_image('partly_cloudy', axis)
+    elif code == '03':
+        icon = offset_image('cloudy', axis)
+    elif code[0] == '4':
+        icon = offset_image('rain_mix', axis)
+    elif code[0] == '5':
+        icon = offset_image('drizzle', axis)
+    elif code[0] == '6' or code == 23:
+        icon = offset_image('rain', axis)
+    elif code[0] == '7' or code == '21':
+        icon = offset_image('snow', axis)
+    elif code[0] == ('8'):
+        icon = offset_image('showers', axis)
+    elif code[0] == ('9'):
+        icon = offset_image('thunderstorm', axis)
+    else:
+        icon = offset_image('na', axis)
+    return icon
+
+def winddirectiontoimage(wind_direction, axis):
+    """Funcion to convert wind direction to icon.
+
+    Parameters
+    ----------
+    wind_direction : float
+        Wind direction
+    axis : Object
+        Axis object.
+
+    Returns
+    -------
+    Object
+        offset_image Object.
+    """
+    if 0 <= wind_direction <= 22.5 or 337.5 <= wind_direction <= 360:
+        icon = offset_image('direction_up', axis)
+    elif 22.5 < wind_direction < 67.5:
+        icon = offset_image('direction_up_left', axis)
+    elif 67.5 < wind_direction < 112.5:
+        icon = offset_image('direction_left', axis)
+    elif 112.5 < wind_direction < 157.5:
+        icon = offset_image('direction_down_left', axis)
+    elif 157.5 < wind_direction < 202.5:
+        icon = offset_image('direction_down', axis)
+    elif 202.5 < wind_direction < 247.5:
+        icon = offset_image('direction_down_right', axis)
+    elif 247.5 < wind_direction < 292.5:
+        icon = offset_image('direction_right', axis)
+    elif 292.5 < wind_direction < 337.5:
+        icon = offset_image('direction_up_right', axis)
+    return icon
+
+def plot_weather(date, location, bounds, axis):
+    """Plot weather on airmass map
+
+    Parameters
+    ----------
+    date : str | tuple
+        Plotting date.
+    location : Location
+        Location object.
+    bounds : tuple
+        Tuple containing observation bounds.
+    axis : Object
+        Pyplot axis object.
+    """
+    hours = list(np.mod(np.arange(bounds[0],bounds[1]), 24))
+    weather_forecast = OpenMeteo(location=location)
+    annotation_box = AnnotationBbox(TextArea('Weather\nforecasts',
+                                            textprops=dict(rotation = 90, ha = 'center')),
+                                            (0, 0),
+                                            xybox=(-85, -55),
+                                            frameon=False,
+                                            xycoords='data',
+                                            boxcoords="offset points",
+                                            pad=0)
+    axis.add_artist(annotation_box)
+    weather_units = [TextArea('Temperature °C',
+                            textprops=dict(size=6)),
+                    TextArea('Humidity %',
+                            textprops=dict(size=6)),
+                    TextArea('Precipitation mm',
+                            textprops=dict(size=6)),
+                    TextArea('Wind Speed km/h',
+                            textprops=dict(size=6)),
+                    TextArea('Wind Direction',
+                            textprops=dict(size=6))]
+    for j, item in enumerate(weather_units):
+        annotation_box = AnnotationBbox(item,
+                                        (0, 0),
+                                        xybox=(-40, -35 - 10 * j),
+                                        frameon=False,
+                                        xycoords='data',
+                                        boxcoords="offset points",
+                                        pad=0)
+        axis.add_artist(annotation_box)
+    last_time = 0
+    for time in hours:
+        if time - last_time < 0:
+            date = AstroDateTime(date).get_gregorian(1)
+        last_time = time
+        datetime = date + (time, 0, 0)
+        weather = [offset_image('na', axis)]
+        weather += [TextArea(f'{weather_forecast.get_temperature(datetime)}',
+                            textprops=dict(size=6)),
+                    TextArea(f'{weather_forecast.get_humidity(datetime)}',
+                            textprops=dict(size=6)),
+                    TextArea(f'{weather_forecast.get_precipitation(datetime)}',
+                            textprops=dict(size=6)),
+                    TextArea(f'{weather_forecast.get_wind_speed(datetime)}',
+                            textprops=dict(size=6))]
+        weather.append(winddirectiontoimage(
+                        weather_forecast.get_wind_direction(datetime), axis))
+        weather[0] = wmotoimage(weather_forecast.get_wmo(datetime), axis)
+        for j, item in enumerate(weather):
+            annotation_box = AnnotationBbox(item,
+                                            (hours.index(time) * 10, 0),
+                                            xybox=(0., -25 - 10 * j),
+                                            frameon=False,
+                                            xycoords='data',
+                                            boxcoords="offset points",
+                                            pad=0)
+            axis.add_artist(annotation_box)
 
 def sun_impact(lines, site, date, bounds):
     """Function which plots sun impact.
@@ -150,8 +322,8 @@ def airmas_map(object_dict,
     plt.yticks(np.arange(0.5,len(object_dict),1),
                 [item[1].name + ' v='
                 + str(item[1].magnitude)
-                for item in reversed(object_dict.items())]
-                )
+                for item in reversed(object_dict.items())])
+    plot_weather(ut_time.date, site, bounds, axis)
     axis.tick_params(left = False)
     axis.grid(axis = 'x', color = 'k')
     axis.set_title(f'Airmass: {ut_time.get_day():02.0f}/{ut_time.get_month():02.0f}'

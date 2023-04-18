@@ -12,6 +12,7 @@ from astro_toolbox.coordinates.location import Location
 from astro_toolbox.coordinates.solar_system import Ephemeris
 from astro_toolbox.query.ephemeris import Horizons
 from astro_toolbox.query.catalogs import Simbad
+from astro_toolbox.query.weather import OpenMeteo
 
 from astro_toolbox.query.ephemeris import DICT_OBJECTS
 
@@ -27,6 +28,7 @@ __all__ = [
     "Ephemeris",
     "Simbad",
     "Horizons",
+    "OpenMeteo",
 ]
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"

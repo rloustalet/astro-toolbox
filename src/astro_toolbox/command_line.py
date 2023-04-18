@@ -16,6 +16,7 @@ from astro_toolbox.coordinates.location import Location
 from astro_toolbox.coordinates.equatorial import Equatorial
 from astro_toolbox.query.ephemeris import Horizons
 from astro_toolbox.query.catalogs import Simbad
+from astro_toolbox.query.weather import OpenMeteo
 from astro_toolbox.scripts.planning import read_observatory_program
 from astro_toolbox.scripts.planning import get_multiple_informations
 from astro_toolbox.scripts.plots import airmas_map
@@ -25,6 +26,7 @@ from astro_toolbox.scripts.plots import polarstar_plt_southern
 from astro_toolbox.query.ephemeris import DICT_OBJECTS
 
 PATH = pkg_resources.resource_filename('astro_toolbox', 'coordinates/data/')
+PATH_2 = pkg_resources.resource_filename('astro_toolbox', 'query/weather_icons/')
 
 @click.group()
 @click.option(
@@ -289,6 +291,48 @@ def polaris_command(location, time):
     elif location.latitude.dmstodeg() < 0:
         polarstar_plt_southern(location, time)
 
+@cli.command('weather')
+@click.option("-l", "--location",
+            type=click.STRING,
+            default=None,
+            help='-l --location the site name default is None if None last site used')
+@click.option(
+    "-d",
+    "--days",
+    count=True,
+    default=1)
+def weather_command(location, days):
+    """Weather forecasts displayed from Open-Meteo
+
+    Parameters
+    ----------
+    location : str
+        Saved site name.
+    days : int
+        Number of days displayed.
+    """
+    last_time = '0000-00-00T00:00:00'
+    print(f'weather_forecasts @ {Location(location)}')
+    weather_forecasts = OpenMeteo(Location(location))
+    for time in weather_forecasts.data['hourly']['time'][:24*days]:
+        time += ':00'
+        if int(time[8:10]) != int(last_time[8:10]):
+            print('=' * 152)
+            print(f"|{'time':^25}|{'Temperature (°C)':^20}|" +
+                f"{'Humidity (%)':^20}|{'Precipitation (mm)':^20}|" +
+                f"{'Wind Speed (km/h)':^20}|{'Wind Direction (°)':^20}|" +
+                f"{'WMO':^20}|")
+            print('=' * 152)
+        else:
+            print('-' * 152)
+        print(f'|{time:^25}|{weather_forecasts.get_temperature(time):^20}|' +
+              f'{weather_forecasts.get_humidity(time):^20}|' +
+              f'{weather_forecasts.get_precipitation(time):^20}|' +
+              f'{weather_forecasts.get_wind_speed(time):^20}|' +
+              f'{weather_forecasts.get_wind_direction(time):^20}|' +
+              f'{weather_forecasts.get_wmo(time):^20}|')
+        last_time = time
+    print('-' * 152)
 
 if __name__ == '__main__':
     cli(False)

@@ -44,7 +44,7 @@ class Horizons():
         datetime : tuple | str
             Date and time as tuple or str (``dd:dd:dd.dd`` or ``ddhddmdd.dds``).
         location : Location
-            Observer location as Location class
+            Observer location as Location class.
         """
         self.name = object_name
         self.datetime = AstroDateTime(datetime)

@@ -97,6 +97,18 @@ This command allows you to display the polaris position (northern and southern h
 
 **-l, --location**	Option to inform a location name ``-l Greenwich``, default is None (last location used).
 
+weather
+=======
+
+This command allows you to display forecasts of a given location. This command doesn\'t need any argument.
+
+*options*
+=========
+
+**-l, \--location** Option to inform a location name ``-l Greenwich``, default is None (last location used).
+
+**-d, \--days** Counter to inform the number of days to display, default is 1.
+
 
 .. toctree::
    Home <self>

@@ -22,12 +22,16 @@ class AstroDateTime():
         """
         if ut_time is None:
             ut_time = datetime.datetime.now(datetime.timezone.utc).timetuple()
-        elif isinstance(ut_time, str):
+        if ut_time is not None and isinstance(ut_time, str):
             ut_time = angle_parser(ut_time)
         if ut_time is not None and len(ut_time) == 3:
             ut_time += (12, 0, 0)
         self.date = (ut_time[0], ut_time[1], ut_time[2])
-        self.time = (ut_time[3], ut_time[4], ut_time[5])
+        self.time = (ut_time[3]%24, ut_time[4], ut_time[5])
+        if ut_time is not None and ut_time[3] > 23:
+            ut_time = self.get_gregorian(0) + ut_time[3:6]
+        self.date = (int(ut_time[0]), int(ut_time[1]), int(ut_time[2]))
+        self.time = (int(ut_time[3])%24, int(ut_time[4]),int(ut_time[5]))
 
     def __repr__(self):
         """Representative method.
@@ -37,8 +41,8 @@ class AstroDateTime():
         string
             Return a class representative string.
         """
-        return (f'{self.date[0]:02d}-{self.date[1]:02d}-{self.date[2]:02d} '+
-                f'{self.time[0]:02d}:{self.time[1]:02d}:{self.time[2]:02d}')
+        return (f'{self.date[0]:02d}-{self.date[1]:02d}-{self.date[2]:02d}'+
+                f'T{self.time[0]:02d}:{self.time[1]:02d}:{self.time[2]:02d}')
 
     def get_year(self):
         """Get year
@@ -80,12 +84,17 @@ class AstroDateTime():
         """
         return self.time
 
-    def get_jd(self):
-        """Get julian day with USNO formula.
+    def get_jd(self, delta: int = 0):
+        """Get julian day with possibility of delta days from USNO formula.
 
         .. math:: JD=367year-\\frac{7(year+\\frac{month+9}{12})}{4}>+\\frac{275month}{9}+
                 day+1721013.5+\\frac{UT}{24}-\n
         .. math:: 0.5sign(100year+month-190002.5)+0.5
+
+        Parameters
+        ----------
+        delta : int
+            Delta in days.
 
         Returns
         -------
@@ -99,7 +108,44 @@ class AstroDateTime():
         self.date[2] + 1721013.5 +
         (self.time[0] + self.time[1] / 60.0 + self.time[2] / 3600) / 24.0 -
         0.5 * math.copysign(1, 100 * self.date[0] + self.date[1] - 190002.5) + 0.5)
-        return julian_day
+        return julian_day + delta
+
+    def get_gregorian(self, delta: int = 0):
+        """Get gregorian date with possibility of delta days from USNO formulas.
+
+        .. math:: g_1 = julian_day + 68569
+        .. math:: g_2 = <\\frac{4g_1}{146097}>
+        .. math:: g_1 = g_1 - <\\frac{146087g_2 + 3}{4}>
+        .. math:: g_3 = <\\frac{4000(g_1 + 1)}{1461001}>
+        .. math:: g_1 = g_1 - <\\frac{1461g_3}{4}> + 31
+        .. math:: g_4 = <\\frac{80g_3}{2447}>
+        .. math:: day = g_1 - <\\frac{2447g_4}{80}>
+        .. math:: g_1 = <\\frac{g_4}{11}
+        .. math:: month = g_4 + 2 - 12g_1
+        .. math:: year = 100(g_2 - 49) + g_3 + g_1
+
+        Parameters
+        ----------
+        delta : int, optional
+            Delta days, by default 0.
+
+        Returns
+        -------
+        tuple
+            Tuple of int containing year month and month day.
+        """
+        julian_day = int(self.get_jd(delta) + 0.5)
+        g_1 = julian_day + 68569
+        g_2 = int(4 * g_1 / 146097)
+        g_1 = g_1 - int((146097 * g_2 + 3) / 4)
+        g_3 = int(4000 * (g_1 + 1) / 1461001)
+        g_1 = g_1 - int(1461 * g_3 / 4) + 31
+        g_4 = int(80 * g_1 / 2447)
+        day = g_1 - int(2447 * g_4 / 80)
+        g_1 = int(g_4 / 11)
+        month = g_4 + 2 - 12 * g_1
+        year = 100 * (g_2 - 49) + g_3 + g_1
+        return year, month, day
 
     def get_year_day(self):
         """Get day of year.

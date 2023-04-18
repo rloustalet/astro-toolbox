@@ -11,6 +11,10 @@ ut_time = AstroDateTime((2023, 1, 15, 0, 0, 0))
 def test_get_jd():
     assert  ut_time.get_jd() == 2459959.500000
 
+def test_get_gregorian():
+    tomorrow = ut_time.get_gregorian(1)
+    assert tomorrow == (2023, 1, 16)
+
 def test_get_gmst():
     assert ut_time.get_gmst() == (7, 36, approx(45.9, rel=1e-2))
 
