@@ -81,6 +81,20 @@ class Location():
                 f'longitude: {self.longitude} '+
                 f'elevation = {self.elevation} m')
 
+    def compute_pressure_level(self):
+        """Pressure level computing method.
+
+        .. math:: P = 1013.25(1 - \\frac{h}{44307.694})^{5.25530}
+
+        Returns
+        -------
+        float
+            Pressure level in hPa.
+        """
+        return (1013.25 *
+                (1 - self.elevation /
+                44307.694) ** 5.25530)
+
     def save_site(self):
         """Method to save current site in sites file.
 

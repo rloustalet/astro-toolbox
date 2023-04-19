@@ -7,6 +7,26 @@ import math
 from astro_toolbox.time.core import AstroDateTime
 from astro_toolbox.coordinates.location import Location
 
+OPENMETEO_LEVELS = [1000,
+                    975,
+                    950,
+                    925,
+                    900,
+                    850,
+                    800,
+                    700,
+                    600,
+                    500,
+                    400,
+                    300,
+                    250,
+                    200,
+                    150,
+                    100,
+                    70,
+                    50,
+                    30]
+
 class OpenMeteo():
     """OpenMeteo service request and parsing.
 
@@ -28,7 +48,12 @@ class OpenMeteo():
             Weather model (https://open-meteo.com/en/docs), by default 'best_match'
         """
         self.location = location
-        self.pressure_level = self.get_pressure_level()
+        pressure_level = self.location.compute_pressure_level()
+        index_pressure_level = list(abs(openmeteo_pressure_level - pressure_level)
+                                for openmeteo_pressure_level in OPENMETEO_LEVELS).index(
+                                min(list(abs(openmeteo_pressure_level - pressure_level)
+                                for openmeteo_pressure_level in OPENMETEO_LEVELS)))
+        self.pressure_level = OPENMETEO_LEVELS[index_pressure_level]
         self.model = model
         self.data = self._get_data()
 
@@ -94,20 +119,6 @@ class OpenMeteo():
         if datetime_str not in self.data['hourly']['time']:
             return float('nan')
         return self.data['hourly']['time'].index(datetime_str)
-
-    def get_pressure_level(self):
-        """Pressure level computing method.
-
-        .. math:: P = 1013.25(1 - \\frac{h}{44307.694})^{5.25530}
-
-        Returns
-        -------
-        int
-            10^2 rounded pressure level in hPa.
-        """
-        return int(round((1013.25 *
-                (1 - self.location.elevation /
-                44307.694) ** 5.25530), -2))
 
     def get_temperature(self, datetime: str | tuple = None):
         """Get temperature method.
