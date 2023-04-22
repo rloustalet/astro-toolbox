@@ -1,6 +1,5 @@
 """This module creates the console interface.
 """
-import re
 import pathlib
 import json
 import logging
@@ -8,6 +7,8 @@ import pkg_resources
 import click
 from matplotlib.backends.backend_pdf import PdfPages
 from rich.progress import track
+from rich.console import Console
+from rich.table import Table
 
 from astro_toolbox.angle.degrees import AngleDeg
 from astro_toolbox.angle.hms import AngleHMS
@@ -27,6 +28,74 @@ from astro_toolbox.query.ephemeris import DICT_OBJECTS
 
 PATH = pkg_resources.resource_filename('astro_toolbox', 'coordinates/data/')
 PATH_2 = pkg_resources.resource_filename('astro_toolbox', 'query/weather_icons/')
+
+def wmototext(code):
+    """Function to convert WMO code to text.
+
+    Parameters
+    ----------
+    code : str
+        WMO code as str.
+
+    Returns
+    -------
+    Object
+        offset_image Object.
+    """
+    if code == '00':
+        text = 'Sunny'
+    elif code == '01':
+        text = 'Mainly Clear'
+    elif code == '02':
+        text = 'Partly Cloudy'
+    elif code == '03':
+        text = 'Cloudy'
+    elif code[0] == '4':
+        text = 'Fog'
+    elif code[0] == '5':
+        text = 'Drizzle'
+    elif code[0] == '6':
+        text = 'Rain'
+    elif code[0] == '7' or code in (85, 86):
+        text = 'Snow'
+    elif code in (80, 81, 82):
+        text = 'Showers'
+    elif code[0] == ('9'):
+        text = 'Thunderstorm'
+    else:
+        text = 'N/A'
+    return text
+
+def winddirectiontotext(wind_direction):
+    """Funcion to convert wind direction to text.
+
+    Parameters
+    ----------
+    wind_direction : float
+        Wind direction
+
+    Returns
+    -------
+    Object
+        offset_image Object.
+    """
+    if 0 <= wind_direction <= 22.5 or 337.5 <= wind_direction <= 360:
+        direction = 'N'
+    elif 22.5 < wind_direction < 67.5:
+        direction = 'NE'
+    elif 67.5 < wind_direction < 112.5:
+        direction = 'E'
+    elif 112.5 < wind_direction < 157.5:
+        direction = 'SE'
+    elif 157.5 < wind_direction < 202.5:
+        direction = 'S'
+    elif 202.5 < wind_direction < 247.5:
+        direction = 'SW'
+    elif 247.5 < wind_direction < 292.5:
+        direction = 'W'
+    elif 292.5 < wind_direction < 337.5:
+        direction = 'NW'
+    return direction
 
 @click.group()
 @click.option(
@@ -191,46 +260,7 @@ def location_command(location_name, add, delete, update):
     update : bool
         Command to update site
     """
-    def _verify_coords(latitude, longitude, elevation):
-        """Function to verify coords
-
-        Parameters
-        ----------
-        latitude : str
-            Latitude string
-        longitude : str
-            Longitude string
-        elevation : float
-            Elevation float
-
-        Returns
-        -------
-        list
-            Coords list
-
-        Raises
-        ------
-        ValueError
-            Latitude or Longitude is not in necessary format
-        ValueError
-            Elevation is not a number
-        """
-        coords = [latitude, longitude]
-        for count, value in enumerate(coords):
-            value_flag = True
-            if ('°' and "'") in value:
-                coord_str = re.split(r"[°']",value)[:3]
-                coords[count] = tuple(float(coord_val) for coord_val in coord_str)
-                value_flag = False
-            elif '.' in value and not ('°' and "'") in value:
-                coords[count] = AngleDeg(float(value)).degtodms
-                value_flag = False
-            elif value_flag is False and (value != 'None'):
-                raise ValueError(f"{value} Latitude or longitude is not in format 0.0 or 0°0'0''")
-            if not isinstance(elevation, float):
-                raise ValueError((f"{value} Elevation value is not a number"))
-        return coords
-    if add:
+    if add and location_name != 'list':
         latitude = str(input("Enter latitude in degrees (00.00) or in dms (00°00'00\"): "))
         if '.' in latitude and ('°' and "'") not in latitude:
             latitude = AngleDeg(float(latitude)).degtodms()
@@ -238,22 +268,29 @@ def location_command(location_name, add, delete, update):
         if '.' in longitude and ('°' and "'") not in longitude:
             longitude = AngleDeg(float(longitude)).degtodms()
         elevation = float(input("Enter elevation in meters: ") or 0)
-        coords = (latitude, longitude, elevation)
-        Location(location_name, coords[0], coords[1], elevation).save_site()
+        Location(location_name, latitude, longitude, elevation).save_site()
 
-    if delete:
+    if delete and location_name != 'list':
         Location(name=location_name).delete_site()
 
-    if update:
+    if update and location_name != 'list':
         click.echo('Enter only values to update')
         latitude = (str(input("Enter latitude in degrees (00.00) or in dms (00°00'00''): ")
                     or None))
         longitude = (str(input("Enter longitude in degrees (00.00) or in dms (00°00'00''): ")
                     or None))
-        elevation = (float(input("Enter elevation in meters: ")
-                    or 'nan'))
-        coords = _verify_coords(latitude=latitude, longitude=longitude, elevation=elevation)
-        Location(location_name, coords[0], coords[1], elevation).update_site()
+        elevation = (str(input("Enter elevation in meters: "))
+                    or None)
+        location = Location(location_name)
+        if latitude == "None":
+            latitude = None
+        elif '.' in latitude and ('°' and "'") not in latitude:
+            latitude = AngleDeg(float(latitude)).degtodms()
+        if longitude == "None":
+            longitude = None
+        elif '.' in longitude and ('°' and "'") not in longitude:
+            longitude = AngleDeg(float(longitude)).degtodms()
+        Location(location_name, latitude, longitude, elevation).update_site()
 
     if location_name == 'list':
         with open(PATH  + 'sites.json', encoding="utf-8") as json_file:
@@ -265,6 +302,12 @@ def location_command(location_name, add, delete, update):
                 f"longitude: {dict_sites[name]['longitude']} "+
                 f"elevation = {dict_sites[name]['elevation']} m")
             count = count + 1
+
+    if location_name != 'list':
+        location = Location(location_name)
+        click.echo(f"{location.name}: latitude: {location.latitude} "+
+                f"longitude: {location.longitude} "+
+                f"elevation = {location.elevation} m")
 
 @cli.command('polaris')
 @click.option("-t", "--time",
@@ -301,7 +344,12 @@ def polaris_command(location, time):
     "--days",
     count=True,
     default=1)
-def weather_command(location, days):
+@click.option(
+    "-p",
+    "--past",
+    count=True,
+    default=0)
+def weather_command(location, days, past):
     """Weather forecasts displayed from Open-Meteo
 
     Parameters
@@ -314,26 +362,42 @@ def weather_command(location, days):
     last_time = '0000-00-00T00:00:00'
     print(f'weather_forecasts @ {Location(location)}')
     weather_forecasts = OpenMeteo(Location(location))
-    for time in weather_forecasts.data['hourly']['time'][:24*days]:
+    console = Console()
+    table = Table()
+    for time in weather_forecasts.data['hourly']['time'][72 - 24 * past :72 + 24*days]:
         time += ':00'
         if int(time[8:10]) != int(last_time[8:10]):
-            print('=' * 174)
-            print(f"|{'Time (UT)':^25}|{'Temperature (°C)':^20}|" +
-                f"{'Humidity (%)':^20}|{'Precipitation (mm)':^20}|" +
-                f"{'Wind Speed (km/h)':^20}|{'Wind Direction (°)':^20}|" +
-                f"{'Cloud Coverage (%)':^20}|{'WMO':^20}|")
-            print('=' * 174)
+            console.print(table)
+            table = Table(title=f"Weather forecasts {time[:11]} " +
+                          f"@ {weather_forecasts.location.name}",
+                          show_lines=True)
+            table.add_column("Time (UT)", justify="center")
+            table.add_column("Temperature (°C)", justify="center")
+            table.add_column("Humidity (%)", justify="center")
+            table.add_column("Precipitation (mm)", justify="center")
+            table.add_column("Wind speed (km/h)", justify="center")
+            table.add_column("Wind Direction", justify="center")
+            table.add_column("Cloud Coverage (%)", justify="center")
+            table.add_column(justify="center")
+            table.add_row(f'{time:^25}',
+                        f'{weather_forecasts.get_temperature(time)}',
+                        f'{weather_forecasts.get_humidity(time)}',
+                        f'{weather_forecasts.get_precipitation(time)}',
+                        f'{weather_forecasts.get_wind_speed(time)}',
+                        f'{winddirectiontotext(weather_forecasts.get_wind_direction(time))}',
+                        f'{weather_forecasts.get_cloud(time)}',
+                        wmototext(weather_forecasts.get_wmo(time)))
         else:
-            print('-' * 174)
-        print(f'|{time:^25}|{weather_forecasts.get_temperature(time):^20}|' +
-              f'{weather_forecasts.get_humidity(time):^20}|' +
-              f'{weather_forecasts.get_precipitation(time):^20}|' +
-              f'{weather_forecasts.get_wind_speed(time):^20}|' +
-              f'{weather_forecasts.get_wind_direction(time):^20}|' +
-              f'{weather_forecasts.get_cloud(time):^20}|' +
-              f'{weather_forecasts.get_wmo(time):^20}|')
+            table.add_row(f'{time:^25}',
+                        f'{weather_forecasts.get_temperature(time)}',
+                        f'{weather_forecasts.get_humidity(time)}',
+                        f'{weather_forecasts.get_precipitation(time)}',
+                        f'{weather_forecasts.get_wind_speed(time)}',
+                        f'{winddirectiontotext(weather_forecasts.get_wind_direction(time))}',
+                        f'{weather_forecasts.get_cloud(time)}',
+                        wmototext(weather_forecasts.get_wmo(time)))
         last_time = time
-    print('-' * 174)
+    console.print(table)
 
 if __name__ == '__main__':
     cli(False)

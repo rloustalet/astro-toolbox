@@ -63,14 +63,14 @@ def wmotoimage(code, axis):
     elif code == '03':
         icon = offset_image('cloudy', axis)
     elif code[0] == '4':
-        icon = offset_image('rain_mix', axis)
+        icon = offset_image('fog', axis)
     elif code[0] == '5':
         icon = offset_image('drizzle', axis)
-    elif code[0] == '6' or code == 23:
+    elif code[0] == '6':
         icon = offset_image('rain', axis)
-    elif code[0] == '7' or code == '21':
+    elif code[0] == '7' or code in (85, 86):
         icon = offset_image('snow', axis)
-    elif code[0] == ('8'):
+    elif code in (80, 81, 82):
         icon = offset_image('showers', axis)
     elif code[0] == ('9'):
         icon = offset_image('thunderstorm', axis)

@@ -145,8 +145,7 @@ class Location():
             keys = list(key for key in dict_sites)
             idx = [key.lower() for key in dict_sites].index(self.name.lower())
             for key in dict_sites[keys[idx]]:
-                if self.current_site[self.name][key] is not None:
-                    dict_sites[keys[idx]][key] = self.current_site[self.name][key]
+                dict_sites[keys[idx]][key] = self.current_site[self.name][key]
             with open(PATH  + 'sites.json', 'w', encoding="utf-8") as json_file:
                 json.dump(dict_sites, json_file, indent=4)
             return None

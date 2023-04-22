@@ -119,6 +119,9 @@ default is None (last location used).
 **-d, \--days** Counter to inform the number of days to display,
 default is 1.
 
+**-p, \--past** Counter to inform the number of past days to display,
+default is 0.
+
 ## Documentation
 
 The documentation is availale on [readthedocs.io](https://astro-toolbox.readthedocs.io/en/latest/)

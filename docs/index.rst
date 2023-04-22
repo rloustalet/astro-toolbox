@@ -109,6 +109,8 @@ This command allows you to display forecasts of a given location. This command d
 
 **-d, \--days** Counter to inform the number of days to display, default is 1.
 
+**-p, \--past** Counter to inform the number of past days to display, default is 0.
+
 
 .. toctree::
    Home <self>

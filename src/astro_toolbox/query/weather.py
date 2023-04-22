@@ -86,6 +86,7 @@ class OpenMeteo():
                 'hourly=' +
                 f'temperature_{self.pressure_level}hPa,' +
                 f'relativehumidity_{self.pressure_level}hPa,' +
+                'dewpoint_2m,' +
                 'precipitation_probability,' +
                 'precipitation,' +
                 'weathercode,' +
@@ -94,7 +95,7 @@ class OpenMeteo():
                 f'windspeed_{self.pressure_level}hPa,' +
                 f'winddirection_{self.pressure_level}hPa')
 
-        link += f'&models={self.model}&current_weather=false&past_days=1&forecast_days=16'
+        link += f'&models={self.model}&current_weather=false&past_days=3&forecast_days=16'
         request=urllib.Request(link)
         with urllib.urlopen(request) as response:
             result = json.loads(response.read().decode('utf-8'))
@@ -235,25 +236,6 @@ class OpenMeteo():
         code = self.data['hourly']['weathercode'][index]
         return f'{code:02d}'
 
-    def get_pressure(self, datetime: str | tuple = None):
-        """Get pressure method.
-
-        Parameters
-        ----------
-        datetime : str | tuple, optional
-            Date and Time as tuple (``YYYY,MM,DD,hh,mm,ss`` or ``YYYY-MM-DDThh:mm:ss``),
-            by default None.
-
-        Returns
-        -------
-        float
-            Pressure
-        """
-        index = self._get_index(datetime)
-        if math.isnan(index):
-            return float('nan')
-        return self.data['hourly']['surface_pressure'][index]
-
     def get_msl_pressure(self, datetime: str | tuple = None):
         """Get sea level pressure method.
 
@@ -329,6 +311,7 @@ class OpenMeteo():
         if math.isnan(index):
             return float('nan')
         return self.data['hourly'][f'winddirection_{self.pressure_level}hPa'][index]
+
     def get_units(self):
         """Get units.
 
