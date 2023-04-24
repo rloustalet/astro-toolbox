@@ -5,6 +5,7 @@ import numpy as np
 import pkg_resources
 
 from matplotlib import pyplot as plt
+from matplotlib import rcParams
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox, TextArea
 
 from astro_toolbox.angle.hms import AngleHMS
@@ -15,6 +16,7 @@ from astro_toolbox.coordinates.equatorial import Equatorial
 from astro_toolbox.query.ephemeris import Horizons
 from astro_toolbox.query.weather import OpenMeteo
 
+rcParams['toolbar'] = 'None'
 
 PATH = pkg_resources.resource_filename('astro_toolbox', 'query/weather_icons/')
 
@@ -54,6 +56,7 @@ def wmotoimage(code, axis):
     Object
         offset_image Object.
     """
+    code = str(code)
     if code == '00':
         icon = offset_image('sunny', axis)
     elif code == '01':
@@ -68,9 +71,9 @@ def wmotoimage(code, axis):
         icon = offset_image('drizzle', axis)
     elif code[0] == '6':
         icon = offset_image('rain', axis)
-    elif code[0] == '7' or code in (85, 86):
+    elif code[0] == '7' or code in ('85', '86'):
         icon = offset_image('snow', axis)
-    elif code in (80, 81, 82):
+    elif code in ('80', '81', '82'):
         icon = offset_image('showers', axis)
     elif code[0] == ('9'):
         icon = offset_image('thunderstorm', axis)
@@ -93,6 +96,7 @@ def winddirectiontoimage(wind_direction, axis):
     Object
         offset_image Object.
     """
+    wind_direction = float(wind_direction)
     if 0 <= wind_direction <= 22.5 or 337.5 <= wind_direction <= 360:
         icon = offset_image('direction_up', axis)
     elif 22.5 < wind_direction < 67.5:
@@ -109,6 +113,8 @@ def winddirectiontoimage(wind_direction, axis):
         icon = offset_image('direction_right', axis)
     elif 292.5 < wind_direction < 337.5:
         icon = offset_image('direction_up_right', axis)
+    else:
+        icon = offset_image('na', axis)
     return icon
 
 def plot_weather(date, location, bounds, axis):
@@ -128,24 +134,24 @@ def plot_weather(date, location, bounds, axis):
     hours = list(np.mod(np.arange(bounds[0],bounds[1]), 24))
     weather_forecast = OpenMeteo(location=location)
     annotation_box = AnnotationBbox(TextArea('Weather\nforecasts',
-                                            textprops=dict(rotation = 90, ha = 'center')),
+                                            textprops={'rotation': 90, 'ha': 'center'}),
                                             (0, 0),
-                                            xybox=(-85, -55),
+                                            xybox=(-80, -55),
                                             frameon=False,
                                             xycoords='data',
                                             boxcoords="offset points",
                                             pad=0)
     axis.add_artist(annotation_box)
     weather_units = [TextArea('Temperature °C',
-                            textprops=dict(size=6)),
+                            textprops={'size': 6}),
                     TextArea('Humidity %',
-                            textprops=dict(size=6)),
+                            textprops={'size': 6}),
                     TextArea('Precipitation mm',
-                            textprops=dict(size=6)),
+                            textprops={'size': 6}),
                     TextArea('Wind Speed km/h',
-                            textprops=dict(size=6)),
+                            textprops={'size': 6}),
                     TextArea('Wind Direction',
-                            textprops=dict(size=6))]
+                            textprops={'size': 6})]
     for j, item in enumerate(weather_units):
         annotation_box = AnnotationBbox(item,
                                         (0, 0),
@@ -163,13 +169,13 @@ def plot_weather(date, location, bounds, axis):
         datetime = date + (time, 0, 0)
         weather = [offset_image('na', axis)]
         weather += [TextArea(f'{weather_forecast.get_temperature(datetime)}',
-                            textprops=dict(size=6)),
+                            textprops={'size': 6}),
                     TextArea(f'{weather_forecast.get_humidity(datetime)}',
-                            textprops=dict(size=6)),
+                            textprops={'size': 6}),
                     TextArea(f'{weather_forecast.get_precipitation(datetime)}',
-                            textprops=dict(size=6)),
+                            textprops={'size': 6}),
                     TextArea(f'{weather_forecast.get_wind_speed(datetime)}',
-                            textprops=dict(size=6))]
+                            textprops={'size': 6})]
         weather.append(winddirectiontoimage(
                         weather_forecast.get_wind_direction(datetime), axis))
         weather[0] = wmotoimage(weather_forecast.get_wmo(datetime), axis)
@@ -306,7 +312,7 @@ def airmas_map(object_dict,
                                 ut_time.get_lst(site), site)
             if airmasses[j][i] >= 40:
                 alpha_visible[len(object_dict)-j-1][i] = 0
-    fig, axis = plt.subplots(figsize=(8.3, 11.7))
+    fig, axis = plt.subplots(figsize=(8.27, 11.69), num='Airmass', dpi=72)
     moon_times(len(object_dict), site, date, bounds)
     mesh = axis.pcolormesh(airmasses[::-1],
                     cmap='jet',
@@ -316,7 +322,7 @@ def airmas_map(object_dict,
                     vmax = 3.5)
     for rect in sun_impact(len(object_dict), site, date, bounds):
         axis.add_patch(rect)
-    fig.colorbar(mesh, ax=axis, shrink=0.5)
+    fig.colorbar(mesh, ax=axis, shrink=0.3, label='Airmass\nBlue is better')
     plt.xticks(np.arange(0,len(np.arange(bounds[0],bounds[1],0.1)),10),
                                 np.mod(np.arange(bounds[0],bounds[1]), 24))
     plt.yticks(np.arange(0.5,len(object_dict),1),
@@ -324,6 +330,32 @@ def airmas_map(object_dict,
                 + str(item[1].magnitude)
                 for item in reversed(object_dict.items())])
     plot_weather(ut_time.date, site, bounds, axis)
+    axis.add_artist(AnnotationBbox(OffsetImage(np.full((10,80), np.arange(80)),
+                                            cmap='Blues',
+                                            dpi_cor=False),
+                                    (-10, -10),
+                                    xybox=(551, 780),
+                                    frameon=False,
+                                    xycoords='figure points',
+                                    boxcoords='offset points',
+                                    pad=0))
+    axis.add_artist(AnnotationBbox(TextArea('Daylight impact'),
+                                    (551, 765),
+                                    xybox=(-10, -10),
+                                    frameon=False,
+                                    xycoords='figure points',
+                                    boxcoords='offset points',
+                                    pad=0))
+    axis.add_artist(AnnotationBbox(TextArea('Fully transparent represent\n' +
+                                            'astronomical night\n' +
+                                            r'$h_{sun} < 18°$',
+                                            textprops={'size': 6, 'multialignment': 'center'}),
+                                    (551, 745),
+                                    xybox=(-10, -10),
+                                    frameon=False,
+                                    xycoords='figure points',
+                                    boxcoords='offset points',
+                                    pad=0))
     axis.tick_params(left = False)
     axis.grid(axis = 'x', color = 'k')
     axis.set_title(f'Airmass: {ut_time.get_day():02.0f}/{ut_time.get_month():02.0f}'
@@ -373,7 +405,7 @@ def polarstar_plt_northern(location: Location, datetime: tuple | str=None):
     axis.text(20, 55, f"d (') = {round(polar_star_distance, 2)}", color='r')
     fig.tight_layout()
     fig.patch.set_facecolor('k')
-    plt.show()
+    return fig
 
 def polarstar_plt_southern(location: Location, datetime: tuple=None):
     """Polaris Polar Finder position for southern hemisphere
@@ -432,6 +464,8 @@ def polarstar_plt_southern(location: Location, datetime: tuple=None):
     axis.axis('off')
     axis.set_xlim([-160, 160])
     axis.set_ylim([-160, 160])
+    axis.text(40, 120, f"HA = {octans_constellation[2][2]}", color='r')
+    axis.text(40, 110, f"d (') = {round(octans_constellation[1][2], 2)}", color='r')
     fig.tight_layout()
     fig.patch.set_facecolor('k')
-    plt.show()
+    return fig

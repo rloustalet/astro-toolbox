@@ -1,0 +1,97 @@
+[build-system]
+requires = [
+    "setuptools>=61.2",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "astro-toolbox"
+description = "Toolbox for observationnal astronomy."
+authors = [
+    { name = "Romain Loustalet Palengat", email = "romain.loustalet@gmx.com" },
+]
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License (GPL)",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries",
+]
+keywords = [
+    "astro",
+    "toolbox",
+    "astro_toolbox",
+    "observationnal",
+]
+requires-python = ">=3.10"
+dynamic = [
+    "version",
+    "dependencies",
+]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.urls]
+Homepage = "https://github.com/rloustalet/astro_toolbox"
+Source = "https://github.com/rloustalet/astro_toolbox"
+Documentation = "https://astro-toolbox.readthedocs.io/en/latest/"
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
+doc = [
+    "sphinx",
+    "sphinx-rtd-theme",
+    "sphinx-autodocgen",
+    "Sphinx >= 3.0.0",
+]
+
+[project.scripts]
+astro-toolbox = "astro_toolbox.__main__:main"
+
+[tool.setuptools]
+packages = [
+    "astro_toolbox",
+    "astro_toolbox.angle",
+    "astro_toolbox.coordinates",
+    "astro_toolbox.query",
+    "astro_toolbox.time",
+    "astro_toolbox.scripts",
+    "astro_toolbox.utils",
+    "astro_toolbox.gui",
+]
+zip-safe = false
+platforms = [
+    "unix",
+    "linux",
+    "osx",
+    "cygwin",
+    "win32",
+]
+license-files = [
+    "LICENSE",
+]
+include-package-data = false
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.package-data]
+"astro_toolbox.coordinates" = [
+    "data/*.json",
+]
+"astro_toolbox.query" = [
+    "weather_icons/*.png",
+]
+"astro_toolbox.gui" = [
+    "*.ui",
+    "*.ico",
+]
+
+[tool.setuptools.dynamic.version]
+attr = "astro_toolbox.__init__.__version__"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["REQUIREMENTS"]}

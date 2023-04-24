@@ -1,14 +1,18 @@
 """This module creates the console interface.
 """
+import sys
 import pathlib
 import json
 import logging
 import pkg_resources
 import click
 from matplotlib.backends.backend_pdf import PdfPages
+from matplotlib import pyplot as plt
 from rich.progress import track
 from rich.console import Console
 from rich.table import Table
+
+from PyQt6 import QtWidgets, QtGui
 
 from astro_toolbox.angle.degrees import AngleDeg
 from astro_toolbox.angle.hms import AngleHMS
@@ -24,8 +28,11 @@ from astro_toolbox.scripts.plots import airmas_map
 from astro_toolbox.scripts.plots import polarstar_plt_northern
 from astro_toolbox.scripts.plots import polarstar_plt_southern
 
+from astro_toolbox.gui.gui import Application
+
 from astro_toolbox.query.ephemeris import DICT_OBJECTS
 
+PATH_GUI = pkg_resources.resource_filename('astro_toolbox', 'gui/')
 PATH = pkg_resources.resource_filename('astro_toolbox', 'coordinates/data/')
 PATH_2 = pkg_resources.resource_filename('astro_toolbox', 'query/weather_icons/')
 
@@ -56,9 +63,9 @@ def wmototext(code):
         text = 'Drizzle'
     elif code[0] == '6':
         text = 'Rain'
-    elif code[0] == '7' or code in (85, 86):
+    elif code[0] == '7' or code in ('85', '86'):
         text = 'Snow'
-    elif code in (80, 81, 82):
+    elif code in ('80', '81', '82'):
         text = 'Showers'
     elif code[0] == ('9'):
         text = 'Thunderstorm'
@@ -333,6 +340,7 @@ def polaris_command(location, time):
         polarstar_plt_northern(location, time)
     elif location.latitude.dmstodeg() < 0:
         polarstar_plt_southern(location, time)
+    plt.show()
 
 @cli.command('weather')
 @click.option("-l", "--location",
@@ -350,7 +358,7 @@ def polaris_command(location, time):
     count=True,
     default=0)
 def weather_command(location, days, past):
-    """Weather forecasts displayed from Open-Meteo
+    """Weather forecasts displayed from Open-Meteo.
 
     Parameters
     ----------
@@ -368,7 +376,7 @@ def weather_command(location, days, past):
         time += ':00'
         if int(time[8:10]) != int(last_time[8:10]):
             console.print(table)
-            table = Table(title=f"Weather forecasts {time[:11]} " +
+            table = Table(title=f"Weather forecasts {time[:10]} " +
                           f"@ {weather_forecasts.location.name}",
                           show_lines=True)
             table.add_column("Time (UT)", justify="center")
@@ -376,28 +384,26 @@ def weather_command(location, days, past):
             table.add_column("Humidity (%)", justify="center")
             table.add_column("Precipitation (mm)", justify="center")
             table.add_column("Wind speed (km/h)", justify="center")
-            table.add_column("Wind Direction", justify="center")
-            table.add_column("Cloud Coverage (%)", justify="center")
+            table.add_column("Wind direction", justify="center")
+            table.add_column("Cloud cover (%)", justify="center")
             table.add_column(justify="center")
-            table.add_row(f'{time:^25}',
-                        f'{weather_forecasts.get_temperature(time)}',
-                        f'{weather_forecasts.get_humidity(time)}',
-                        f'{weather_forecasts.get_precipitation(time)}',
-                        f'{weather_forecasts.get_wind_speed(time)}',
-                        f'{winddirectiontotext(weather_forecasts.get_wind_direction(time))}',
-                        f'{weather_forecasts.get_cloud(time)}',
-                        wmototext(weather_forecasts.get_wmo(time)))
-        else:
-            table.add_row(f'{time:^25}',
-                        f'{weather_forecasts.get_temperature(time)}',
-                        f'{weather_forecasts.get_humidity(time)}',
-                        f'{weather_forecasts.get_precipitation(time)}',
-                        f'{weather_forecasts.get_wind_speed(time)}',
-                        f'{winddirectiontotext(weather_forecasts.get_wind_direction(time))}',
-                        f'{weather_forecasts.get_cloud(time)}',
-                        wmototext(weather_forecasts.get_wmo(time)))
+        table.add_row(f'{time[11:]}',
+                    f'{weather_forecasts.get_temperature(time)}',
+                    f'{weather_forecasts.get_humidity(time)}',
+                    f'{weather_forecasts.get_precipitation(time)}',
+                    f'{weather_forecasts.get_wind_speed(time)}',
+                    f'{winddirectiontotext(weather_forecasts.get_wind_direction(time))}',
+                    f'{weather_forecasts.get_cloud_cover(time)}',
+                    wmototext(weather_forecasts.get_wmo(time)))
         last_time = time
     console.print(table)
+@cli.command('gui')
+def gui():
+    """GUI function to launch GUI from cli.
+    """
+    app = QtWidgets.QApplication(sys.argv)
+    app.setWindowIcon(QtGui.QIcon(PATH_GUI + 'logo_astro_toolbox.png'))
+    Application(app)
 
 if __name__ == '__main__':
     cli(False)

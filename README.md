@@ -20,6 +20,11 @@ astro-toolbox \[options1\] \<command\> \<argument\> \[options2\]
 
 # Commands
 
+# gui
+
+This command launch the Graphical User Interface (GUI) which allow you
+to use the functions available in command lines in a more intuitive interface.
+
 # airmass
 
 This command allows you to plot airmass map of one or multiple objects.

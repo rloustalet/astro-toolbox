@@ -18,6 +18,12 @@ Options 1
 Commands
 ========
 
+gui
+===
+This command launch the Graphical User Interface (GUI) which allow you to use the functions available in command lines in a more intuitive interface.
+
+It doesn't require any argument or option.
+
 airmass
 =======
 This command allows you to plot airmass map of one or multiple objects.

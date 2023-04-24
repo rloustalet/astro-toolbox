@@ -70,7 +70,7 @@ class OpenMeteo():
                 f'Precipitation: {self.get_precipitation()} mm' +
                 f'Wind Speed: {self.get_wind_speed()} km/h' +
                 f'Wind Direction: {self.get_wind_direction()} °' +
-                f'Cloud Coverage: {self.get_cloud()} %')
+                f'Cloud Coverage: {self.get_cloud_cover()} %')
 
     def _get_data(self):
         """Open Meteo query method.
@@ -91,7 +91,9 @@ class OpenMeteo():
                 'precipitation,' +
                 'weathercode,' +
                 'pressure_msl,' +
-                f'cloudcover_{self.pressure_level}hPa,' +
+                'cloudcover_low,' +
+                'cloudcover_mid,' +
+                'cloudcover_high,' +
                 f'windspeed_{self.pressure_level}hPa,' +
                 f'winddirection_{self.pressure_level}hPa')
 
@@ -255,7 +257,7 @@ class OpenMeteo():
             return float('nan')
         return self.data['hourly']['pressure_msl'][index]
 
-    def get_cloud(self, datetime: str | tuple = None):
+    def get_cloud_cover(self, datetime: str | tuple = None):
         """Get cloud coverage method.
 
         Parameters
@@ -269,10 +271,22 @@ class OpenMeteo():
         float
             Cloud coverage
         """
+
         index = self._get_index(datetime)
         if math.isnan(index):
             return float('nan')
-        return self.data['hourly'][f'cloudcover_{self.pressure_level}hPa'][index]
+        if float(self.location.elevation) < 2000:
+            cloud_cover = (int(self.data['hourly']['cloudcover_low'][index]) +
+                           int(self.data['hourly']['cloudcover_mid'][index]) +
+                           int(self.data['hourly']['cloudcover_high'][index]))
+        elif 2000 < float(self.location.elevation) < 6000:
+            cloud_cover = (int(self.data['hourly']['cloudcover_mid'][index]) +
+                           int(self.data['hourly']['cloudcover_high'][index]))
+        else:
+            cloud_cover = int(self.data['hourly']['cloudcover_high'][index])
+        if cloud_cover == min(cloud_cover, 100):
+            cloud_cover = 100
+        return cloud_cover
 
     def get_wind_speed(self, datetime: str | tuple = None):
         """Get wind speed method.

@@ -60,7 +60,7 @@ class Location():
         self.name = name
         self.latitude = AngleDMS(latitude)
         self.longitude = AngleDMS(longitude)
-        self.elevation = elevation
+        self.elevation = float(elevation)
         self.current_site = {self.name:
                             {
                                 'latitude': repr(self.latitude),

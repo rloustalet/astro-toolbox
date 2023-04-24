@@ -113,7 +113,7 @@ class Ephemeris():
         """
         earth_orbital_elements = self._get_orbital_elements('EM Bary')
         true_anomaly, radius = self.compute_true_anomaly_distance(**earth_orbital_elements)
-        lonearth = (true_anomaly*180/math.pi + earth_orbital_elements['perihelion'])
+        lonearth = true_anomaly*180/math.pi + earth_orbital_elements['perihelion']
         x_sun = -radius * math.cos(lonearth*math.pi/180)
         y_sun = -radius * math.sin(lonearth*math.pi/180)
         return x_sun, y_sun
@@ -151,7 +151,7 @@ class Ephemeris():
             Tuple which contains object position around the sun.
         """
         true_anomaly, radius = self.compute_true_anomaly_distance(**orbital_elements)
-        true_longitude = (true_anomaly*180/math.pi + orbital_elements['perihelion'])
+        true_longitude = true_anomaly*180/math.pi + orbital_elements['perihelion']
         x_ecliptic = radius * (math.cos(orbital_elements['longnode']*math.pi/180) *
                                     math.cos(true_longitude*math.pi/180) -
                                     math.sin(orbital_elements['longnode']*math.pi/180) *
